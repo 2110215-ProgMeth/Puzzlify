@@ -1,10 +1,9 @@
 package Block;
 
-import Special.Skillable;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
-public abstract class SpecialBlock extends Block implements Skillable {
+public abstract class SpecialBlock extends Block implements Skillable{
 
 
     static String imgPath; // have to edit this value in each special block
