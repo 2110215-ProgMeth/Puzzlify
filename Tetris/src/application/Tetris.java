@@ -541,7 +541,7 @@ public class Tetris extends Application {
         }
     }
 
-    // move Block function
+    // move Block function.
     private boolean moveA(Form form) {
         return (MESH[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1] == 1);
     }
