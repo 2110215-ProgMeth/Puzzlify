@@ -18,19 +18,17 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Tetris extends Application {
-    // The variables
-    // yo
-    //hello
+    //variable ต่างๆ
     public static final int MOVE = 25;//เคลื่อนที่ครั้งละblock
     public static final int SIZE = 25;//ขนาดblock
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
-    public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//ไม่รู้ว่าคืออะไร แต่เหมือนจะเป็นทำให้เกิดเป็นblock
-    private static Pane group = new Pane();
+    public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
+    private static Pane group = new Pane();//สร้างpane
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene scene = new Scene(group, XMAX + 150, YMAX);
-    public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกดเลื่อนลง || deleterow
-    private static int top = 0;
+    private static Scene scene = new Scene(group, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
+    private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
     private static Form nextObj = Controller.makeRect();//ของชิ้นต่อไป
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
@@ -41,16 +39,16 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        for (int[] a : MESH) {//ไม่เข้าใจ
+        for (int[] a : MESH) {//unknowed
             Arrays.fill(a, 0);
         }
 
         Line line = new Line(XMAX, 0, XMAX, YMAX);//เส้นแบ่งระหว่างส่วนเกม กับ ส่วนscore+line
-        Text scoretext = new Text("Score : ");//ตอนเริ่ม
+        Text scoretext = new Text();//text for score
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);//ไม่ให้ติดกับเส้นแบ่ง
-        Text level = new Text("Lines : ");//ตอนเริ่ม
+        Text level = new Text();//text for level
         level.setStyle("-fx-font: 20 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
@@ -69,15 +67,15 @@ public class Tetris extends Application {
         Timer fall = new Timer();
         TimerTask task = new TimerTask() {
             public void run() {
-                Platform.runLater(new Runnable() {
+                Platform.runLater(new Runnable() {//ใช้เพราะมีการเปลี่ยน user interface
                     public void run() {
                         if (object.a.getY() == 0 || object.b.getY() == 0 || object.c.getY() == 0
-                                || object.d.getY() == 0)
+                                || object.d.getY() == 0)//ถึงแตะบนสุด + 1
                             top++;
                         else
-                            top = 0;
+                            top = 0; //ลดลงมาทันก็นับใหม่
 
-                        if (top == 2) {
+                        if (top == 2) {//เกินไป 1 block = จบ
                             // GAME OVER
                             Text over = new Text("GAME OVER");
                             over.setFill(Color.RED);
@@ -85,15 +83,15 @@ public class Tetris extends Application {
                             over.setY(250);
                             over.setX(10);
                             group.getChildren().add(over);
-                            game = false;
+                            game = false;//จบเกม
                         }
                         // Exit
-                        if (top == 15) {
+                        if (top == 15) {//เวลาในการExitGame automatically
                             System.exit(0);
                         }
 
                         if (game) {
-                            MoveDown(object);
+                            MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
                             scoretext.setText("Score: " + Integer.toString(score));
                             level.setText("Lines: " + Integer.toString(linesNo));
                         }
@@ -101,10 +99,10 @@ public class Tetris extends Application {
                 });
             }
         };
-        fall.schedule(task, 0, 300);
+        fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
     }
 
-    private void moveOnKeyPress(Form form) {//กดปุ่มทำอะไร
+    private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -123,6 +121,9 @@ public class Tetris extends Application {
                     case UP:
                         MoveTurn(form);
                         break;
+//                    case ENTER:// ทำให้ลงถึงสุดเลย
+//                        MoveToBottom();
+//                        break;
                 }
             }
         });
@@ -145,7 +146,7 @@ public class Tetris extends Application {
                     MoveDown(form.d);
                     MoveLeft(form.d);
                     MoveLeft(form.d);
-                    form.changeForm();
+                    form.changeForm();//จาก 1->2
                     break;
                 }
                 if (f == 2 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, -2, 2)) {
@@ -477,8 +478,14 @@ public class Tetris extends Application {
     private void MoveDown(Rectangle rect) {
         if (rect.getY() + MOVE < YMAX)
             rect.setY(rect.getY() + MOVE);
-
     }
+
+//    private void MoveToBottom(Rectangle rect){
+//        while(rect.getY()+MOVE < YMAX){
+//            rect.setY(rect.getY()+MOVE);
+//            score++;
+//        }
+//    }
 
     private void MoveRight(Rectangle rect) {
         if (rect.getX() + MOVE <= XMAX - SIZE)
@@ -542,16 +549,16 @@ public class Tetris extends Application {
         return (MESH[(int) form.d.getX() / SIZE][((int) form.d.getY() / SIZE) + 1] == 1);
     }
 
-    private boolean cB(Rectangle rect, int x, int y) {
-        boolean xb = false;
-        boolean yb = false;
-        if (x >= 0)
+    private boolean cB(Rectangle rect, int x, int y) {//check bounder ดูว่าเลื่อนในแกนx x move/แกนy y move หลุดขอบไหม
+        boolean xb = false;//X-axis bounder
+        boolean yb = false;//Y-axis bounder
+        if (x >= 0)//เช็คเทียบขอบขวามือ
             xb = rect.getX() + x * MOVE <= XMAX - SIZE;
-        if (x < 0)
+        if (x < 0)//เช็คเทียบขอบซ้ายมือ
             xb = rect.getX() + x * MOVE >= 0;
-        if (y >= 0)
+        if (y >= 0)//เช็คล่าง
             yb = rect.getY() - y * MOVE > 0;
-        if (y < 0)
+        if (y < 0)//เช็คบน
             yb = rect.getY() + y * MOVE < YMAX;
         return xb && yb && MESH[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
     }
