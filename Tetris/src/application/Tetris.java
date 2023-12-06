@@ -19,8 +19,6 @@ import javafx.stage.Stage;
 
 public class Tetris extends Application {
     // The variables
-    // yo
-    //hello
     public static final int MOVE = 25;//เคลื่อนที่ครั้งละblock
     public static final int SIZE = 25;//ขนาดblock
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
