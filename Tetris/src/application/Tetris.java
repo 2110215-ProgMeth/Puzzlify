@@ -503,8 +503,16 @@ public class Tetris extends Application {
     }
 
     private void MoveDown(Form form) {
-        if (form.a.getY() == YMAX - SIZE || form.b.getY() == YMAX - SIZE || form.c.getY() == YMAX - SIZE
-                || form.d.getY() == YMAX - SIZE || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
+        if (form.a.getY() == YMAX - SIZE ||
+                form.b.getY() == YMAX - SIZE ||
+                form.c.getY() == YMAX - SIZE ||
+                form.d.getY() == YMAX - SIZE ||
+                moveA(form) ||
+                moveB(form) ||
+                moveC(form) ||
+                moveD(form))
+        {
+            // set Mesh
             MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
             MESH[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE] = 1;
             MESH[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE] = 1;
@@ -533,6 +541,7 @@ public class Tetris extends Application {
         }
     }
 
+    // move Block function
     private boolean moveA(Form form) {
         return (MESH[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1] == 1);
     }
