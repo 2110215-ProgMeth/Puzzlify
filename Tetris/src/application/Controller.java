@@ -46,6 +46,8 @@ public class Controller {
     public static Form makeRect() {//สร้างobj
         int block = (int) (Math.random() * 100);
         String name;
+        // create function to random block
+        // maybe change all Rectangle to Block
         Rectangle a = new Rectangle(SIZE-1, SIZE-1), b = new Rectangle(SIZE-1, SIZE-1), c = new Rectangle(SIZE-1, SIZE-1),
                 d = new Rectangle(SIZE-1, SIZE-1);
         if (block < 15) {
