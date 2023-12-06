@@ -26,7 +26,7 @@ public class Form {
         this.d = d;
         this.name = name;
 
-        switch (name) {//ลงสี
+        switch (name) {//ลงสีรูปร่างต่างๆ
             case "j":
                 color = Color.SLATEGRAY;
                 break;
@@ -50,6 +50,7 @@ public class Form {
                 break;
 
         }
+        //เพิ่มสีให้กับแต่ละBlock
         this.a.setFill(color);
         this.b.setFill(color);
         this.c.setFill(color);
@@ -60,6 +61,7 @@ public class Form {
     public String getName() {//getter
         return name;
     }
+    //น่าจะเอาไปทำอะไรอย่างอื่น เช่น MoveTurn() ต้องรูปเป็นรูปอะไรถึงจะสามารถหมุนอย่างถูกต้องได้
 
 
     public void changeForm() {//เป็นลูป 1->2->3->4->1
