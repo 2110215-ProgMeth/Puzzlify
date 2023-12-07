@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Tetris extends Application {
-    // The variables
+    //variable ต่างๆ
     public static final int MOVE = 25;//เคลื่อนที่ครั้งละblock
     public static final int SIZE = 25;//ขนาดblock
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
@@ -121,9 +121,9 @@ public class Tetris extends Application {
                     case UP:
                         MoveTurn(form);
                         break;
-//                    case ENTER:// ทำให้ลงถึงสุดเลย
-//                        MoveToBottom();
-//                        break;
+                    case ENTER:// ทำให้ลงถึงสุดเลย
+                        MoveToBottom(form);
+                        break;
                 }
             }
         });
@@ -421,6 +421,7 @@ public class Tetris extends Application {
         ArrayList<Node> rects = new ArrayList<Node>();
         ArrayList<Integer> lines = new ArrayList<Integer>();
         ArrayList<Node> newrects = new ArrayList<Node>();
+
         int full = 0;
         for (int i = 0; i < MESH[0].length; i++) {
             for (int j = 0; j < MESH.length; j++) {
@@ -432,17 +433,24 @@ public class Tetris extends Application {
             //lines.add(i + lines.size());
             full = 0;
         }
-        if (lines.size() > 0)
+        if (lines.size() > 0){
+            // if have line to remove
             do {
+                // add all node to rects
                 for (Node node : pane.getChildren()) {
                     if (node instanceof Rectangle)
                         rects.add(node);
                 }
+
+                // update score and lineNo score
                 score += 50;
                 linesNo++;
 
+                // get all node that recently from pane
                 for (Node node : rects) {
                     Rectangle a = (Rectangle) node;
+
+                    // if this node has y the same as the line we gonna delete
                     if (a.getY() == lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                         pane.getChildren().remove(node);
@@ -452,6 +460,7 @@ public class Tetris extends Application {
 
                 for (Node node : newrects) {
                     Rectangle a = (Rectangle) node;
+                    // node that higher than the line -> move down 1 block
                     if (a.getY() < lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                         a.setY(a.getY() + SIZE);
@@ -460,10 +469,12 @@ public class Tetris extends Application {
                 lines.remove(0);
                 rects.clear();
                 newrects.clear();
+                /// get all rectangle in pane
                 for (Node node : pane.getChildren()) {
                     if (node instanceof Rectangle)
                         rects.add(node);
                 }
+                // redraw
                 for (Node node : rects) {
                     Rectangle a = (Rectangle) node;
                     try {
@@ -473,6 +484,7 @@ public class Tetris extends Application {
                 }
                 rects.clear();
             } while (lines.size() > 0);
+        }
     }
 
     private void MoveDown(Rectangle rect) {
@@ -480,12 +492,6 @@ public class Tetris extends Application {
             rect.setY(rect.getY() + MOVE);
     }
 
-//    private void MoveToBottom(Rectangle rect){
-//        while(rect.getY()+MOVE < YMAX){
-//            rect.setY(rect.getY()+MOVE);
-//            score++;
-//        }
-//    }
 
     private void MoveRight(Rectangle rect) {
         if (rect.getX() + MOVE <= XMAX - SIZE)
@@ -502,15 +508,35 @@ public class Tetris extends Application {
             rect.setY(rect.getY() - MOVE);
     }
 
+    private void MoveToBottom(Form form){
+        //TODO : fixed bug, idk why it's bug
+        int c =0;
+        while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX){
+            MoveDown(form);
+        }
+    }
+
     private void MoveDown(Form form) {
-        if (form.a.getY() == YMAX - SIZE || form.b.getY() == YMAX - SIZE || form.c.getY() == YMAX - SIZE
-                || form.d.getY() == YMAX - SIZE || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
+        if (form.a.getY() == YMAX - SIZE ||
+                form.b.getY() == YMAX - SIZE ||
+                form.c.getY() == YMAX - SIZE ||
+                form.d.getY() == YMAX - SIZE ||
+                moveA(form) ||
+                moveB(form) ||
+                moveC(form) ||
+                moveD(form))
+        {
+            // if this block at the bottom.
+            // set Mesh
             MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
             MESH[(int) form.b.getX() / SIZE][(int) form.b.getY() / SIZE] = 1;
             MESH[(int) form.c.getX() / SIZE][(int) form.c.getY() / SIZE] = 1;
             MESH[(int) form.d.getX() / SIZE][(int) form.d.getY() / SIZE] = 1;
-            RemoveRows(group);
 
+
+            RemoveRows(group); // remove row, check inside.
+
+            // create next block
             Form a = nextObj;
             nextObj = Controller.makeRect();
             object = a;
@@ -533,6 +559,8 @@ public class Tetris extends Application {
         }
     }
 
+    // move Block function.
+    // check if this below has data?
     private boolean moveA(Form form) {
         return (MESH[(int) form.a.getX() / SIZE][((int) form.a.getY() / SIZE) + 1] == 1);
     }

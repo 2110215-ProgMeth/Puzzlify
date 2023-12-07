@@ -18,7 +18,7 @@ public class Controller {
             int moveb = MESH[((int) form.b.getX() / SIZE) + 1][((int) form.b.getY() / SIZE)];
             int movec = MESH[((int) form.c.getX() / SIZE) + 1][((int) form.c.getY() / SIZE)];
             int moved = MESH[((int) form.d.getX() / SIZE) + 1][((int) form.d.getY() / SIZE)];
-            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
+            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) { // every mesh is till empty? (0)
                 form.a.setX(form.a.getX() + MOVE);
                 form.b.setX(form.b.getX() + MOVE);
                 form.c.setX(form.c.getX() + MOVE);
@@ -46,6 +46,8 @@ public class Controller {
     public static Form makeRect() {//สร้างobj
         int block = (int) (Math.random() * 100);
         String name;
+        // create function to random block
+        // maybe change all Rectangle to Block
         Rectangle a = new Rectangle(SIZE-1, SIZE-1), b = new Rectangle(SIZE-1, SIZE-1), c = new Rectangle(SIZE-1, SIZE-1),
                 d = new Rectangle(SIZE-1, SIZE-1);
         if (block < 15) {
