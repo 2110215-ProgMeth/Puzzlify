@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
@@ -17,8 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -45,6 +43,7 @@ public class Tetris extends Application {
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
 
+    private AudioClip hitSound ;
 
 
     public Button startButton = new Button("Start");
@@ -55,6 +54,7 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+//        hitSound  = new AudioClip(ClassLoader.getSystemResources("osu-hit-sound.wav").toString());
 
         stage.setResizable(false);
         group.setPrefWidth(XMAX);
@@ -141,6 +141,7 @@ public class Tetris extends Application {
 
 
     private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
+//        hitSound.play();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
