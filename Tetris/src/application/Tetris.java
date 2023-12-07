@@ -136,7 +136,6 @@ public class Tetris extends Application {
             fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
             startButton.setDisable(true);
         });
-//        fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
     }
 
 
