@@ -7,10 +7,13 @@ import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Mesh;
@@ -28,8 +31,10 @@ public class Tetris extends Application {
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
     private static Pane group = new Pane();//สร้างpane
+    private static VBox UI = new VBox();
+    private static HBox ROOT = new HBox();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene scene = new Scene(group, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene scene = new Scene(ROOT, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
@@ -44,11 +49,12 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setResizable(false);
+        group.setPrefWidth(XMAX);
+
         for (int[] a : MESH) {//unknowed
             Arrays.fill(a, 0);
         }
-
-        Line line = new Line(XMAX, 0, XMAX, YMAX);//เส้นแบ่งระหว่างส่วนเกม กับ ส่วนscore+line
         Text scoretext = new Text();//text for score
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
@@ -58,14 +64,15 @@ public class Tetris extends Application {
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
-        group.getChildren().addAll(scoretext, line, level);//เพิ่มลงในpane
 
-        ui.setAlignment(Pos.CENTER);
-        setBackground();
+        UI.setAlignment(Pos.CENTER);
+        UI.getChildren().addAll(scoretext, level);//เพิ่มลงในpane
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
         moveOnKeyPress(a);
+
+        ROOT.getChildren().addAll(group,UI);
         object = a;
         nextObj = Controller.makeRect();
         stage.setScene(scene);
