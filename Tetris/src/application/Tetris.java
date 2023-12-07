@@ -43,7 +43,6 @@ public class Tetris extends Application {
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
 
-    private AudioClip hitSound ;
 
 
     public Button startButton = new Button("Start");
