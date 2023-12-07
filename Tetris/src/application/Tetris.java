@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
@@ -7,16 +8,18 @@ import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Mesh;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,14 +27,16 @@ import Block.*;
 
 public class Tetris extends Application {
     //variable ต่างๆ
-    public static final int MOVE = 25;//เคลื่อนที่ครั้งละblock
-    public static final int SIZE = 25;//ขนาดblock
+    public static final int MOVE = 40;//เคลื่อนที่ครั้งละblock
+    public static final int SIZE = 40;//ขนาดblock
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
     private static Pane group = new Pane();//สร้างpane
+    private static VBox UI = new VBox();
+    private static HBox ROOT = new HBox();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene scene = new Scene(group, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene scene = new Scene(ROOT, XMAX + 300, YMAX+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
@@ -40,35 +45,49 @@ public class Tetris extends Application {
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
 
+
+
+    public Button startButton = new Button("Start");
+    public Button restartButton = new Button();
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        stage.setResizable(false);
+        group.setPrefWidth(XMAX);
+
         for (int[] a : MESH) {//unknowed
             Arrays.fill(a, 0);
         }
+        group.setPrefWidth(XMAX);
+        ROOT.setPadding(new Insets(10));
+        group.setPadding(new Insets(2));
 
-        Line line = new Line(XMAX, 0, XMAX, YMAX);//เส้นแบ่งระหว่างส่วนเกม กับ ส่วนscore+line
-        Text scoretext = new Text();//text for score
-        scoretext.setStyle("-fx-font: 20 arial;");
+        Text scoretext = new Text("Score: 0");//text for score
+        scoretext.setStyle("-fx-font: 30 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);//ไม่ให้ติดกับเส้นแบ่ง
-        Text level = new Text();//text for level
-        level.setStyle("-fx-font: 20 arial;");
+        Text level = new Text("Level: 0");//text for level
+        level.setStyle("-fx-font: 30 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
-//        Circle circle = new Circle();
-//        Image img = new Image("Double.jpg");
-//        circle.setFill(new ImagePattern(img));
-//        circle.setVisible(false);
-        group.getChildren().addAll(scoretext, line, level);//เพิ่มลงในpane
+
+        setBackground();
+
+        UI.setAlignment(Pos.BASELINE_CENTER);
+        UI.setPadding(new Insets(10));
+        UI.getChildren().addAll(scoretext, level,startButton);//เพิ่มลงในpane
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
+
+        ROOT.getChildren().addAll(group,UI);
         moveOnKeyPress(a);
+
         object = a;
         nextObj = Controller.makeRect();
         stage.setScene(scene);
@@ -80,6 +99,8 @@ public class Tetris extends Application {
             public void run() {
                 Platform.runLater(new Runnable() {//ใช้เพราะมีการเปลี่ยน user interface
                     public void run() {
+
+
                         if (object.a.getY() == 0 || object.b.getY() == 0 || object.c.getY() == 0
                                 || object.d.getY() == 0)//ถึงแตะบนสุด + 1
                             top++;
@@ -96,6 +117,7 @@ public class Tetris extends Application {
                             group.getChildren().add(over);
                             game = false;//จบเกม
                         }
+
                         // Exit
                         if (top == 15) {//เวลาในการExitGame automatically
                             System.exit(0);
@@ -112,11 +134,15 @@ public class Tetris extends Application {
                 });
             }
         };
-        fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+        startButton.setOnAction(e->{
+            fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+            startButton.setDisable(true);
+        });
     }
 
-    private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
 
+
+    private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -456,7 +482,7 @@ public class Tetris extends Application {
             do {
                 // add all node to rects
                 for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle)
+                    if (node instanceof Block)
                         rects.add(node);
                 }
                 // update score and lineNo score
@@ -467,16 +493,20 @@ public class Tetris extends Application {
 
                 // get all node that recently from pane
                 for (Node node : rects) {
+                    if(node instanceof Block){
                         Block a = (Block) node;
+
                         // if this node has y the same as the line we gonna delete
                         if (a.getY() == lines.get(0) * SIZE) {
                             MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                            if (a instanceof Skillable) {
+                            if(a instanceof Skillable){
                                 ((Skillable) a).activeSkill(group);
                             }
                             pane.getChildren().remove(node);
                         } else
                             newrects.add(node);
+
+                    }
                 }
 
                 for (Node node : newrects) {
@@ -492,7 +522,7 @@ public class Tetris extends Application {
                 newrects.clear();
                 /// get all rectangle in pane
                 for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle)
+                    if (node instanceof Block)
                         rects.add(node);
                 }
                 // บอกในMESHว่าตรงนี้มีBlock เพราะข้างบนลบออกแล้วยังไม่ได้เพิ่มใหม่
@@ -539,8 +569,6 @@ public class Tetris extends Application {
     }
 
     private void MoveToBottom(Form form){
-        //TODO : fixed bug, idk why it's bug
-        // it's bug when below this block already have another block
         while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX && !moveA(form) && !moveB(form) && !moveC(form) && !moveD(form)){
             MoveDown(form);
         }
@@ -556,6 +584,7 @@ public class Tetris extends Application {
                 moveC(form) ||
                 moveD(form))
         {
+
             // if this block at the bottom.
             // set Mesh
             MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
@@ -620,5 +649,18 @@ public class Tetris extends Application {
             yb = rect.getY() + y * MOVE < YMAX;
         return xb && yb && MESH[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
     }
+
+    private void setBackground(){
+        for(int i =0;i<12;i++){
+            for(int j = 0;j<24;j++){
+                Rectangle wall = new Rectangle(SIZE-1,SIZE-1);
+                wall.setStyle("-fx-fill: rgb(255, 246, 220); -fx-stroke: rgb(158, 159, 165); -fx-stroke-width: 1");
+                wall.setX(i*SIZE);
+                wall.setY(j*SIZE);
+                group.getChildren().add(wall);
+            }
+        }
+    }
+
 
 }
