@@ -7,9 +7,11 @@ import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -27,6 +29,7 @@ public class Tetris extends Application {
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
     private static Pane group = new Pane();//สร้างpane
+    private static GridPane ui = new GridPane();
     private static Form object;//ของชิ้นปัจจุบัน
     private static Scene scene = new Scene(group, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
@@ -36,6 +39,7 @@ public class Tetris extends Application {
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
+
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -58,6 +62,8 @@ public class Tetris extends Application {
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
         group.getChildren().addAll(scoretext, line, level);//เพิ่มลงในpane
+
+        ui.setAlignment(Pos.CENTER);
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
