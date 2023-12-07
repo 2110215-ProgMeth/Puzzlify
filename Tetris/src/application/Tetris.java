@@ -43,6 +43,7 @@ public class Tetris extends Application {
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
 
+
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
@@ -55,6 +56,9 @@ public class Tetris extends Application {
         for (int[] a : MESH) {//unknowed
             Arrays.fill(a, 0);
         }
+
+        group.setPrefWidth(XMAX);
+
         Text scoretext = new Text();//text for score
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
@@ -65,11 +69,18 @@ public class Tetris extends Application {
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
 
+
+
         UI.setAlignment(Pos.CENTER);
         UI.getChildren().addAll(scoretext, level);//เพิ่มลงในpane
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
+//        group.setBorder(new Border(new BorderStroke(Color.BLACK,
+//                BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(3))));
+
+        ROOT.getChildren().addAll(group,UI);
+
         moveOnKeyPress(a);
 
         ROOT.getChildren().addAll(group,UI);
@@ -84,6 +95,8 @@ public class Tetris extends Application {
             public void run() {
                 Platform.runLater(new Runnable() {//ใช้เพราะมีการเปลี่ยน user interface
                     public void run() {
+
+
                         if (object.a.getY() == 0 || object.b.getY() == 0 || object.c.getY() == 0
                                 || object.d.getY() == 0)//ถึงแตะบนสุด + 1
                             top++;
@@ -100,6 +113,7 @@ public class Tetris extends Application {
                             group.getChildren().add(over);
                             game = false;//จบเกม
                         }
+
                         // Exit
                         if (top == 15) {//เวลาในการExitGame automatically
                             System.exit(0);
@@ -638,8 +652,6 @@ public class Tetris extends Application {
             }
         }
     }
-
-
 
 
 }

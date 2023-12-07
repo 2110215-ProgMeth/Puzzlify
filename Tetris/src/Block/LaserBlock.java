@@ -63,4 +63,6 @@ public class LaserBlock extends SpecialBlock {
                 rects.clear();
             } while (lines.size() > 0);
     }
+
+
 }
