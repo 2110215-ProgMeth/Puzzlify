@@ -1,6 +1,7 @@
 package Block;
 
 import application.Tetris.*;
+import javafx.scene.layout.Pane;
 
 import static application.Tetris.DoubleNow;
 import static application.Tetris.times;
@@ -12,13 +13,14 @@ public class DoubleBlock extends SpecialBlock{
     }
 
     @Override
-    public void activeSkill() {
+    public void activeSkill(Pane pane) {
         DoubleNow = true;
         System.out.println("Time to Double!");
         Thread thread = new Thread(()->{
             try{
-                Thread.sleep(30000);
+                Thread.sleep(15000);
                 DoubleNow = false;
+                System.out.println("Double end!");
             }catch(InterruptedException e ){}
         });
         thread.start();

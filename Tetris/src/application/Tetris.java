@@ -425,23 +425,23 @@ public class Tetris extends Application {
         }
     }
 
-    private void RemoveRows(Pane pane) {//ไม่ค่อยเข้าใจ
+    private void RemoveRows(Pane pane) {
         ArrayList<Node> rects = new ArrayList<Node>();
-        ArrayList<Integer> lines = new ArrayList<Integer>();
+        ArrayList<Integer> lines = new ArrayList<Integer>();//เก็บว่าแถวไหนเต็มบ้าง
         ArrayList<Node> newrects = new ArrayList<Node>();
 
-        int full = 0;
-        for (int i = 0; i < MESH[0].length; i++) {
-            for (int j = 0; j < MESH.length; j++) {
-                if (MESH[j][i] == 1)
-                    full++;
+        int full = 0;//นับว่าแต่ละrowมีblockเท่าไหร่
+        for (int i = 0; i < MESH[0].length; i++) {//each row
+            for (int j = 0; j < MESH.length; j++) {//each column
+                if (MESH[j][i] == 1)//ช่องนี้มีblockไหม
+                    full++;//ถ้ามีเพิ่ม
             }
-            if (full == MESH.length)
-                lines.add(i);
+            if (full == MESH.length)//ถ้ามีทั้งแถว
+                lines.add(i);//บอกว่าแถวนี้เต็มนะ
             //lines.add(i + lines.size());
-            full = 0;
+            full = 0;//ทำให้เป็นศูนย์เพื่อไปนับแถวต่อไป
         }
-        if (lines.size() > 0){
+        if (lines.size() > 0){//มีแถวเต็ม
             // if have line to remove
             do {
                 // add all node to rects
@@ -449,7 +449,6 @@ public class Tetris extends Application {
                     if (node instanceof Rectangle)
                         rects.add(node);
                 }
-
                 // update score and lineNo score
                 if(!DoubleNow) {
                     score += 50;
@@ -481,10 +480,10 @@ public class Tetris extends Application {
                 newrects.clear();
                 /// get all rectangle in pane
                 for (Node node : pane.getChildren()) {
-                    if (node instanceof Block)
+                    if (node instanceof Rectangle)
                         rects.add(node);
                 }
-                // redraw
+                // บอกในMESHว่าตรงนี้มีBlock เพราะข้างบนลบออกแล้วยังไม่ได้เพิ่มใหม่
                 for (Node node : rects) {
                     Block a = (Block) node;
                     try {

@@ -1,6 +1,7 @@
 package Block;
 
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 
 public abstract class SpecialBlock extends Block implements Skillable{
@@ -15,4 +16,6 @@ public abstract class SpecialBlock extends Block implements Skillable{
     public void activeSkill() {
         System.out.println("YO");
     }
+
+    public abstract void activeSkill(Pane pane);
 }
