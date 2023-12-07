@@ -70,20 +70,19 @@ public class Tetris extends Application {
         level.setFill(Color.GREEN);
 
 
+        setBackground();
 
         UI.setAlignment(Pos.CENTER);
         UI.getChildren().addAll(scoretext, level);//เพิ่มลงในpane
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
-//        group.setBorder(new Border(new BorderStroke(Color.BLACK,
-//                BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(3))));
 
         ROOT.getChildren().addAll(group,UI);
-
         moveOnKeyPress(a);
 
-        ROOT.getChildren().addAll(group,UI);
+
+
         object = a;
         nextObj = Controller.makeRect();
         stage.setScene(scene);
