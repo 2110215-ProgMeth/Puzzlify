@@ -27,8 +27,8 @@ import Block.*;
 
 public class Tetris extends Application {
     //variable ต่างๆ
-    public static final int MOVE = 25;//เคลื่อนที่ครั้งละblock
-    public static final int SIZE = 25;//ขนาดblock
+    public static final int MOVE = 40;//เคลื่อนที่ครั้งละblock
+    public static final int SIZE = 40;//ขนาดblock
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
@@ -36,7 +36,7 @@ public class Tetris extends Application {
     private static VBox UI = new VBox();
     private static HBox ROOT = new HBox();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene scene = new Scene(ROOT, XMAX + 150, YMAX+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene scene = new Scene(ROOT, XMAX + 300, YMAX+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
@@ -67,11 +67,11 @@ public class Tetris extends Application {
         group.setPadding(new Insets(2));
 
         Text scoretext = new Text("Score: 0");//text for score
-        scoretext.setStyle("-fx-font: 20 arial;");
+        scoretext.setStyle("-fx-font: 30 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);//ไม่ให้ติดกับเส้นแบ่ง
         Text level = new Text("Level: 0");//text for level
-        level.setStyle("-fx-font: 20 arial;");
+        level.setStyle("-fx-font: 30 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
