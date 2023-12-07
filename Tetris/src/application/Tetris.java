@@ -19,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Block.*;
+import org.w3c.dom.css.Rect;
 
 public class Tetris extends Application {
     //variable ต่างๆ
@@ -65,6 +66,9 @@ public class Tetris extends Application {
 
         UI.setAlignment(Pos.CENTER);
         UI.getChildren().addAll(scoretext, level);//เพิ่มลงในpane
+
+        ui.setAlignment(Pos.CENTER);
+        setBackground();
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
@@ -473,17 +477,20 @@ public class Tetris extends Application {
 
                 // get all node that recently from pane
                 for (Node node : rects) {
-                    Block a = (Block) node;
+                    if(node instanceof Block){
+                        Block a = (Block) node;
 
-                    // if this node has y the same as the line we gonna delete
-                    if (a.getY() == lines.get(0) * SIZE) {
-                        MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                        if(a instanceof Skillable){
-                            ((Skillable) a).activeSkill(group);
-                        }
-                        pane.getChildren().remove(node);
-                    } else
-                        newrects.add(node);
+                        // if this node has y the same as the line we gonna delete
+                        if (a.getY() == lines.get(0) * SIZE) {
+                            MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
+                            if(a instanceof Skillable){
+                                ((Skillable) a).activeSkill(group);
+                            }
+                            pane.getChildren().remove(node);
+                        } else
+                            newrects.add(node);
+
+                    }
                 }
 
                 for (Node node : newrects) {
@@ -628,7 +635,6 @@ public class Tetris extends Application {
         return xb && yb && MESH[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
     }
 
-
     private void setBackground(){
         for(int i =0;i<12;i++){
             for(int j = 0;j<24;j++){
@@ -640,6 +646,6 @@ public class Tetris extends Application {
             }
         }
     }
-    
+
 
 }
