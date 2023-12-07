@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import Misc.Wallpaper;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Mesh;
@@ -30,11 +28,10 @@ public class Tetris extends Application {
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
-    private static HBox ROOT= new HBox();
     private static Pane group = new Pane();//สร้างpane
-    private static VBox UI = new VBox();
+    private static GridPane ui = new GridPane();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene scene = new Scene(ROOT, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene scene = new Scene(group, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
@@ -43,7 +40,6 @@ public class Tetris extends Application {
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
 
-    private static ArrayList<Wallpaper> WALLS = new ArrayList<>();
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -55,37 +51,25 @@ public class Tetris extends Application {
             Arrays.fill(a, 0);
         }
 
-
-
-        stage.setResizable(false);
-        group.setPrefWidth(XMAX);
-        group.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
+        Line line = new Line(XMAX, 0, XMAX, YMAX);//เส้นแบ่งระหว่างส่วนเกม กับ ส่วนscore+line
         Text scoretext = new Text();//text for score
-        scoretext.setStyle("-fx-font: 20 Montserrat;");
+        scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);//ไม่ให้ติดกับเส้นแบ่ง
         Text level = new Text();//text for level
-        level.setStyle("-fx-font: 20 Montserrat;");
+        level.setStyle("-fx-font: 20 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
+        group.getChildren().addAll(scoretext, line, level);//เพิ่มลงในpane
 
-        UI.setAlignment(Pos.CENTER);
-        UI.getChildren().addAll(scoretext,level);
-
-        setWallpaper();
+        ui.setAlignment(Pos.CENTER);
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
-
-        ROOT.getChildren().addAll(group,UI);
-
         moveOnKeyPress(a);
         object = a;
         nextObj = Controller.makeRect();
-
         stage.setScene(scene);
         stage.setTitle("T E T R I S");
         stage.show();
@@ -640,17 +624,7 @@ public class Tetris extends Application {
         return xb && yb && MESH[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
     }
 
-    private void setWallpaper(){
-        for(int i =0;i<12;i++){
-            for(int j=0;j<24;j++){
-                Wallpaper wall = new Wallpaper(SIZE-1,SIZE-1);
-                group.getChildren().add(wall);
-                wall.setX(i*SIZE);
-                wall.setY(j*SIZE);
-                WALLS.add(wall);
-            }
-        }
 
-    }
+    
 
 }
