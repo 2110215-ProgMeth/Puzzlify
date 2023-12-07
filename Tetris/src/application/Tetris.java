@@ -125,6 +125,8 @@ public class Tetris extends Application {
 
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
+//                            if(DoubleNow){circle.setVisible(true);}
+//                            else{circle.setVisible(false);}
                             scoretext.setText("Score: " + Integer.toString(score));
                             level.setText("Lines: " + Integer.toString(linesNo));
                         }
