@@ -9,9 +9,12 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Mesh;
 import javafx.scene.shape.Rectangle;
@@ -57,6 +60,10 @@ public class Tetris extends Application {
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
+//        Circle circle = new Circle();
+//        Image img = new Image("Double.jpg");
+//        circle.setFill(new ImagePattern(img));
+//        circle.setVisible(false);
         group.getChildren().addAll(scoretext, line, level);//เพิ่มลงในpane
 
         Form a = nextObj;
@@ -96,6 +103,8 @@ public class Tetris extends Application {
 
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
+//                            if(DoubleNow){circle.setVisible(true);}
+//                            else{circle.setVisible(false);}
                             scoretext.setText("Score: " + Integer.toString(score));
                             level.setText("Lines: " + Integer.toString(linesNo));
                         }
@@ -458,17 +467,16 @@ public class Tetris extends Application {
 
                 // get all node that recently from pane
                 for (Node node : rects) {
-                    Block a = (Block) node;
-
-                    // if this node has y the same as the line we gonna delete
-                    if (a.getY() == lines.get(0) * SIZE) {
-                        MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                        if(a instanceof Skillable){
-                            ((Skillable) a).activeSkill(group);
-                        }
-                        pane.getChildren().remove(node);
-                    } else
-                        newrects.add(node);
+                        Block a = (Block) node;
+                        // if this node has y the same as the line we gonna delete
+                        if (a.getY() == lines.get(0) * SIZE) {
+                            MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
+                            if (a instanceof Skillable) {
+                                ((Skillable) a).activeSkill(group);
+                            }
+                            pane.getChildren().remove(node);
+                        } else
+                            newrects.add(node);
                 }
 
                 for (Node node : newrects) {
