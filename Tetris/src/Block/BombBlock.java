@@ -30,11 +30,11 @@ public class BombBlock extends SpecialBlock {
         ArrayList<Node> rects = new ArrayList<Node>();
         ArrayList<Node> newrects = new ArrayList<Node>();
         for (Node node : pane.getChildren()) {
-            if (node instanceof Rectangle)
+            if (node instanceof Block)
                 rects.add(node);
         }
         for (Node node : rects) {
-            Rectangle a = (Rectangle) node;
+            Block a = (Block) node;
             double ay = a.getY();
             double ax = a.getX();
             int r = radius*SIZE;
@@ -46,7 +46,7 @@ public class BombBlock extends SpecialBlock {
                 newrects.add(node);
         }
         for (Node node : newrects) {
-            Rectangle a = (Rectangle) node;
+            Block a = (Block) node;
             if (a.getX()<=(x+2)*SIZE && (x-2)*SIZE<=a.getX() && a.getY()<=(y-2)*SIZE) {
                 MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                 a.setY(a.getY() + 4*SIZE);//ติดนิดนึง
@@ -55,11 +55,11 @@ public class BombBlock extends SpecialBlock {
         rects.clear();
         newrects.clear();
         for (Node node : pane.getChildren()) {
-            if (node instanceof Rectangle)
+            if (node instanceof Block)
                 rects.add(node);
         }
         for (Node node : rects) {
-            Rectangle a = (Rectangle) node;
+            Block a = (Block) node;
             try {
                 MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
             } catch (ArrayIndexOutOfBoundsException e) {
