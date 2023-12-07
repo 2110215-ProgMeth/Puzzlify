@@ -13,7 +13,7 @@ import static application.Tetris.SIZE;
 public class BombBlock extends SpecialBlock {
 
 //    static String imgPath = "Tetris/Resource/havel-photo.jpg";
-    private final int radius=1;
+    private final int radius=2;
     public BombBlock(double v1, double v2) {
         super(v1/2, v2/2);
     }
