@@ -510,7 +510,6 @@ public class Tetris extends Application {
 
     private void MoveToBottom(Form form){
         //TODO : fixed bug, idk why it's bug
-        int c =0;
         while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX){
             MoveDown(form);
         }

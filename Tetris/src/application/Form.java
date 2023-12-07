@@ -2,6 +2,7 @@ package application;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import
 
 public class Form {
     Rectangle a;
