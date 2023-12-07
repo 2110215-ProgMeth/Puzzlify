@@ -52,10 +52,10 @@ public class Form {
 
         }
         //เพิ่มสีให้กับแต่ละBlock
-        this.a.setFill(color);
-        this.b.setFill(color);
-        this.c.setFill(color);
-        this.d.setFill(color);
+        if(a instanceof Skillable){}else{this.a.setFill(color);}
+        if(b instanceof Skillable){}else{this.b.setFill(color);}
+        if(c instanceof Skillable){}else{this.c.setFill(color);}
+        if(d instanceof Skillable){}else{this.d.setFill(color);}
     }
 
 

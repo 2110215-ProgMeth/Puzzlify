@@ -1,7 +1,9 @@
 package Block;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -10,9 +12,11 @@ import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
 public class LaserBlock extends SpecialBlock {
-//    static String imgPath  = "Tetris/Resource/Laser.jpg";
+    private final static String imgPath  = "Laser.jpg";
     public LaserBlock(double v1,double v2){
         super(v1,v2);
+        Image img = new Image(imgPath);
+        this.setFill(new ImagePattern(img));
     }
 
     @Override

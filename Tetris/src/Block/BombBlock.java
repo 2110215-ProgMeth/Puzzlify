@@ -2,7 +2,10 @@ package Block;
 
 import application.Tetris;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -11,31 +14,13 @@ import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
 public class BombBlock extends SpecialBlock {
-
-//    static String imgPath = "Tetris/Resource/havel-photo.jpg";
+    private final static String imgPath = "havel-photo.jpg";
     private final int radius=2;
     public BombBlock(double v1, double v2) {
-        super(v1/2, v2/2);
+        super(v1, v2);
+        Image img = new Image(imgPath);
+        this.setFill(new ImagePattern(img));
     }
-
-//    @Override
-//    public void activeSkill(Pane pane) {
-//        int x = (int) this.getX();
-//        int y = (int) this.getY();
-//        int r = radius*SIZE;
-//        for (Node node : pane.getChildren()) {
-//            if(node instanceof Rectangle){
-//                Rectangle a = (Rectangle) node;
-//                double ay = a.getY();
-//                double ax = a.getX();
-////                if ((a.getY()<=y +radius*SIZE && (y-radius)*SIZE<=a.getY()) && (a.getX()<=(x+radius)*SIZE && (x-radius)*SIZE<=a.getX())) {
-//                if(ax<=x+r && ax>=x-r && ay<=y+r && ay>=y-r){
-//                    System.out.println(ax + " " + ay);
-//                    Tetris.removeBlock(a);
-//                }
-//            }
-//        }
-//    }
 
     @Override
     public void activeSkill(Pane pane) {

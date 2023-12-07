@@ -1,15 +1,19 @@
 package Block;
 
 import application.Tetris.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 
 import static application.Tetris.DoubleNow;
 import static application.Tetris.times;
 
 public class DoubleBlock extends SpecialBlock{
-//    static String imgPath  = "Tetris/Resource/Double.jpg";
+    static String imgPath  = "Double.jpg";
     public DoubleBlock(double v1,double v2){
         super(v1,v2);
+        Image img = new Image(imgPath);
+        this.setFill(new ImagePattern(img));
     }
 
     @Override
