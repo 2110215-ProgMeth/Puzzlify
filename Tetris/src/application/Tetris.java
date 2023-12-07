@@ -43,7 +43,7 @@ public class Tetris extends Application {
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
 
-    public static ArrayList<Wallpaper> WALLS;
+    private static ArrayList<Wallpaper> WALLS = new ArrayList<>();
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -95,6 +95,10 @@ public class Tetris extends Application {
             public void run() {
                 Platform.runLater(new Runnable() {//ใช้เพราะมีการเปลี่ยน user interface
                     public void run() {
+
+                        //Check Highlight
+
+
                         if (object.a.getY() == 0 || object.b.getY() == 0 || object.c.getY() == 0
                                 || object.d.getY() == 0)//ถึงแตะบนสุด + 1
                             top++;
@@ -111,6 +115,7 @@ public class Tetris extends Application {
                             group.getChildren().add(over);
                             game = false;//จบเกม
                         }
+
                         // Exit
                         if (top == 15) {//เวลาในการExitGame automatically
                             System.exit(0);
@@ -642,6 +647,7 @@ public class Tetris extends Application {
                 group.getChildren().add(wall);
                 wall.setX(i*SIZE);
                 wall.setY(j*SIZE);
+                WALLS.add(wall);
             }
         }
 
