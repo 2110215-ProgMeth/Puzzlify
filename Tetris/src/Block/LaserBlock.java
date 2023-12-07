@@ -8,6 +8,6 @@ public class LaserBlock extends SpecialBlock {
 
     @Override
     public void activeSkill() {
-        super.activeSkill();
+        System.out.println("Cut it All !!");
     }
 }

@@ -16,6 +16,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import Block.*;
 
 public class Tetris extends Application {
     //variable ต่างๆ
@@ -32,6 +33,8 @@ public class Tetris extends Application {
     private static boolean game = true;//ยังรอดอยู่ไหม
     private static Form nextObj = Controller.makeRect();//ของชิ้นต่อไป
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
+    private static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
+    private static boolean DoubleNow = false;
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -92,6 +95,7 @@ public class Tetris extends Application {
 
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
+                            times++;
                             scoretext.setText("Score: " + Integer.toString(score));
                             level.setText("Lines: " + Integer.toString(linesNo));
                         }
@@ -113,7 +117,12 @@ public class Tetris extends Application {
                         break;
                     case DOWN:
                         MoveDown(form);
-                        score++;
+                        if(!DoubleNow) {
+                            score++;
+                        }else{
+                            score++;
+                            score++;
+                        }
                         break;
                     case LEFT:
                         Controller.MoveLeft(form);
@@ -131,10 +140,10 @@ public class Tetris extends Application {
 
     private void MoveTurn(Form form) {//หมุน แต่ละแบบหมุนได้ 4 form มี 7 แบบ รวม 28 form
         int f = form.form;//แยกแต่ละrectangleมาเลื่อน
-        Rectangle a = form.a;
-        Rectangle b = form.b;
-        Rectangle c = form.c;
-        Rectangle d = form.d;
+        Block a = form.a;
+        Block b = form.b;
+        Block c = form.c;
+        Block d = form.d;
         switch (form.getName()) {
             case "j":
                 if (f == 1 && cB(a, 1, -1) && cB(c, -1, -1) && cB(d, -2, -2)) {
@@ -448,7 +457,7 @@ public class Tetris extends Application {
 
                 // get all node that recently from pane
                 for (Node node : rects) {
-                    Rectangle a = (Rectangle) node;
+                    Block a = (Block) node;
 
                     // if this node has y the same as the line we gonna delete
                     if (a.getY() == lines.get(0) * SIZE) {
@@ -459,7 +468,7 @@ public class Tetris extends Application {
                 }
 
                 for (Node node : newrects) {
-                    Rectangle a = (Rectangle) node;
+                    Block a = (Block) node;
                     // node that higher than the line -> move down 1 block
                     if (a.getY() < lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
@@ -471,12 +480,12 @@ public class Tetris extends Application {
                 newrects.clear();
                 /// get all rectangle in pane
                 for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle)
+                    if (node instanceof Block)
                         rects.add(node);
                 }
                 // redraw
                 for (Node node : rects) {
-                    Rectangle a = (Rectangle) node;
+                    Block a = (Block) node;
                     try {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
                     } catch (ArrayIndexOutOfBoundsException e) {

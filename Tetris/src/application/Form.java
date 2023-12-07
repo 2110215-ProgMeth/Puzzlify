@@ -2,25 +2,25 @@ package application;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import
+import Block.*;
 
 public class Form {
-    Rectangle a;
-    Rectangle b;
-    Rectangle c;
-    Rectangle d;
+    Block a;
+    Block b;
+    Block c;
+    Block d;
     Color color;
     private String name;
     public int form = 1;
 
-    public Form(Rectangle a, Rectangle b, Rectangle c, Rectangle d) {//default constructor
+    public Form(Block a, Block b, Block c, Block d) {//default constructor
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
     }
 
-    public Form(Rectangle a, Rectangle b, Rectangle c, Rectangle d, String name) {//constructor with name
+    public Form(Block a, Block b, Block c, Block d, String name) {//constructor with name
         this.a = a;
         this.b = b;
         this.c = c;

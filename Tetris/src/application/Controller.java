@@ -2,6 +2,8 @@ package application;
 
 
 import javafx.scene.shape.Rectangle;
+import Block.*;
+
 
 public class Controller {
     // Getting the numbers and the MESH from Tetris
@@ -42,14 +44,27 @@ public class Controller {
             }
         }
     }
-
+    public static Block RamdomBlock(double v1, double v2){
+        int value = (int) (Math.random() * 1000);
+        Block blockweget = new Block(v1,v2);
+        if(value>850&&900>value){
+            blockweget = new BombBlock(v1,v2);
+        }
+        else if(value>900&&950>value){
+            blockweget = new DoubleBlock(v1,v2);
+        }
+        else if(value>950&&1000>value){
+            blockweget = new LaserBlock(v1,v2);
+        }
+        return blockweget;
+    }
     public static Form makeRect() {//สร้างobj
         int block = (int) (Math.random() * 100);
         String name;
         // create function to random block
         // maybe change all Rectangle to Block
-        Rectangle a = new Rectangle(SIZE-1, SIZE-1), b = new Rectangle(SIZE-1, SIZE-1), c = new Rectangle(SIZE-1, SIZE-1),
-                d = new Rectangle(SIZE-1, SIZE-1);
+        Block a = RamdomBlock(SIZE-1, SIZE-1), b = RamdomBlock(SIZE-1, SIZE-1), c = RamdomBlock(SIZE-1, SIZE-1),
+                d = RamdomBlock(SIZE-1, SIZE-1);
         if (block < 15) {
             a.setX(XMAX / 2 - SIZE);
             b.setX(XMAX / 2 - SIZE);
