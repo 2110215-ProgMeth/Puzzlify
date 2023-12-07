@@ -463,6 +463,9 @@ public class Tetris extends Application {
                     if (a.getY() == lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                         pane.getChildren().remove(node);
+                        if(a instanceof Skillable){
+                            ((Skillable) a).activeSkill(group);
+                        }
                     } else
                         newrects.add(node);
                 }
@@ -519,6 +522,7 @@ public class Tetris extends Application {
 
     private void MoveToBottom(Form form){
         //TODO : fixed bug, idk why it's bug
+        // it's bug when below this block already have another block
         while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX){
             MoveDown(form);
         }
