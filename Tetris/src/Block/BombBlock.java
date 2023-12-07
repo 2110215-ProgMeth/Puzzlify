@@ -29,32 +29,32 @@ public class BombBlock extends SpecialBlock {
         }
         for (Node node : rects) {
             Rectangle a = (Rectangle) node;
-            if ((a.getY()<=y+2 && y-2<=a.getY()) || (a.getX()<=x+2 && x-2<=a.getX())) {
+            if ((a.getY()<=(y+1)*SIZE && (y-1)*SIZE<=a.getY()) && (a.getX()<=(x+1)*SIZE && (x-1)*SIZE<=a.getX())) {
                 MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                 pane.getChildren().remove(node);
             } else
                 newrects.add(node);
+        }
+        for (Node node : newrects) {
+            Rectangle a = (Rectangle) node;
+            if (a.getX()<=(x+2)*SIZE && (x-2)*SIZE<=a.getX() && a.getY()<=(y-2)*SIZE) {
+                MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
+                a.setY(a.getY() + 4*SIZE);//ติดนิดนึง
             }
-                for (Node node : newrects) {
-                    Rectangle a = (Rectangle) node;
-                    if (a.getX()<=x+2 && x-2<=a.getX() && a.getY()<=y-2) {
-                        MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                        a.setY(a.getY() + 4*SIZE);
-                    }
-                }
-                rects.clear();
-                newrects.clear();
-                for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle)
-                        rects.add(node);
-                }
-                for (Node node : rects) {
-                    Rectangle a = (Rectangle) node;
-                    try {
-                        MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                    }
-                }
-                rects.clear();
+        }
+        rects.clear();
+        newrects.clear();
+        for (Node node : pane.getChildren()) {
+            if (node instanceof Rectangle)
+                rects.add(node);
+        }
+        for (Node node : rects) {
+            Rectangle a = (Rectangle) node;
+            try {
+                MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+        }
+        rects.clear();
     }
 }
