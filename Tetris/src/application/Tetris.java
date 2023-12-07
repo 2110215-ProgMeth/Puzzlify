@@ -18,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Block.*;
+import org.w3c.dom.css.Rect;
 
 public class Tetris extends Application {
     //variable ต่างๆ
@@ -58,6 +59,9 @@ public class Tetris extends Application {
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
         group.getChildren().addAll(scoretext, line, level);//เพิ่มลงในpane
+
+        ui.setAlignment(Pos.CENTER);
+        setBackground();
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
@@ -447,7 +451,7 @@ public class Tetris extends Application {
             do {
                 // add all node to rects
                 for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle)
+                    if (node instanceof Block)
                         rects.add(node);
                 }
                 // update score and lineNo score
@@ -458,17 +462,20 @@ public class Tetris extends Application {
 
                 // get all node that recently from pane
                 for (Node node : rects) {
-                    Block a = (Block) node;
+                    if(node instanceof Block){
+                        Block a = (Block) node;
 
-                    // if this node has y the same as the line we gonna delete
-                    if (a.getY() == lines.get(0) * SIZE) {
-                        MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                        if(a instanceof Skillable){
-                            ((Skillable) a).activeSkill(group);
-                        }
-                        pane.getChildren().remove(node);
-                    } else
-                        newrects.add(node);
+                        // if this node has y the same as the line we gonna delete
+                        if (a.getY() == lines.get(0) * SIZE) {
+                            MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
+                            if(a instanceof Skillable){
+                                ((Skillable) a).activeSkill(group);
+                            }
+                            pane.getChildren().remove(node);
+                        } else
+                            newrects.add(node);
+
+                    }
                 }
 
                 for (Node node : newrects) {
@@ -484,7 +491,7 @@ public class Tetris extends Application {
                 newrects.clear();
                 /// get all rectangle in pane
                 for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle)
+                    if (node instanceof Block)
                         rects.add(node);
                 }
                 // บอกในMESHว่าตรงนี้มีBlock เพราะข้างบนลบออกแล้วยังไม่ได้เพิ่มใหม่
@@ -612,5 +619,20 @@ public class Tetris extends Application {
             yb = rect.getY() + y * MOVE < YMAX;
         return xb && yb && MESH[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
     }
+
+    private void setBackground(){
+        for(int i =0;i<12;i++){
+            for(int j = 0;j<24;j++){
+                Rectangle wall = new Rectangle(SIZE-1,SIZE-1);
+                wall.setStyle("-fx-fill: rgb(255, 246, 220); -fx-stroke: rgb(158, 159, 165); -fx-stroke-width: 1");
+                wall.setX(i*SIZE);
+                wall.setY(j*SIZE);
+                group.getChildren().add(wall);
+            }
+        }
+    }
+
+
+
 
 }

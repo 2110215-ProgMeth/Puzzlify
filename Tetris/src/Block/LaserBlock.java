@@ -28,11 +28,11 @@ public class LaserBlock extends SpecialBlock {
         if (lines.size() > 0)
             do {
                 for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle)
+                    if (node instanceof Block)
                         rects.add(node);
                 }
                 for (Node node : rects) {
-                    Rectangle a = (Rectangle) node;
+                    Block a = (Block) node;
                     if (a.getY() == lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                         pane.getChildren().remove(node);
@@ -40,7 +40,7 @@ public class LaserBlock extends SpecialBlock {
                         newrects.add(node);
                 }
                 for (Node node : newrects) {
-                    Rectangle a = (Rectangle) node;
+                    Block a = (Block) node;
                     if (a.getY() < lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                         a.setY(a.getY() + SIZE);
@@ -50,11 +50,11 @@ public class LaserBlock extends SpecialBlock {
                 rects.clear();
                 newrects.clear();
                 for (Node node : pane.getChildren()) {
-                    if (node instanceof Rectangle)
+                    if (node instanceof Block)
                         rects.add(node);
                 }
                 for (Node node : rects) {
-                    Rectangle a = (Rectangle) node;
+                    Block a = (Block) node;
                     try {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
                     } catch (ArrayIndexOutOfBoundsException e) {
