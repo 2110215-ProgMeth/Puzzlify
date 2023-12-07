@@ -1,5 +1,7 @@
 package Block;
 
+import javafx.scene.layout.Pane;
+
 public interface Skillable {
-    void activeSkill();
+    void activeSkill(Pane pane);
 }

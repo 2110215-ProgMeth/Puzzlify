@@ -10,7 +10,7 @@ import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
 public class LaserBlock extends SpecialBlock {
-    static String imgPath  = "Tetris/Resource/Laser.jpg";
+//    static String imgPath  = "Tetris/Resource/Laser.jpg";
     public LaserBlock(double v1,double v2){
         super(v1,v2);
     }
