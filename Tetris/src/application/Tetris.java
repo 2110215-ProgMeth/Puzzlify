@@ -33,8 +33,8 @@ public class Tetris extends Application {
     private static boolean game = true;//ยังรอดอยู่ไหม
     private static Form nextObj = Controller.makeRect();//ของชิ้นต่อไป
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
-    private static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
-    private static boolean DoubleNow = false;
+    public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
+    public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -95,7 +95,6 @@ public class Tetris extends Application {
 
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
-                            times++;
                             scoretext.setText("Score: " + Integer.toString(score));
                             level.setText("Lines: " + Integer.toString(linesNo));
                         }
@@ -452,7 +451,9 @@ public class Tetris extends Application {
                 }
 
                 // update score and lineNo score
-                score += 50;
+                if(!DoubleNow) {
+                    score += 50;
+                }else{score+=100;}
                 linesNo++;
 
                 // get all node that recently from pane
