@@ -629,6 +629,17 @@ public class Tetris extends Application {
     }
 
 
+    private void setBackground(){
+        for(int i =0;i<12;i++){
+            for(int j = 0;j<24;j++){
+                Rectangle wall = new Rectangle(SIZE-1,SIZE-1);
+                wall.setStyle("-fx-fill: rgb(255, 246, 220); -fx-stroke: rgb(158, 159, 165); -fx-stroke-width: 1");
+                wall.setX(i*SIZE);
+                wall.setY(j*SIZE);
+                group.getChildren().add(wall);
+            }
+        }
+    }
     
 
 }
