@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
@@ -7,21 +8,22 @@ import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Mesh;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Block.*;
-import org.w3c.dom.css.Rect;
 
 public class Tetris extends Application {
     //variable ต่างๆ
@@ -34,7 +36,7 @@ public class Tetris extends Application {
     private static VBox UI = new VBox();
     private static HBox ROOT = new HBox();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene scene = new Scene(ROOT, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene scene = new Scene(ROOT, XMAX + 150, YMAX+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
@@ -44,44 +46,47 @@ public class Tetris extends Application {
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
 
 
+
+    public Button startButton = new Button("Start");
+    public Button restartButton = new Button();
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+
         stage.setResizable(false);
         group.setPrefWidth(XMAX);
 
         for (int[] a : MESH) {//unknowed
             Arrays.fill(a, 0);
         }
-
         group.setPrefWidth(XMAX);
+        ROOT.setPadding(new Insets(10));
+        group.setPadding(new Insets(2));
 
-        Text scoretext = new Text();//text for score
+        Text scoretext = new Text("Score: 0");//text for score
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);//ไม่ให้ติดกับเส้นแบ่ง
-        Text level = new Text();//text for level
+        Text level = new Text("Level: 0");//text for level
         level.setStyle("-fx-font: 20 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
 
-
         setBackground();
 
-        UI.setAlignment(Pos.CENTER);
-        UI.getChildren().addAll(scoretext, level);//เพิ่มลงในpane
+        UI.setAlignment(Pos.BASELINE_CENTER);
+        UI.setPadding(new Insets(10));
+        UI.getChildren().addAll(scoretext, level,startButton);//เพิ่มลงในpane
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
 
         ROOT.getChildren().addAll(group,UI);
         moveOnKeyPress(a);
-
-
 
         object = a;
         nextObj = Controller.makeRect();
@@ -127,11 +132,16 @@ public class Tetris extends Application {
                 });
             }
         };
-        fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+        startButton.setOnAction(e->{
+            fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+            startButton.setDisable(true);
+        });
+//        fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
     }
 
-    private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
 
+
+    private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -558,8 +568,6 @@ public class Tetris extends Application {
     }
 
     private void MoveToBottom(Form form){
-        //TODO : fixed bug, idk why it's bug
-        // it's bug when below this block already have another block
         while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX && !moveA(form) && !moveB(form) && !moveC(form) && !moveD(form)){
             MoveDown(form);
         }
@@ -575,6 +583,7 @@ public class Tetris extends Application {
                 moveC(form) ||
                 moveD(form))
         {
+
             // if this block at the bottom.
             // set Mesh
             MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
