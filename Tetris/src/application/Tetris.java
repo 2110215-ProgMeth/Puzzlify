@@ -7,10 +7,11 @@ import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Mesh;
@@ -28,8 +29,10 @@ public class Tetris extends Application {
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
     private static Pane group = new Pane();//สร้างpane
+    private static VBox UI = new VBox();
+    private static HBox ROOT = new HBox();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene scene = new Scene(group, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene scene = new Scene(ROOT, XMAX + 150, YMAX);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
@@ -37,6 +40,7 @@ public class Tetris extends Application {
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
+
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -48,7 +52,8 @@ public class Tetris extends Application {
             Arrays.fill(a, 0);
         }
 
-        Line line = new Line(XMAX, 0, XMAX, YMAX);//เส้นแบ่งระหว่างส่วนเกม กับ ส่วนscore+line
+        group.setPrefWidth(XMAX);
+
         Text scoretext = new Text();//text for score
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
@@ -58,13 +63,20 @@ public class Tetris extends Application {
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
-        group.getChildren().addAll(scoretext, line, level);//เพิ่มลงในpane
+
+        UI.setAlignment(Pos.CENTER);
+        UI.getChildren().addAll(scoretext, level);//เพิ่มลงในpane
 
         ui.setAlignment(Pos.CENTER);
         setBackground();
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
+//        group.setBorder(new Border(new BorderStroke(Color.BLACK,
+//                BorderStrokeStyle.SOLID, new CornerRadii(3), new BorderWidths(3))));
+
+        ROOT.getChildren().addAll(group,UI);
+
         moveOnKeyPress(a);
         object = a;
         nextObj = Controller.makeRect();
@@ -77,6 +89,8 @@ public class Tetris extends Application {
             public void run() {
                 Platform.runLater(new Runnable() {//ใช้เพราะมีการเปลี่ยน user interface
                     public void run() {
+
+
                         if (object.a.getY() == 0 || object.b.getY() == 0 || object.c.getY() == 0
                                 || object.d.getY() == 0)//ถึงแตะบนสุด + 1
                             top++;
@@ -93,6 +107,7 @@ public class Tetris extends Application {
                             group.getChildren().add(over);
                             game = false;//จบเกม
                         }
+
                         // Exit
                         if (top == 15) {//เวลาในการExitGame automatically
                             System.exit(0);
@@ -631,8 +646,6 @@ public class Tetris extends Application {
             }
         }
     }
-
-
 
 
 }
