@@ -1,5 +1,6 @@
 package Block;
 
+import application.Tetris;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -12,9 +13,29 @@ import static application.Tetris.SIZE;
 public class BombBlock extends SpecialBlock {
 
 //    static String imgPath = "Tetris/Resource/havel-photo.jpg";
+    private final int radius=1;
     public BombBlock(double v1, double v2) {
-        super(v1, v2);
+        super(v1/2, v2/2);
     }
+
+//    @Override
+//    public void activeSkill(Pane pane) {
+//        int x = (int) this.getX();
+//        int y = (int) this.getY();
+//        int r = radius*SIZE;
+//        for (Node node : pane.getChildren()) {
+//            if(node instanceof Rectangle){
+//                Rectangle a = (Rectangle) node;
+//                double ay = a.getY();
+//                double ax = a.getX();
+////                if ((a.getY()<=y +radius*SIZE && (y-radius)*SIZE<=a.getY()) && (a.getX()<=(x+radius)*SIZE && (x-radius)*SIZE<=a.getX())) {
+//                if(ax<=x+r && ax>=x-r && ay<=y+r && ay>=y-r){
+//                    System.out.println(ax + " " + ay);
+//                    Tetris.removeBlock(a);
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public void activeSkill(Pane pane) {
@@ -29,7 +50,11 @@ public class BombBlock extends SpecialBlock {
         }
         for (Node node : rects) {
             Rectangle a = (Rectangle) node;
-            if ((a.getY()<=(y+1)*SIZE && (y-1)*SIZE<=a.getY()) && (a.getX()<=(x+1)*SIZE && (x-1)*SIZE<=a.getX())) {
+            double ay = a.getY();
+            double ax = a.getX();
+            int r = radius*SIZE;
+            if(ax<=x+r && ax>=x-r && ay<=y+r && ay>=y-r){
+                System.out.println(ax + " " + ay);
                 MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
                 pane.getChildren().remove(node);
             } else
@@ -56,5 +81,11 @@ public class BombBlock extends SpecialBlock {
             }
         }
         rects.clear();
+    }
+
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

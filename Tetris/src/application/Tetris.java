@@ -13,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Mesh;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -462,10 +463,10 @@ public class Tetris extends Application {
                     // if this node has y the same as the line we gonna delete
                     if (a.getY() == lines.get(0) * SIZE) {
                         MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                        pane.getChildren().remove(node);
                         if(a instanceof Skillable){
                             ((Skillable) a).activeSkill(group);
                         }
+                        pane.getChildren().remove(node);
                     } else
                         newrects.add(node);
                 }
@@ -498,6 +499,15 @@ public class Tetris extends Application {
             } while (lines.size() > 0);
         }
     }
+    public static void removeBlock(Node block){
+        if(block instanceof Block){
+            Block b = (Block)block;
+            int x = (int)b.getX();
+            int y = (int)b.getY();
+            MESH[x/SIZE][y/SIZE] = 0;
+            group.getChildren().remove(block);
+        }
+    }
 
     private void MoveDown(Rectangle rect) {
         if (rect.getY() + MOVE < YMAX)
@@ -523,7 +533,7 @@ public class Tetris extends Application {
     private void MoveToBottom(Form form){
         //TODO : fixed bug, idk why it's bug
         // it's bug when below this block already have another block
-        while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX){
+        while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX && !moveA(form) && !moveB(form) && !moveC(form) && !moveD(form)){
             MoveDown(form);
         }
     }
