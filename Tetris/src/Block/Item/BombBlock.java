@@ -1,25 +1,28 @@
-package Block;
+package Block.Item;
 
-import application.Tetris;
+import Block.BasicStructure.Block;
+import Block.BasicStructure.Item;
+import Block.BasicStructure.SpecialBlock;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
 import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
-public class BombBlock extends SpecialBlock {
+public class BombBlock extends SpecialBlock implements Item {
     private final static String imgPath = "havel-photo.jpg";
     private final int radius=2;
     public BombBlock(double v1, double v2) {
         super(v1, v2);
-        Image img = new Image(imgPath);
+        Image img = new Image(getimgPath());
         this.setFill(new ImagePattern(img));
+    }
+    public String getimgPath(){
+        return imgPath;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package Block;
+package Block.BasicStructure;
 
 import javafx.scene.shape.Rectangle;
 

@@ -1,8 +1,8 @@
 package application;
 
+import Block.BasicStructure.Block;
+import Block.BasicStructure.Skillable;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import Block.*;
 
 public class Form {
     Block a;

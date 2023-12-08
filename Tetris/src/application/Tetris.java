@@ -1,10 +1,13 @@
 package application;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import Block.BasicStructure.Block;
+import Block.BasicStructure.Skillable;
+import Utils.Mode;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -17,13 +20,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import Block.*;
 
 public class Tetris extends Application {
     //variable ต่างๆ
@@ -43,7 +43,7 @@ public class Tetris extends Application {
     private static Form nextObj = Controller.makeRect();//ของชิ้นต่อไป
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
-    public static boolean DoubleNow = false;//ใช้มาเลือกการเพิ่มคะแนน
+    public static Mode scoreMode = Mode.DEFAULT;//ใช้มาเลือกการเพิ่มคะแนน
 
 
 
@@ -152,12 +152,7 @@ public class Tetris extends Application {
                         break;
                     case DOWN:
                         MoveDown(form);
-                        if(!DoubleNow) {
-                            score++;
-                        }else{
-                            score++;
-                            score++;
-                        }
+                        increaseScore(2);
                         break;
                     case LEFT:
                         Controller.MoveLeft(form);
@@ -486,9 +481,7 @@ public class Tetris extends Application {
                         rects.add(node);
                 }
                 // update score and lineNo score
-                if(!DoubleNow) {
-                    score += 50;
-                }else{score+=100;}
+                increaseScore(50);
                 linesNo++;
 
                 // get all node that recently from pane
@@ -571,6 +564,7 @@ public class Tetris extends Application {
     private void MoveToBottom(Form form){
         while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX && !moveA(form) && !moveB(form) && !moveC(form) && !moveD(form)){
             MoveDown(form);
+            increaseScore(2);
         }
     }
 
@@ -660,6 +654,19 @@ public class Tetris extends Application {
                 group.getChildren().add(wall);
             }
         }
+    }
+    private void increaseScore(int base){
+        if(scoreMode == Mode.DEFAULT){
+            System.out.println("You on Default Mode score+="+Integer.toString(base));
+            score+=base;
+        }else if(scoreMode==Mode.DOUBLE){
+            System.out.println("You on Double Mode score+="+Integer.toString(2*base));
+            score+=(2*base);
+        }else if(scoreMode==Mode.HALF){
+            System.out.println("You on Half Mode score+="+Integer.toString((int)(0.5*base)));
+            score+= (int) (0.5*base);
+        }
+        System.out.println("Current Score :" + Integer.toString(score));
     }
 
 

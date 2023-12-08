@@ -1,22 +1,27 @@
-package Block;
+package Block.Item;
 
+import Block.BasicStructure.Block;
+import Block.BasicStructure.Item;
+import Block.BasicStructure.SpecialBlock;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
 import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
-public class LaserBlock extends SpecialBlock {
+public class LaserBlock extends SpecialBlock implements Item {
     private final static String imgPath  = "Laser.jpg";
     public LaserBlock(double v1,double v2){
         super(v1,v2);
-        Image img = new Image(imgPath);
+        Image img = new Image(getimgPath());
         this.setFill(new ImagePattern(img));
+    }
+    public String getimgPath(){
+        return imgPath;
     }
 
     @Override
