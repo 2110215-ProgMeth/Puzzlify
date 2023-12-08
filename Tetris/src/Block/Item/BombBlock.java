@@ -1,8 +1,7 @@
 package Block.Item;
 
-import Block.BasicStructure.Block;
-import Block.BasicStructure.Item;
-import Block.BasicStructure.SpecialBlock;
+import Utils.Utils;
+import application.Tetris;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -13,13 +12,11 @@ import java.util.ArrayList;
 import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
-public class BombBlock extends SpecialBlock implements Item {
-    private final static String imgPath = "havel-photo.jpg";
+public class BombBlock extends SpecialBlock {
     private final int radius=2;
     public BombBlock(double v1, double v2) {
         super(v1, v2);
-        Image img = new Image(getimgPath());
-        this.setFill(new ImagePattern(img));
+        bt = Utils.BlockType.BOMB;
     }
     public String getimgPath(){
         return imgPath;

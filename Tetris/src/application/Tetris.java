@@ -182,8 +182,8 @@ public class Tetris extends Application {
         Block b = form.b;
         Block c = form.c;
         Block d = form.d;
-        switch (form.getName()) {
-            case "j":
+        switch (form.getBlockType()) {
+            case J:
                 if (f == 1 && cB(a, 1, -1) && cB(c, -1, -1) && cB(d, -2, -2)) {
                     MoveRight(form.a);
                     MoveDown(form.a);
@@ -233,7 +233,7 @@ public class Tetris extends Application {
                     break;
                 }
                 break;
-            case "l":
+            case L:
                 if (f == 1 && cB(a, 1, -1) && cB(c, 1, 1) && cB(b, 2, 2)) {
                     MoveRight(form.a);
                     MoveDown(form.a);
@@ -283,9 +283,9 @@ public class Tetris extends Application {
                     break;
                 }
                 break;
-            case "o":
+            case O:
                 break;
-            case "s":
+            case S:
                 if (f == 1 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, 0, 2)) {
                     MoveDown(form.a);
                     MoveLeft(form.a);
@@ -327,7 +327,7 @@ public class Tetris extends Application {
                     break;
                 }
                 break;
-            case "t":
+            case T:
                 if (f == 1 && cB(a, 1, 1) && cB(d, -1, -1) && cB(c, -1, 1)) {
                     MoveUp(form.a);
                     MoveRight(form.a);
@@ -369,7 +369,7 @@ public class Tetris extends Application {
                     break;
                 }
                 break;
-            case "z":
+            case Z:
                 if (f == 1 && cB(b, 1, 1) && cB(c, -1, 1) && cB(d, -2, 0)) {
                     MoveUp(form.b);
                     MoveRight(form.b);
@@ -411,7 +411,7 @@ public class Tetris extends Application {
                     break;
                 }
                 break;
-            case "i":
+            case I:
                 if (f == 1 && cB(a, 2, 2) && cB(b, 1, 1) && cB(d, -1, -1)) {
                     MoveUp(form.a);
                     MoveUp(form.a);
