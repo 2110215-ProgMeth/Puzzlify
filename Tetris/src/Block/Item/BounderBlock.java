@@ -14,14 +14,8 @@ import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
 public class BounderBlock extends SpecialBlock implements Item {
-    static String imgPath  = "Bounder.jpg";
     public  BounderBlock(double v1, double v2){
         super(v1,v2);
-        Image img = new Image(getimgPath());
-        this.setFill(new ImagePattern(img));
-    }
-    public String getimgPath(){
-        return imgPath;
     }
 
     @Override

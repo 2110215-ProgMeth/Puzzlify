@@ -1,7 +1,7 @@
 package application;
 
+import Block.BasicStructure.Block;
 import Utils.Utils;
-import Block.*;
 
 public class Form {
     Block a;

@@ -3,6 +3,7 @@ package Block.Item;
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Item;
 import Block.BasicStructure.SpecialBlock;
+import Utils.Utils;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -15,14 +16,9 @@ import static application.Tetris.SIZE;
 
 
 public class JesusBlock extends SpecialBlock implements Item {
-    static String imgPath  = "Jesus.jpg";
     public JesusBlock(double v1,double v2){
         super(v1,v2);
-        Image img = new Image(getimgPath());
-        this.setFill(new ImagePattern(img));
-    }
-    public String getimgPath(){
-        return imgPath;
+        bt = Utils.BlockType.JESUS;
     }
 
     @Override

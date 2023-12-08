@@ -24,15 +24,15 @@ public class Utils {
 //        else if(800<value&&value<=850){
 //            return new BombBlock(v1,v2);
 //        }
-//        else if(850<value&&value<=900){
-//            return new JesusBlock(v1,v2);
-//        }
+        else if(850<value&&value<=900){
+            return new JesusBlock(v1,v2);
+        }
         else if(900<value&&value<=950){
             return new DoubleBlock(v1,v2);
         }
-//        else if(950<value&&value<=1000){
-//            return new LaserBlock(v1,v2);
-//        }
+        else if(950<value&&value<=1000){
+            return new LaserBlock(v1,v2);
+        }
         else{
             return new NormalBlock(v1,v2);
         }

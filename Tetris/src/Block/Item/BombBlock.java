@@ -1,11 +1,10 @@
 package Block.Item;
 
+import Block.BasicStructure.Block;
+import Block.BasicStructure.SpecialBlock;
 import Utils.Utils;
-import application.Tetris;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
 
@@ -17,9 +16,6 @@ public class BombBlock extends SpecialBlock {
     public BombBlock(double v1, double v2) {
         super(v1, v2);
         bt = Utils.BlockType.BOMB;
-    }
-    public String getimgPath(){
-        return imgPath;
     }
 
     @Override

@@ -9,7 +9,6 @@ public abstract class Block extends Rectangle {
     protected Utils.BlockType bt = Utils.BlockType.NULL;
     public Block(double v1, double v2){
         super(v1,v2);
-//        System.out.println(bt);
     }
 
     public void setBlockType(Utils.BlockType bt) {
