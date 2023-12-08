@@ -47,7 +47,11 @@ public class Tetris extends Application {
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static sMode scoreMode = sMode.DEFAULT;//ใช้มาเลือกการเพิ่มคะแนน
 
-    private static AudioClip hs;
+    public static AudioClip hs;
+    public static AudioClip rotateSound;
+    public static AudioClip tap;
+    public static AudioClip clearLine;
+
 
 
 
@@ -60,8 +64,12 @@ public class Tetris extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        hs = new AudioClip(this.getClass().getResource("/SFX/harddrop.mp3").toExternalForm());
+        rotateSound = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
+        tap = new AudioClip(this.getClass().getResource("/SFX/tap.mp3").toExternalForm());
+        clearLine = new AudioClip(this.getClass().getResource("/SFX/clearLine.wav").toExternalForm());
+
         scene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
-        hs = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
 
         stage.setResizable(false);
         group.setPrefWidth(XMAX);
@@ -162,6 +170,7 @@ public class Tetris extends Application {
                         break;
                     case DOWN:
                         MoveDown(form);
+                        tap.play();
                         increaseScore(2);
                         break;
                     case LEFT:
@@ -179,6 +188,7 @@ public class Tetris extends Application {
     }
 
     private void MoveTurn(Form form) {//หมุน แต่ละแบบหมุนได้ 4 form มี 7 แบบ รวม 28 form
+        rotateSound.play();
         int f = form.form;//แยกแต่ละrectangleมาเลื่อน
         Block a = form.a;
         Block b = form.b;
@@ -485,6 +495,7 @@ public class Tetris extends Application {
         }
         if (lines.size() > 0){//มีแถวเต็ม
             // if have line to remove
+            clearLine.play();
             do {
                 // add all Block to rects
                 for (Node node : pane.getChildren()) {
@@ -577,6 +588,7 @@ public class Tetris extends Application {
     }
 
     private void MoveToBottom(Form form){
+        hs.play();
         while(form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX && form.d.getY() + MOVE < YMAX && !moveA(form) && !moveB(form) && !moveC(form) && !moveD(form)){
             MoveDown(form);
             increaseScore(2);
@@ -593,7 +605,6 @@ public class Tetris extends Application {
                 moveC(form) ||
                 moveD(form))
         {
-            hs.play();
 
             // if this block at the bottom.
             // set Mesh
