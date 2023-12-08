@@ -38,7 +38,7 @@ public class Utils {
             case JESUS -> "BlockSprite/Jesus.png";
             case X2 -> "BlockSprite/x2.png";
             case GARBAGE -> "BlockSprite/garbege.png";
-            default -> "BlockSprite/garbege.png";
+            default -> "BlockSprite/yellow.png";
         };
     }
 
