@@ -1,4 +1,4 @@
-package Block;
+package Block.BasicStructure;
 
 import Utils.Utils;
 import javafx.scene.image.Image;

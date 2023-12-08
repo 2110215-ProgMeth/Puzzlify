@@ -1,9 +1,8 @@
 package application;
 
 
+import Block.BasicStructure.Block;
 import Utils.Utils;
-import javafx.scene.shape.Rectangle;
-import Block.*;
 
 
 public class Controller {

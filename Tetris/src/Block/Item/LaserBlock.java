@@ -1,11 +1,10 @@
-package Block;
+package Block.Item;
 
 import Utils.Utils;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -16,6 +15,9 @@ public class LaserBlock extends SpecialBlock {
     public LaserBlock(double v1,double v2){
         super(v1,v2);
         bt = Utils.BlockType.LASER;
+    }
+    public String getimgPath(){
+        return imgPath;
     }
 
     @Override
@@ -62,6 +64,4 @@ public class LaserBlock extends SpecialBlock {
                 rects.clear();
             } while (lines.size() > 0);
     }
-
-
 }
