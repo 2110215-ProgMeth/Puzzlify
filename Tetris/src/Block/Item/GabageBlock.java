@@ -1,6 +1,7 @@
 package Block.Item;
 
 import Block.BasicStructure.*;
+import Utils.Utils;
 import javafx.css.Size;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -13,6 +14,7 @@ import static application.Tetris.SIZE;
 public class GabageBlock extends SpecialBlock implements Item {
     public GabageBlock(double v1, double v2){
         super(v1,v2);
+        bt = Utils.BlockType.GARBAGE;
     }
 
     @Override

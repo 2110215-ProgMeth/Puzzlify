@@ -11,7 +11,7 @@ import Block.Item.NuclearBlock;
 
 public class Utils {
     public enum BlockType{
-        J,L,O,S,T,Z,I,BOMB,LASER,X2,GARBAGE,JESUS,NULL
+        J,L,O,S,T,Z,I,BOMB,LASER,X2,GARBAGE,JESUS,NULL,GAB
     }
     public static Block RamdomBlock(double v1, double v2){
         int value = (int) (Math.random() * 1000);
@@ -51,7 +51,8 @@ public class Utils {
             case LASER -> "BlockSprite/laser.png";
             case JESUS -> "BlockSprite/Jesus.png";
             case X2 -> "BlockSprite/x2.png";
-            case GARBAGE -> "BlockSprite/garbege.png";
+            case GARBAGE -> "BlockSprite/gab.png";
+            case GAB-> "BlockSprite/garbege.png";
             default -> "BlockSprite/yellow.png";
         };
     }
