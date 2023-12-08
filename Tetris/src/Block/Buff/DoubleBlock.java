@@ -23,16 +23,7 @@ public class DoubleBlock extends SpecialBlock implements Buff {
 
     @Override
     public void activeSkill(Pane pane) {
-        scoreMode = Mode.DOUBLE;
-        System.out.println("You got buff, you will get double score in next 15 seconds!");
-        Thread thread = new Thread(()->{
-            try{
-                Thread.sleep(15000);
-                scoreMode = Mode.DEFAULT;
-                System.out.println("Buff Gone!");
-            }catch(InterruptedException e ){}
-        });
-        thread.start();
+        Mode.activeDouble();
     }
 
     private String getImgPath(){

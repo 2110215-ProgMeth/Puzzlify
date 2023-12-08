@@ -13,10 +13,9 @@ import java.util.ArrayList;
 import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
-
-public class JesusBlock extends SpecialBlock implements Item {
-    static String imgPath  = "Jesus.jpg";
-    public JesusBlock(double v1,double v2){
+public class BounderBlock extends SpecialBlock implements Item {
+    static String imgPath  = "Bounder.jpg";
+    public  BounderBlock(double v1, double v2){
         super(v1,v2);
         Image img = new Image(getimgPath());
         this.setFill(new ImagePattern(img));
@@ -27,20 +26,17 @@ public class JesusBlock extends SpecialBlock implements Item {
 
     @Override
     public void activeSkill(Pane pane) {
-        System.out.println("Jesus!!");
-        int x = (int) this.getX();
+        System.out.println("Earthquake now ground be higher, try to remove it!");
         ArrayList<Node> rects = new ArrayList<Node>();
+        ArrayList<Integer> lines = new ArrayList<Integer>();
         for (Node node : pane.getChildren()) {
             if (node instanceof Block)
                 rects.add(node);
         }
         for (Node node : rects) {
             Block a = (Block) node;
-            double ax = a.getX();
-            if (ax == x) {
-                MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                pane.getChildren().remove(node);
-            }
+            MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
+            a.setY(a.getY() - SIZE);
         }
         rects.clear();
         for (Node node : pane.getChildren()) {
@@ -51,9 +47,7 @@ public class JesusBlock extends SpecialBlock implements Item {
             Block a = (Block) node;
             try {
                 MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
-            } catch (ArrayIndexOutOfBoundsException e) {
-            }
+            } catch (ArrayIndexOutOfBoundsException e) {}
         }
-        rects.clear();
     }
 }

@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
 import Utils.Mode;
+import Utils.sMode;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -20,11 +21,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 public class Tetris extends Application {
     //variable ต่างๆ
@@ -44,7 +45,7 @@ public class Tetris extends Application {
     private static Form nextObj ;//ของชิ้นต่อไป
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
-    public static Mode scoreMode = Mode.DEFAULT;//ใช้มาเลือกการเพิ่มคะแนน
+    public static sMode scoreMode = sMode.DEFAULT;//ใช้มาเลือกการเพิ่มคะแนน
 
 
 
@@ -663,13 +664,13 @@ public class Tetris extends Application {
         }
     }
     private void increaseScore(int base){
-        if(scoreMode == Mode.DEFAULT){
+        if(scoreMode == sMode.DEFAULT){
             System.out.println("You on Default Mode score+="+Integer.toString(base));
             score+=base;
-        }else if(scoreMode==Mode.DOUBLE){
+        }else if(scoreMode==sMode.DOUBLE){
             System.out.println("You on Double Mode score+="+Integer.toString(2*base));
             score+=(2*base);
-        }else if(scoreMode==Mode.HALF){
+        }else if(scoreMode==sMode.HALF){
             System.out.println("You on Half Mode score+="+Integer.toString((int)(0.5*base)));
             score+= (int) (0.5*base);
         }
