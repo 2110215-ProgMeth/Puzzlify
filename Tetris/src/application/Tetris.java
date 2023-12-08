@@ -61,7 +61,7 @@ public class Tetris extends Application {
     public void start(Stage stage) throws Exception {
 
         scene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
-        hs = new AudioClip(this.getClass().getResource("/SFX/hs.wav").toExternalForm());
+        hs = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
 
         stage.setResizable(false);
         group.setPrefWidth(XMAX);
