@@ -7,7 +7,6 @@ import java.util.TimerTask;
 
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
-import Utils.Mode;
 import Utils.sMode;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -57,7 +56,7 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-//        hitSound  = new AudioClip(ClassLoader.getSystemResources("osu-hit-sound.wav").toString());
+        scene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
 
         stage.setResizable(false);
         group.setPrefWidth(XMAX);
@@ -70,18 +69,18 @@ public class Tetris extends Application {
         group.setPadding(new Insets(2));
 
         Text scoretext = new Text("Score: 0");//text for score
-        scoretext.setStyle("-fx-font: 30 arial;");
+//        scoretext.setStyle("-fx-font: 30 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);//ไม่ให้ติดกับเส้นแบ่ง
         Text level = new Text("Level: 0");//text for level
-        level.setStyle("-fx-font: 30 arial;");
+//        level.setStyle("-fx-font: 30 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
 
         setBackground();
 
-        UI.setAlignment(Pos.BASELINE_CENTER);
+        UI.setAlignment(Pos.CENTER_LEFT);
         UI.setPadding(new Insets(10));
         UI.getChildren().addAll(scoretext, level,startButton);//เพิ่มลงในpane
 
