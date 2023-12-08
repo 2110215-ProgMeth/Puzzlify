@@ -24,7 +24,7 @@ public class LaserBlock extends SpecialBlock {
         ArrayList<Node> rects = new ArrayList<Node>();
         ArrayList<Integer> lines = new ArrayList<Integer>();
         ArrayList<Node> newrects = new ArrayList<Node>();
-        lines.add(21);lines.add(22);lines.add(23);
+        lines.add(22);lines.add(23);
         if (lines.size() > 0)
             do {
                 for (Node node : pane.getChildren()) {

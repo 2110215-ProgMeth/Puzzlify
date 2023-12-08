@@ -470,6 +470,7 @@ public class Tetris extends Application {
         ArrayList<Node> rects = new ArrayList<Node>();
         ArrayList<Integer> lines = new ArrayList<Integer>();//เก็บว่าแถวไหนเต็มบ้าง
         ArrayList<Node> newrects = new ArrayList<Node>();
+        ArrayList<Skillable> Specialblock = new ArrayList<Skillable>();
 
         int full = 0;//นับว่าแต่ละrowมีblockเท่าไหร่
         for (int i = 0; i < MESH[0].length; i++) {//each row
@@ -498,20 +499,19 @@ public class Tetris extends Application {
                 for (Node node : rects) {
                     if(node instanceof Block){
                         Block a = (Block) node;
-
                         // if this node has y the same as the line we gonna delete
                         if (a.getY() == lines.get(0) * SIZE) {
                             MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-                            if(a instanceof Skillable){
-                                ((Skillable) a).activeSkill(group);
-                            }
                             pane.getChildren().remove(node);
+                            if(a instanceof Skillable){
+                                Specialblock.add((Skillable) a);
+//                                ((Skillable) a).activeSkill(group);
+                            }
+
                         } else
                             newrects.add(node);
-
                     }
                 }
-
                 for (Node node : newrects) {
                     Block a = (Block) node;
                     // node that higher than the line -> move down 1 block
@@ -537,6 +537,11 @@ public class Tetris extends Application {
                     }
                 }
                 rects.clear();
+                if(!Specialblock.isEmpty()){
+                    for(Skillable a : Specialblock){
+                        a.activeSkill(group);
+                    }
+                }
             } while (lines.size() > 0);
         }
     }
