@@ -1,4 +1,3 @@
 package Block.BasicStructure;
 
-public interface Item {
-}
+public interface Item { }
