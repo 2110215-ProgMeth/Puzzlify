@@ -34,7 +34,7 @@ public class Tetris extends Application {
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
-    private static Pane group = new Pane();//สร้างpane
+    public static Pane group = new Pane();//สร้างpane
     private static VBox UI = new VBox();
     private static HBox ROOT = new HBox();
     private static Form object;//ของชิ้นปัจจุบัน

@@ -2,6 +2,7 @@ package Block.Item;
 
 import Block.BasicStructure.*;
 import Utils.Utils;
+import application.Tetris;
 import javafx.css.Size;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -21,7 +22,6 @@ public class GabageBlock extends SpecialBlock implements Item {
     public void activeSkill(Pane pane) {
         System.out.println("Earthquake now ground be higher, try to remove it!");
         ArrayList<Node> rects = new ArrayList<Node>();
-        ArrayList<Integer> lines = new ArrayList<Integer>();
         for (Node node : pane.getChildren()) {
             if (node instanceof Block)
                 rects.add(node);
@@ -30,20 +30,18 @@ public class GabageBlock extends SpecialBlock implements Item {
             Block a = (Block) node;
             MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
             a.setY(a.getY() - SIZE);
-        }
-        for (Node node : rects) {
-            Block a = (Block) node;
-            try {
-                MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
-            } catch (ArrayIndexOutOfBoundsException e) {}
+            MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
         }
         int emptyGrid = (int) (Math.random() * 11);
         for(int x=0;x!=12;x++){
-            GabBlock i = new GabBlock(SIZE, SIZE);
-            i.setColor();
-            i.setX(x*SIZE);
-            i.setY(23*SIZE);
-            if(x!=emptyGrid) MESH[x][23]=1;
+            if(x!=emptyGrid) {
+                MESH[x][23]=1;
+                GabBlock i = new GabBlock(SIZE, SIZE);
+                i.setColor();
+                i.setX(x*SIZE);
+                i.setY(23*SIZE);
+                Tetris.group.getChildren().add(i);
+            }
         }
         MESH[emptyGrid][23]=0;
     }
