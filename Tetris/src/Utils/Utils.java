@@ -46,7 +46,7 @@ public class Utils {
             case Z -> "BlockSprite/white.png";
             case T -> "BlockSprite/orange.png";
             case L -> "BlockSprite/purple.png";
-            case BOMB -> "BlockSprite/Bomb.png";
+            case BOMB -> "BlockSprite/nuclear.png";
             case LASER -> "BlockSprite/laser.png";
             case JESUS -> "BlockSprite/Jesus.png";
             case X2 -> "BlockSprite/x2.png";
