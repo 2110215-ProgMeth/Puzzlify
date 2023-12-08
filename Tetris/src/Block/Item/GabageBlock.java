@@ -1,8 +1,6 @@
 package Block.Item;
 
-import Block.BasicStructure.Block;
-import Block.BasicStructure.Item;
-import Block.BasicStructure.SpecialBlock;
+import Block.BasicStructure.*;
 import javafx.css.Size;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -39,7 +37,8 @@ public class GabageBlock extends SpecialBlock implements Item {
         }
         int emptyGrid = (int) (Math.random() * 11);
         for(int x=0;x!=12;x++){
-            GabageBlock i = new GabageBlock(SIZE, SIZE);
+            GabBlock i = new GabBlock(SIZE, SIZE);
+            i.setColor();
             i.setX(x*SIZE);
             i.setY(23*SIZE);
             if(x!=emptyGrid) MESH[x][23]=1;
