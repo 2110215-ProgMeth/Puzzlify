@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -40,7 +41,7 @@ public class Tetris extends Application {
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
-    private static Form nextObj = Controller.makeRect();//ของชิ้นต่อไป
+    private static Form nextObj ;//ของชิ้นต่อไป
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static Mode scoreMode = Mode.DEFAULT;//ใช้มาเลือกการเพิ่มคะแนน
@@ -55,6 +56,7 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+//        hitSound  = new AudioClip(ClassLoader.getSystemResources("osu-hit-sound.wav").toString());
 
         stage.setResizable(false);
         group.setPrefWidth(XMAX);
@@ -82,14 +84,9 @@ public class Tetris extends Application {
         UI.setPadding(new Insets(10));
         UI.getChildren().addAll(scoretext, level,startButton);//เพิ่มลงในpane
 
-        Form a = nextObj;
-        group.getChildren().addAll(a.a, a.b, a.c, a.d);
-
         ROOT.getChildren().addAll(group,UI);
-        moveOnKeyPress(a);
 
-        object = a;
-        nextObj = Controller.makeRect();
+
         stage.setScene(scene);
         stage.setTitle("T E T R I S");
         stage.show();
@@ -137,12 +134,22 @@ public class Tetris extends Application {
         startButton.setOnAction(e->{
             fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
             startButton.setDisable(true);
+            nextObj = Controller.makeRect();
+
+            Form a = nextObj;
+            group.getChildren().addAll(a.a, a.b, a.c, a.d);
+
+            moveOnKeyPress(a);
+
+            object = a;
+            nextObj = Controller.makeRect();
         });
     }
 
 
 
     private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
+//        hitSound.play();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
