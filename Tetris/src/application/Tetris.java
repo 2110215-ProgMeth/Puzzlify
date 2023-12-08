@@ -483,7 +483,7 @@ public class Tetris extends Application {
         if (lines.size() > 0){//มีแถวเต็ม
             // if have line to remove
             do {
-                // add all node to rects
+                // add all Block to rects
                 for (Node node : pane.getChildren()) {
                     if (node instanceof Block)
                         rects.add(node);

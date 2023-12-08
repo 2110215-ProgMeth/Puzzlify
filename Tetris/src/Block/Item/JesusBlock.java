@@ -47,8 +47,7 @@ public class JesusBlock extends SpecialBlock implements Item {
             Block a = (Block) node;
             try {
                 MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 1;
-            } catch (ArrayIndexOutOfBoundsException e) {
-            }
+            } catch (ArrayIndexOutOfBoundsException e) {}
         }
         rects.clear();
     }
