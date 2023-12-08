@@ -15,22 +15,22 @@ public class Utils {
     }
     public static Block RamdomBlock(double v1, double v2){
         int value = (int) (Math.random() * 1000);
-        if(700<value&&value<=750){
+        if(695<value&&value<=700){
+            return new NuclearBlock(v1,v2);
+        }
+        else if(700<value&&value<=750){
             return new GabageBlock(v1,v2);
         }
         else if(750<value&&value<=800){
             return new HalfBlock(v1,v2);
         }
         else if(800<value&&value<=850){
-            return new NuclearBlock(v1,v2);
-        }
-        else if(850<value&&value<=900){
             return new JesusBlock(v1,v2);
         }
-        else if(900<value&&value<=950){
+        else if(850<value&&value<=900){
             return new DoubleBlock(v1,v2);
         }
-        else if(950<value&&value<=1000){
+        else if(900<value&&value<=950){
             return new LaserBlock(v1,v2);
         }
         else{

@@ -21,6 +21,7 @@ public class LaserBlock extends SpecialBlock {
 
     @Override
     public void activeSkill(Pane pane) {
+        System.out.println("RazerBeam!!!");
         ArrayList<Node> rects = new ArrayList<Node>();
         ArrayList<Integer> lines = new ArrayList<Integer>();
         ArrayList<Node> newrects = new ArrayList<Node>();
