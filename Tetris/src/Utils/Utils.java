@@ -21,9 +21,9 @@ public class Utils {
         else*/ if(750<value&&value<=800){
             return new HalfBlock(v1,v2);
         }
-//        else if(800<value&&value<=850){
-//            return new BombBlock(v1,v2);
-//        }
+        else if(800<value&&value<=850){
+            return new BombBlock(v1,v2);
+        }
         else if(850<value&&value<=900){
             return new JesusBlock(v1,v2);
         }
@@ -47,7 +47,7 @@ public class Utils {
             case Z -> "BlockSprite/white.png";
             case T -> "BlockSprite/orange.png";
             case L -> "BlockSprite/purple.png";
-            case BOMB -> "BlockSprite/Bomb.png";
+            case BOMB -> "BlockSprite/nuclear.png";
             case LASER -> "BlockSprite/laser.png";
             case JESUS -> "BlockSprite/Jesus.png";
             case X2 -> "BlockSprite/x2.png";
