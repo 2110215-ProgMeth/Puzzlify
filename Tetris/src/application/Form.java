@@ -1,7 +1,6 @@
 package application;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import Utils.Utils;
 import Block.*;
 
 public class Form {
@@ -9,60 +8,33 @@ public class Form {
     Block b;
     Block c;
     Block d;
-    Color color;
-    private String name;
+    private Utils.BlockType bt;
     public int form = 1;
 
-    public Form(Block a, Block b, Block c, Block d) {//default constructor
+
+    public Form(Block a, Block b, Block c, Block d, Utils.BlockType blockType) {//constructor with name
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
-    }
 
-    public Form(Block a, Block b, Block c, Block d, String name) {//constructor with name
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
-        this.name = name;
 
-        switch (name) {//ลงสีรูปร่างต่างๆ
-            case "j":
-                color = Color.SLATEGRAY;
-                break;
-            case "l":
-                color = Color.DARKGOLDENROD;
-                break;
-            case "o":
-                color = Color.INDIANRED;
-                break;
-            case "s":
-                color = Color.FORESTGREEN;
-                break;
-            case "t":
-                color = Color.CADETBLUE;
-                break;
-            case "z":
-                color = Color.HOTPINK;
-                break;
-            case "i":
-                color = Color.SANDYBROWN;
-                break;
+        this.bt = blockType;
 
-        }
-        //เพิ่มสีให้กับแต่ละBlock
-        if(a instanceof Skillable){}else{this.a.setFill(color);}
-        if(b instanceof Skillable){}else{this.b.setFill(color);}
-        if(c instanceof Skillable){}else{this.c.setFill(color);}
-        if(d instanceof Skillable){}else{this.d.setFill(color);}
+        this.a.setBlockType(blockType);
+        this.b.setBlockType(blockType);
+        this.c.setBlockType(blockType);
+        this.d.setBlockType(blockType);
+
+
+        this.a.setColor();
+        this.b.setColor();
+        this.c.setColor();
+        this.d.setColor();
     }
 
 
-    public String getName() {//getter
-        return name;
-    }
-    //น่าจะเอาไปทำอะไรอย่างอื่น เช่น MoveTurn() ต้องรูปเป็นรูปอะไรถึงจะสามารถหมุนอย่างถูกต้องได้
+    public Utils.BlockType getBlockType(){return bt;}
 
 
     public void changeForm() {//เป็นลูป 1->2->3->4->1
