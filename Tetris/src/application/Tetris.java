@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -46,6 +47,8 @@ public class Tetris extends Application {
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static sMode scoreMode = sMode.DEFAULT;//ใช้มาเลือกการเพิ่มคะแนน
 
+    private static AudioClip hs;
+
 
 
     public Button startButton = new Button("Start");
@@ -56,7 +59,9 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         scene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
+        hs = new AudioClip(this.getClass().getResource("/SFX/hs.wav").toExternalForm());
 
         stage.setResizable(false);
         group.setPrefWidth(XMAX);
@@ -69,11 +74,9 @@ public class Tetris extends Application {
         group.setPadding(new Insets(2));
 
         Text scoretext = new Text("Score: 0");//text for score
-//        scoretext.setStyle("-fx-font: 30 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);//ไม่ให้ติดกับเส้นแบ่ง
         Text level = new Text("Level: 0");//text for level
-//        level.setStyle("-fx-font: 30 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
@@ -585,6 +588,7 @@ public class Tetris extends Application {
                 moveC(form) ||
                 moveD(form))
         {
+            hs.play();
 
             // if this block at the bottom.
             // set Mesh
