@@ -43,8 +43,12 @@ public class Tetris extends Application {
     public static Pane group = new Pane();//สร้างpane
     private static VBox UI = new VBox();
     private static HBox ROOT = new HBox();
+    private static VBox mainROOT = new VBox();
+    private static VBox helpROOT = new VBox();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene scene = new Scene(ROOT, XMAX + 300, YMAX+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene gamescene = new Scene(ROOT, XMAX + 300, YMAX+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene mainscene = new Scene(mainROOT,XMAX + 300,YMAX + 50);
+    private static Scene helpscene = new Scene(helpROOT,XMAX + 300,YMAX + 50);
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = true;//ยังรอดอยู่ไหม
@@ -58,12 +62,12 @@ public class Tetris extends Application {
     public static AudioClip tap;
     public static AudioClip clearLine;
 
+    public Button mainstartButton = new Button("Start");
+    public Button mainhelpButton = new Button("Help");
+    public Button mainexitButton = new Button("Exit");
+    public Button helpBackmainBtn = new Button("Main-Menu");
+    public Button startButton = new Button("Let's play");
 
-    public ScoreBox conScore;
-    public ScoreBox conLv;
-
-
-    public Button startButton = new Button("Start");
     public Button restartButton = new Button();
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -71,13 +75,32 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        mainstartButton.setOnMouseClicked(e->{
+            stage.setScene(gamescene);
+        });
+        mainhelpButton.setOnMouseClicked(e->{
+            stage.setScene(helpscene);
+        });
+        mainexitButton.setOnMouseClicked(e->{
+            System.exit(0);
+        });
+        mainROOT.setAlignment(Pos.CENTER);
+        mainROOT.setSpacing(20);
+        mainROOT.getChildren().addAll(mainstartButton,mainhelpButton,mainexitButton);
+        helpBackmainBtn.setOnMouseClicked(e->{
+            stage.setScene(mainscene);
+        });
+        helpROOT.setAlignment(Pos.BOTTOM_CENTER);
+        helpROOT.setPadding(new Insets(20));
+        helpROOT.getChildren().add(helpBackmainBtn);
+
 
         hs = new AudioClip(this.getClass().getResource("/SFX/harddrop.mp3").toExternalForm());
         rotateSound = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
         tap = new AudioClip(this.getClass().getResource("/SFX/tap.mp3").toExternalForm());
         clearLine = new AudioClip(this.getClass().getResource("/SFX/clearLine.wav").toExternalForm());
 
-        scene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
+        gamescene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
 
         stage.setResizable(false);
         group.setPrefWidth(XMAX);
@@ -108,7 +131,7 @@ public class Tetris extends Application {
         ROOT.getChildren().addAll(group,UI);
 
 
-        stage.setScene(scene);
+        stage.setScene(mainscene);
         stage.setTitle("T E T R I S");
         stage.show();
 
@@ -169,7 +192,7 @@ public class Tetris extends Application {
 
     private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
 //        hitSound.play();
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        gamescene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
