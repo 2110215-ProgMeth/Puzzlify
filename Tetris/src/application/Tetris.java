@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
@@ -7,6 +8,7 @@ import java.util.TimerTask;
 
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
+import UI.ButtonBox;
 import UI.ScoreBox;
 import Utils.sMode;
 import javafx.application.Application;
@@ -19,13 +21,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -51,16 +54,17 @@ public class Tetris extends Application {
     private static Scene helpscene = new Scene(helpROOT,XMAX + 300,YMAX + 50);
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
-    private static boolean game = true;//ยังรอดอยู่ไหม
+    private static boolean game = false;//ยังรอดอยู่ไหม
     private static Form nextObj ;//ของชิ้นต่อไป
     private static int linesNo = 0;//จำนวนแถวที่deleteได้
     public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
     public static sMode scoreMode = sMode.DEFAULT;//ใช้มาเลือกการเพิ่มคะแนน
 
     public static AudioClip hs;
-    public static AudioClip rotateSound;
+    public AudioClip rotateSound;
     public static AudioClip tap;
-    public static AudioClip clearLine;
+    public AudioClip clearLine;
+    public AudioClip bgSong;
 
     public Button mainstartButton = new Button("Start");
     public Button mainhelpButton = new Button("Help");
@@ -72,6 +76,8 @@ public class Tetris extends Application {
 
     public ScoreBox conScore;
     public ScoreBox conLv;
+
+    public ButtonBox conStart;
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
@@ -102,37 +108,63 @@ public class Tetris extends Application {
         rotateSound = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
         tap = new AudioClip(this.getClass().getResource("/SFX/tap.mp3").toExternalForm());
         clearLine = new AudioClip(this.getClass().getResource("/SFX/clearLine.wav").toExternalForm());
+        bgSong = new AudioClip(this.getClass().getResource("/bgSong.mp3").toExternalForm());
+        bgSong.setVolume(0.2);
 
         gamescene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
 
+
         stage.setResizable(false);
+
+        group.setId("GamePane");
         group.setPrefWidth(XMAX);
+        group.setPrefHeight(YMAX);
+        group.setPadding(new Insets(20));
+
+
 
         for (int[] a : MESH) {//unknowed
             Arrays.fill(a, 0);
         }
-        group.setPrefWidth(XMAX);
-        ROOT.setPadding(new Insets(10));
-        group.setPadding(new Insets(2));
+        ROOT.setPadding(new Insets(20));
+        ROOT.setAlignment(Pos.CENTER);
 
          FXMLLoader loadScoreText= new FXMLLoader();
          Parent st = (Parent) loadScoreText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
          conScore = loadScoreText.getController();
 
+         conScore.setLableText("Score:");
+
         FXMLLoader loadLevelText= new FXMLLoader();
         Parent lv = (Parent) loadLevelText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
         conLv=  loadLevelText.getController();
 
-        conLv.setLableText("Level");
+        conLv.setLableText("Level:");
+
+        FXMLLoader loadStartButton = new FXMLLoader(getClass().getResource("/FXML/ButtonBox.fxml"));
+        ImageView startBtn = loadStartButton.load();
+        conStart = loadStartButton.getController();
+        conStart.setEnableButtonPath("/UISprite/StartButtonEnable.png");
+        conStart.setDisableButtonPath("/UISprite/StartButtonDisable.png");
+
+//        startBtn.addEventHandler(MouseEvent.MOUSE_RELEASED,e->{
+//            conStart.mouseReleased();
+//        });
 
         setBackground();
 
-        UI.setAlignment(Pos.CENTER_LEFT);
+        UI.setAlignment(Pos.CENTER);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(st, lv, startButton);//เพิ่มลงในpane
+//        UI.getChildren().addAll(st, lv, startButton);//เพิ่มลงในpane
+        UI.getChildren().addAll(st, lv, startBtn);//เพิ่มลงในpane
 
         ROOT.getChildren().addAll(group,UI);
+        ROOT.setSpacing(20);
 
+        Background UIBackGound= new Background(new BackgroundFill(Color.valueOf("#161A30"),CornerRadii.EMPTY,Insets.EMPTY));
+        Background rootBackGound = new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
+        ROOT.setBackground(rootBackGound);
+        UI.setBackground(UIBackGound);
 
         stage.setScene(mainscene);
         stage.setTitle("T E T R I S");
@@ -176,18 +208,26 @@ public class Tetris extends Application {
                 });
             }
         };
-        startButton.setOnAction(e->{
-            fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
-            startButton.setDisable(true);
-            nextObj = Controller.makeRect();
+        startBtn.addEventHandler(MouseEvent.MOUSE_PRESSED,e->{
+            if(!game){
+                conStart.mousePressed();
 
-            Form a = nextObj;
-            group.getChildren().addAll(a.a, a.b, a.c, a.d);
+                game = true;
 
-            moveOnKeyPress(a);
+                bgSong.play();
+                fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+                nextObj = Controller.makeRect();
 
-            object = a;
-            nextObj = Controller.makeRect();
+                Form a = nextObj;
+                group.getChildren().addAll(a.a, a.b, a.c, a.d);
+
+                moveOnKeyPress(a);
+
+                object = a;
+                nextObj = Controller.makeRect();
+
+            }
+
         });
     }
 
@@ -710,8 +750,10 @@ public class Tetris extends Application {
     private void setBackground(){
         for(int i =0;i<12;i++){
             for(int j = 0;j<24;j++){
-                Rectangle wall = new Rectangle(SIZE-1,SIZE-1);
-                wall.setStyle("-fx-fill: rgb(255, 246, 220); -fx-stroke: rgb(158, 159, 165); -fx-stroke-width: 1");
+                Rectangle wall = new Rectangle(SIZE-3,SIZE-3);
+//                wall.setFill(new ImagePattern(new Image("/BlockSprite/wall.png")));
+//                wall.setStyle("-fx-fill:rgb(22, 26, 48); -fx-stroke: rgb(10,20, 40); -fx-stroke-width: 1");
+                wall.setStyle("-fx-fill:transparent; -fx-stroke: rgb(10,20, 40); -fx-stroke-width: 1");
                 wall.setX(i*SIZE);
                 wall.setY(j*SIZE);
                 group.getChildren().add(wall);
