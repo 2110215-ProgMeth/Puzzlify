@@ -8,37 +8,24 @@ public class Mode {
     private static Thread Doublethread;
     public static void activeDouble(){
         if(scoreMode==sMode.HALF){
-            HalfTimer.cancel();
-            System.out.println("You got Buff, Debuff Gone!");
+            Halfthread.interrupt();
         }else if(scoreMode==sMode.DOUBLE)return;
         scoreMode = sMode.DOUBLE;
-        System.out.println("You got buff, you will get double score in next 15 seconds!");
-        TimerTask Doubletask = new TimerTask() {
-            @Override
-            public void run() {
-                currDoubleTime+=0.01;
-                if(currDoubleTime == 15){
-                    currDoubleTime = 0;
-                    System.out.println("Buff Gone!");
-                    DoubleTimer.cancel();
-                }
+        System.out.println("You got Buff, you will get Double score in next 15 seconds!");
+        Doublethread = new Thread(()->{
+            try{
+                Thread.sleep(15000);
+                scoreMode = sMode.DEFAULT;
+                System.out.println("Buff Gone!");
+            }catch(InterruptedException e ){
+                /*if(scoreMode==sMode.DOUBLE) {
+                    System.out.println("You got Buff again, 15 second one more time!");
+                }else if(scoreMode==sMode.HALF){*/
+                    System.out.println("You got Debuff, Buff Gone!");
+                //}
             }
-        };
-        DoubleTimer.schedule(Doubletask, 0, 10);
-//        Doublethread = new Thread(()->{
-//            try{
-//                Thread.sleep(15000);
-//                scoreMode = sMode.DEFAULT;
-//                System.out.println("Buff Gone!");
-//            }catch(InterruptedException e ){
-//                /*if(scoreMode==sMode.DOUBLE) {
-//                    System.out.println("You got Buff again, 15 second one more time!");
-//                }else if(scoreMode==sMode.HALF){*/
-//                    System.out.println("You got Debuff, Buff Gone!");
-//                //}
-//            }
-//        });
-//        Doublethread.start();
+        });
+        Doublethread.start();
     }
 
     public static void activeHalf(){
