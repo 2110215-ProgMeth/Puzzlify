@@ -6,6 +6,7 @@ import application.Tetris;
 import javafx.css.Size;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
 
@@ -16,10 +17,12 @@ public class GabageBlock extends SpecialBlock implements Item {
     public GabageBlock(double v1, double v2){
         super(v1,v2);
         bt = Utils.BlockType.GARBAGE;
+        sfx = new AudioClip(this.getClass().getResource("/SFX/garbage_out_large.wav").toExternalForm());
     }
 
     @Override
     public void activeSkill(Pane pane) {
+        sfx.play();
         System.out.println("Earthquake now ground be higher, try to remove it!");
         ArrayList<Node> newrects = new ArrayList<Node>();
 
