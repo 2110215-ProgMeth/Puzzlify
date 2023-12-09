@@ -7,6 +7,7 @@ import javafx.scene.paint.ImagePattern;
 
 public abstract class SpecialBlock extends Block implements Skillable{
     protected AudioClip sfx;
+
    public SpecialBlock(double v1, double v2) {
         super(v1, v2);
    }

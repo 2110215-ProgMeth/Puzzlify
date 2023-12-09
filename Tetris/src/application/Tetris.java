@@ -10,6 +10,7 @@ import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
 import UI.ButtonBox;
 import UI.ScoreBox;
+import UI.StartScene;
 import Utils.sMode;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -47,10 +48,11 @@ public class Tetris extends Application {
     private static VBox UI = new VBox();
     private static HBox ROOT = new HBox();
     private static VBox mainROOT = new VBox();
+    private static Parent startROOT;
     private static VBox helpROOT = new VBox();
     private static Form object;//ของชิ้นปัจจุบัน
     private static Scene gamescene = new Scene(ROOT, XMAX + 300, YMAX+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
-    private static Scene mainscene = new Scene(mainROOT,XMAX + 300,YMAX + 50);
+    private static Scene mainscene ;
     private static Scene helpscene = new Scene(helpROOT,XMAX + 300,YMAX + 50);
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
@@ -78,24 +80,41 @@ public class Tetris extends Application {
     public ScoreBox conLv;
 
     public ButtonBox conStart;
+    public StartScene startSceneCon;
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        mainstartButton.setOnMouseClicked(e->{
+        FXMLLoader loadStartScene = new FXMLLoader(getClass().getResource("/FXML/StartScene.fxml"));
+        startROOT = loadStartScene.load();
+        startSceneCon = loadStartScene.getController();
+
+        mainscene = new Scene(startROOT,XMAX + 300,YMAX + 50);
+        startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+            startSceneCon.OnStartBtnPressed();
+        });
+        startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             stage.setScene(gamescene);
         });
-        mainhelpButton.setOnMouseClicked(e->{
+
+        startSceneCon.getGuideBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+            startSceneCon.OnGuideBtnPressed();
+        });
+        startSceneCon.getGuideBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
+            startSceneCon.OnGuidbtnReleased();
             stage.setScene(helpscene);
         });
-        mainexitButton.setOnMouseClicked(e->{
+
+        startSceneCon.getExitBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+            startSceneCon.OnExitBtnPressed();
+        });
+        startSceneCon.getExitBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             System.exit(0);
         });
-        mainROOT.setAlignment(Pos.CENTER);
-        mainROOT.setSpacing(20);
-        mainROOT.getChildren().addAll(mainstartButton,mainhelpButton,mainexitButton);
+
+
         helpBackmainBtn.setOnMouseClicked(e->{
             stage.setScene(mainscene);
         });
@@ -144,18 +163,15 @@ public class Tetris extends Application {
         FXMLLoader loadStartButton = new FXMLLoader(getClass().getResource("/FXML/ButtonBox.fxml"));
         ImageView startBtn = loadStartButton.load();
         conStart = loadStartButton.getController();
+
         conStart.setEnableButtonPath("/UISprite/StartButtonEnable.png");
         conStart.setDisableButtonPath("/UISprite/StartButtonDisable.png");
 
-//        startBtn.addEventHandler(MouseEvent.MOUSE_RELEASED,e->{
-//            conStart.mouseReleased();
-//        });
 
         setBackground();
 
         UI.setAlignment(Pos.CENTER);
         UI.setPadding(new Insets(10));
-//        UI.getChildren().addAll(st, lv, startButton);//เพิ่มลงในpane
         UI.getChildren().addAll(st, lv, startBtn);//เพิ่มลงในpane
 
         ROOT.getChildren().addAll(group,UI);
