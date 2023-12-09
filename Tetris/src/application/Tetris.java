@@ -129,9 +129,9 @@ public class Tetris extends Application {
         Parent lv = (Parent) loadLevelText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
         conLv=  loadLevelText.getController();
 
-        FXMLLoader loadBuff= new FXMLLoader();
-        Parent buffBar = (Parent) loadBuff.load(getClass().getResource("/FXML/BuffCountDown.fxml").openStream());
-        conD2 = loadBuff.getController();
+//        FXMLLoader loadBuff= new FXMLLoader();
+//        Parent buffBar = (Parent) loadBuff.load(getClass().getResource("/FXML/BuffCountDown.fxml").openStream());
+//        conD2 = loadBuff.getController();
 
 //        FXMLLoader loadDeBuff = new FXMLLoader();
 //        Parent debuffBar = loadDeBuff.load(getClass().getResource("/FXML/BuffCountDown.fxml").openStream());
@@ -144,7 +144,7 @@ public class Tetris extends Application {
 
         UI.setAlignment(Pos.CENTER_LEFT);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(st, lv, startButton,buffBar);//เพิ่มลงในpane
+        UI.getChildren().addAll(st, lv, startButton);//เพิ่มลงในpane
 
         ROOT.getChildren().addAll(group,UI);
 
