@@ -108,7 +108,7 @@ public class Tetris extends Application {
         rotateSound = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
         tap = new AudioClip(this.getClass().getResource("/SFX/tap.mp3").toExternalForm());
         clearLine = new AudioClip(this.getClass().getResource("/SFX/clearLine.wav").toExternalForm());
-        bgSong = new AudioClip(this.getClass().getResource("/bgSong.mp3").toExternalForm());
+        bgSong = new AudioClip(this.getClass().getResource("/Totoro.mp3").toExternalForm());
         bgSong.setVolume(0.2);
 
         gamescene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
