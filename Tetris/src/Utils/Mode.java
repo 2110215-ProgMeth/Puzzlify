@@ -1,11 +1,17 @@
 package Utils;
 
 
+import java.util.Timer;
+
 import static application.Tetris.scoreMode;
 
 public class Mode {
     private static Thread Halfthread;
     private static Thread Doublethread;
+
+    public int currHalfTime;
+    public int currDoubleTime;
+
     public static void activeDouble(){
         if(scoreMode==sMode.HALF){
             Halfthread.interrupt();
@@ -27,6 +33,7 @@ public class Mode {
         });
         Doublethread.start();
     }
+
 
     public static void activeHalf(){
             if(scoreMode==sMode.DOUBLE){

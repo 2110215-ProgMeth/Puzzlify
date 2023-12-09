@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
+import UI.BuffCountDown;
 import UI.ScoreBox;
 import Utils.sMode;
 import javafx.application.Application;
@@ -70,8 +71,13 @@ public class Tetris extends Application {
 
     public Button restartButton = new Button();
 
-    public ScoreBox conScore;
-    public ScoreBox conLv;
+    private ScoreBox conScore;
+    private ScoreBox conLv;
+
+    private BuffCountDown conD2;
+    private BuffCountDown conH2;
+
+
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
@@ -123,13 +129,22 @@ public class Tetris extends Application {
         Parent lv = (Parent) loadLevelText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
         conLv=  loadLevelText.getController();
 
+        FXMLLoader loadBuff= new FXMLLoader();
+        Parent buffBar = (Parent) loadBuff.load(getClass().getResource("/FXML/BuffCountDown.fxml").openStream());
+        conD2 = loadBuff.getController();
+
+//        FXMLLoader loadDeBuff = new FXMLLoader();
+//        Parent debuffBar = loadDeBuff.load(getClass().getResource("/FXML/BuffCountDown.fxml").openStream());
+//        conD2 = loadDeBuff.getController();
+
+
         conLv.setLableText("Level");
 
         setBackground();
 
         UI.setAlignment(Pos.CENTER_LEFT);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(st, lv, startButton);//เพิ่มลงในpane
+        UI.getChildren().addAll(st, lv, startButton,buffBar);//เพิ่มลงในpane
 
         ROOT.getChildren().addAll(group,UI);
 
