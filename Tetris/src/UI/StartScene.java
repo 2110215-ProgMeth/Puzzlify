@@ -25,8 +25,8 @@ public class StartScene implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         translateTransition.setNode(gameIcon);
-        translateTransition.setDuration(Duration.millis(1000));
-        translateTransition.setByY(10);
+        translateTransition.setDuration(Duration.millis(2000));
+        translateTransition.setByY(25);
 
         translateTransition.setInterpolator(Interpolator.EASE_BOTH);
         translateTransition.setCycleCount(-1);

@@ -129,6 +129,7 @@ public class Tetris extends Application {
         clearLine = new AudioClip(this.getClass().getResource("/SFX/clearLine.wav").toExternalForm());
         bgSong = new AudioClip(this.getClass().getResource("/Totoro.mp3").toExternalForm());
         bgSong.setVolume(0.2);
+        bgSong.play();
 
         gamescene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
 
@@ -230,7 +231,6 @@ public class Tetris extends Application {
 
                 game = true;
 
-                bgSong.play();
                 fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
                 nextObj = Controller.makeRect();
 

@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="1010.0" fitWidth="780.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../UISprite/StartWallpaper.png" />
+            <Image url="@../UISprite/mainWall2.png" />
          </image>
       </ImageView>
       <ImageView fx:id="gameIcon" fitHeight="349.0" fitWidth="551.0" layoutX="120.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
