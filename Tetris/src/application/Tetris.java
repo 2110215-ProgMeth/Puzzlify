@@ -69,6 +69,9 @@ public class Tetris extends Application {
     public Button startButton = new Button("Let's play");
 
     public Button restartButton = new Button();
+
+    public ScoreBox conScore;
+    public ScoreBox conLv;
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
