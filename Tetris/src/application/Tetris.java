@@ -7,16 +7,20 @@ import java.util.TimerTask;
 
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
+import UI.ScoreBox;
 import Utils.sMode;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -25,6 +29,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import static javafx.fxml.FXMLLoader.load;
 
 
 public class Tetris extends Application {
@@ -55,11 +61,13 @@ public class Tetris extends Application {
     public static AudioClip rotateSound;
     public static AudioClip tap;
     public static AudioClip clearLine;
+
     public Button mainstartButton = new Button("Start");
     public Button mainhelpButton = new Button("Help");
     public Button mainexitButton = new Button("Exit");
     public Button helpBackmainBtn = new Button("Main-Menu");
     public Button startButton = new Button("Let's play");
+
     public Button restartButton = new Button();
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -104,19 +112,21 @@ public class Tetris extends Application {
         ROOT.setPadding(new Insets(10));
         group.setPadding(new Insets(2));
 
-        Text scoretext = new Text("Score: 0");//text for score
-        scoretext.setY(50);
-        scoretext.setX(XMAX + 5);//ไม่ให้ติดกับเส้นแบ่ง
-        Text level = new Text("Level: 0");//text for level
-        level.setY(100);
-        level.setX(XMAX + 5);
-        level.setFill(Color.GREEN);
+         FXMLLoader loadScoreText= new FXMLLoader();
+         Parent st = (Parent) loadScoreText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
+         conScore = loadScoreText.getController();
+
+        FXMLLoader loadLevelText= new FXMLLoader();
+        Parent lv = (Parent) loadLevelText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
+        conLv=  loadLevelText.getController();
+
+        conLv.setLableText("Level");
 
         setBackground();
 
         UI.setAlignment(Pos.CENTER_LEFT);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(scoretext, level,startButton);//เพิ่มลงในpane
+        UI.getChildren().addAll(st, lv, startButton);//เพิ่มลงในpane
 
         ROOT.getChildren().addAll(group,UI);
 
@@ -158,8 +168,6 @@ public class Tetris extends Application {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
 //                            if(DoubleNow){circle.setVisible(true);}
 //                            else{circle.setVisible(false);}
-                            scoretext.setText("Score: " + Integer.toString(score));
-                            level.setText("Lines: " + Integer.toString(linesNo));
                         }
                     }
                 });
@@ -576,6 +584,8 @@ public class Tetris extends Application {
                         a.activeSkill(group);
                     }
                 }
+                conLv.setScore(linesNo);
+                conScore.setScore(score);
             } while (lines.size() > 0);
         }
     }
@@ -706,6 +716,7 @@ public class Tetris extends Application {
         }
     }
     private void increaseScore(int base){
+        conScore.setScore(score);
         if(scoreMode == sMode.DEFAULT){
             System.out.println("You on Default Mode score+="+Integer.toString(base));
             score+=base;
