@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:controller="UI.ScoreText" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="LabelText" layoutX="220.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score :">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Text>
+      <Text fx:id="scoreText" layoutX="300.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="57.0">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
