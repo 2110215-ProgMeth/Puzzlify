@@ -33,7 +33,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="exitBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="670.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#OnExitBtnPressed" onMouseReleased="#OnExitBtnReleased">
+      <ImageView fx:id="exitBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="670.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#onExitBtnPressed" onMouseReleased="#onExitBtnReleased">
          <image>
             <Image url="@../UISprite/ExitBtn.png" />
          </image>

@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
@@ -32,19 +31,19 @@ public class ExitBox implements Initializable {
 
     public GridPane getBox(){return box;}
 
-    public void OnRestartBtnPressed(){
+    public void onRestartBtnPressed(){
         clickSound.play();restartBtn.setImage(reStartDis);
     }
-    public void OnRestartBtnReleased(){
+    public void onRestartBtnReleased(){
         restartBtn.setImage(restartImg);
     }
-    public void OnExitBtnPressed(){
+    public void onExitBtnPressed(){
         clickSound.play();
         exitBtn.setImage(exitDis);
         System.exit(0);
     }
 
-    public void OnPaneActive(int score, int line){
+    public void onPaneActive(int score, int line){
         setLineTxt(line);
         setScoreTxt(score);
         box.setVisible(true);

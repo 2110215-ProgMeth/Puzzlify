@@ -21,11 +21,11 @@ public class GuideScene implements Initializable {
     }
     public ImageView getBackBtn(){return backBtn;}
 
-    public void OnBackBtnPressed(){
+    public void onBackBtnPressed(){
         backBtn.setImage(backBtnDisImg);
         clickSound.play();
     }
-    public void OnBackBtnReleased(){
+    public void onBackBtnReleased(){
         backBtn.setImage(backBtnImg);
     }
 }

@@ -1,16 +1,13 @@
 package UI;
 
-import application.Tetris;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -55,15 +52,15 @@ public class StartScene implements Initializable {
         guideBtn.setImage(disGuideBtnImg);
         clickSound.play();
     }
-    public void OnGuidbtnReleased(){
+    public void onGuidBtnReleased(){
         guideBtn.setImage(guideBtnImg);
     }
-    public void OnExitBtnPressed(){
+    public void onExitBtnPressed(){
         exitBtn.setImage(disExitBtnImg);
         clickSound.play();
     }
 
-    public void OnExitBtnReleased(){
+    public void onExitBtnReleased(){
         Platform.exit();
         System.exit(0);
     }
@@ -75,6 +72,5 @@ public class StartScene implements Initializable {
     public ImageView getGuideBtn() {
         return guideBtn;
     }
-    public ImageView getExitBtn(){return exitBtn;}
 
 }

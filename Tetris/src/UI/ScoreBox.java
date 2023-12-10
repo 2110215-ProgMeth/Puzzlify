@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import javax.xml.crypto.dsig.TransformService;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -60,7 +59,7 @@ public class ScoreBox implements Initializable {
 
         scaleTransition.play();
     }
-    public void setLableText(String s){
+    public void setLabelText(String s){
         labelText.setText(s);
     }
 }

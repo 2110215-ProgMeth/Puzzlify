@@ -112,7 +112,7 @@ public class Tetris extends Application {
         });
 
         startSceneCon.getGuideBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
-            startSceneCon.OnGuidbtnReleased();
+            startSceneCon.onGuidBtnReleased();
             stage.setScene(helpscene);
         });
 
@@ -123,7 +123,7 @@ public class Tetris extends Application {
         guideROOT = loadGuideScene.load();
         guideSceneCon = loadGuideScene.getController();
         guideSceneCon.getBackBtn().addEventHandler(MouseEvent.MOUSE_PRESSED,e->{
-            guideSceneCon.OnBackBtnPressed();
+            guideSceneCon.onBackBtnPressed();
         });
         guideSceneCon.getBackBtn().addEventHandler(MouseEvent.MOUSE_RELEASED,e->{
             stage.setScene(mainscene);
@@ -142,10 +142,10 @@ public class Tetris extends Application {
         exitBoxCon = loadExitBox.getController();
 
         exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-            exitBoxCon.OnRestartBtnPressed();
+            exitBoxCon.onRestartBtnPressed();
         });
         exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
-            exitBoxCon.OnRestartBtnReleased();
+            exitBoxCon.onRestartBtnReleased();
             stage.setScene(mainscene);
             exitBoxCon.getBox().setVisible(false);
             restartGame();
@@ -186,13 +186,13 @@ public class Tetris extends Application {
          Parent st = (Parent) loadScoreText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
          conScore = loadScoreText.getController();
 
-         conScore.setLableText("Score:");
+         conScore.setLabelText("Score:");
 
         FXMLLoader loadLevelText= new FXMLLoader();
         Parent lv = (Parent) loadLevelText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
         conLv=  loadLevelText.getController();
 
-        conLv.setLableText("Level:");
+        conLv.setLabelText("Level:");
 
 
         setBackground();
@@ -251,7 +251,7 @@ public class Tetris extends Application {
 
                         if (top == 2) {//เกินไป 1 block = จบ
                             // GAME OVER
-                            exitBoxCon.OnPaneActive(score, linesNo);
+                            exitBoxCon.onPaneActive(score, linesNo);
                             game = false;//จบเกม
                         }
 
@@ -898,7 +898,7 @@ public class Tetris extends Application {
     private void restartGame() {
         Platform.runLater(() -> {
             //clear all
-            Tetris.clearGame(group);
+            clearGame(group);
             setScore(0);
             setLinesNo(0);
             conScore.setScore(0);

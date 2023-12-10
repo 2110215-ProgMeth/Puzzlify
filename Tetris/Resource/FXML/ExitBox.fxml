@@ -38,7 +38,7 @@
             <Insets right="30.0" />
          </GridPane.margin>
       </ImageView>
-      <ImageView fx:id="exitBtn" fitHeight="105.0" fitWidth="114.0" onMousePressed="#OnExitBtnPressed" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+      <ImageView fx:id="exitBtn" fitHeight="105.0" fitWidth="114.0" onMousePressed="#onExitBtnPressed" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
          <image>
             <Image url="@../UISprite/Exit.png" />
          </image>
