@@ -47,7 +47,6 @@ public class Tetris extends Application {
     public static Pane group = new Pane();//สร้างpane
     private static VBox UI = new VBox();
     private static HBox ROOT = new HBox();
-    private static VBox mainROOT = new VBox();
     private static Parent startROOT;
     private static VBox helpROOT = new VBox();
     private static Form object;//ของชิ้นปัจจุบัน
@@ -126,6 +125,7 @@ public class Tetris extends Application {
         hs = new AudioClip(this.getClass().getResource("/SFX/harddrop.mp3").toExternalForm());
         rotateSound = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
         tap = new AudioClip(this.getClass().getResource("/SFX/tap.mp3").toExternalForm());
+        tap.setVolume(0.2);
         clearLine = new AudioClip(this.getClass().getResource("/SFX/clearLine.wav").toExternalForm());
         bgSong = new AudioClip(this.getClass().getResource("/Totoro.mp3").toExternalForm());
         bgSong.setVolume(0.2);
