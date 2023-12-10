@@ -7,10 +7,7 @@ import java.util.TimerTask;
 
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
-import UI.CountDownBox;
-import UI.ExitBox;
-import UI.ScoreBox;
-import UI.StartScene;
+import UI.*;
 import Utils.Utils;
 import Utils.sMode;
 import javafx.animation.KeyFrame;
@@ -53,11 +50,12 @@ public class Tetris extends Application {
     private static StackPane gameLayerPane = new StackPane();
     private static HBox gameROOT = new HBox();
     private static Parent startROOT;
+    private static Parent guideROOT;
     private static VBox helpROOT = new VBox();
     private static Form object;//ของชิ้นปัจจุบัน
     private static Scene gamescene = new Scene(gameLayerPane, 480 + 300, 960+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     private static Scene mainscene ;
-    private static Scene helpscene = new Scene(helpROOT,480 + 300,960 + 50);
+    private static Scene helpscene;
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = false;//ยังรอดอยู่ไหม
@@ -85,6 +83,7 @@ public class Tetris extends Application {
     private ImageView nextObjImg = new ImageView(new Image("/BlockSprite/FormSprite/Transparent64x64.png"));
     public CountDownBox countDownCon;
     public ExitBox exitBoxCon;
+    public GuideScene guideSceneCon;
     private boolean isFristTime = false;
 
 
@@ -105,13 +104,23 @@ public class Tetris extends Application {
         startROOT = loadStartScene.load();
         startSceneCon = loadStartScene.getController();
 
+        FXMLLoader loadGuideScene = new FXMLLoader(getClass().getResource("/FXML/GuideScene.fxml"));
+        guideROOT = loadGuideScene.load();
+        guideSceneCon = loadGuideScene.getController();
+        guideSceneCon.getBackBtn().addEventHandler(MouseEvent.MOUSE_PRESSED,e->{
+            guideSceneCon.OnBackBtnPressed();
+        });
+        guideSceneCon.getBackBtn().addEventHandler(MouseEvent.MOUSE_RELEASED,e->{
+            stage.setScene(mainscene);
+        });
+        helpscene = new Scene(guideROOT,480 + 300,960 + 50);
+
         FXMLLoader loadCountDown = new FXMLLoader(getClass().getResource("/FXML/CountDownBox.fxml"));
         loadCountDown.load();
         countDownCon = loadCountDown.getController();
 
         FXMLLoader loadExitBox= new FXMLLoader(getClass().getResource("/FXML/ExitBox.fxml"));
         GridPane exitBox = loadExitBox.load();
-//        loadExitBox.load();
         exitBoxCon = loadExitBox.getController();
 
         exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
