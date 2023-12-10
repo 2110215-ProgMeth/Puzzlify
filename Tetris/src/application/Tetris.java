@@ -45,30 +45,31 @@ public class Tetris extends Application {
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตาราง
-    public static Pane group = new Pane();//สร้างpane
-    private static VBox UI = new VBox();
-    private static StackPane gameLayerPane = new StackPane();
-    private static HBox gameROOT = new HBox();
-    private static Parent startROOT;
-    private static Parent guideROOT;
-    private static VBox helpROOT = new VBox();
-    private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene gamescene = new Scene(gameLayerPane, 480 + 300, 960+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
-    private static Scene mainscene ;
-    private static Scene helpscene;
-    public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
-    private static int top = 0;//สำหรับดูว่าเกินหรือยัง
-    private static boolean game = false;//ยังรอดอยู่ไหม
-    private static Form nextObj ;//ของชิ้นต่อไป
-    private static int linesNo = 0;//จำนวนแถวที่deleteได้
-    public static int times = 0;//เวลาใช้มาคำนวณเวลาBuff
+
+    private Pane group = new Pane();//สร้างpane
+    private VBox UI = new VBox();
+    private StackPane gameLayerPane = new StackPane();
+    private HBox gameROOT = new HBox();
+    private Parent startROOT;
+    private Parent guideROOT;
+    private VBox helpROOT = new VBox();
+    private Form object;//ของชิ้นปัจจุบัน
+    private Scene gamescene ;//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private Scene mainscene ;
+    private Scene helpscene;
+    private int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
+    private int top = 0;//สำหรับดูว่าเกินหรือยัง
+    private boolean game = false;//ยังรอดอยู่ไหม
+    private Form nextObj ;//ของชิ้นต่อไป
+    private int linesNo = 0;//จำนวนแถวที่deleteได้
+
     public static sMode scoreMode = sMode.DEFAULT;//ใช้มาเลือกการเพิ่มคะแนน
 
-    public static AudioClip hs;
-    public AudioClip rotateSound;
-    public static AudioClip tap;
-    public AudioClip clearLine;
-    public AudioClip bgSong;
+    private AudioClip hs;
+    private AudioClip rotateSound;
+    private AudioClip tap;
+    private AudioClip clearLine;
+    private AudioClip bgSong;
 
     public Button helpBackmainBtn = new Button("Main-Menu");
 
@@ -182,8 +183,8 @@ public class Tetris extends Application {
         bgSong.setVolume(0.2);
         bgSong.play();
 
+        gamescene = new Scene(gameLayerPane, 480 + 300, 960+50);
         gamescene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
-
 
         stage.setResizable(false);
 
@@ -250,6 +251,7 @@ public class Tetris extends Application {
         gameLayerPane.getChildren().addAll(gameROOT,countDownCon.countDownImg,exitBox);
         exitBoxCon.getBox().setVisible(false);
         UI.setBackground(UIBackGound);
+
 
         stage.setScene(mainscene);
         stage.setTitle("Puzzlify");
@@ -331,7 +333,6 @@ public class Tetris extends Application {
 
 
     private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
-//        hitSound.play();
 
         gamescene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -731,15 +732,6 @@ public class Tetris extends Application {
             } while (lines.size() > 0);
         }
     }
-    public static void removeBlock(Node block){
-        if(block instanceof Block){
-            Block b = (Block)block;
-            int x = (int)b.getX();
-            int y = (int)b.getY();
-            MESH[x/SIZE][y/SIZE] = 0;
-            group.getChildren().remove(block);
-        }
-    }
 
     private void MoveDown(Rectangle rect) {
         if (rect.getY() + MOVE < YMAX)
@@ -884,11 +876,11 @@ public class Tetris extends Application {
         }
         rects.clear();
     }
-    private static void setScore(int i){
+    private void setScore(int i){
         if(i<0)i=0;
         score = 0;
     }
-    private static void setLinesNo(int i){
+    private void setLinesNo(int i){
         if(i<0)i=0;
         linesNo = 0;
     }

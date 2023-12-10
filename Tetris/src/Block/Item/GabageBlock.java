@@ -61,7 +61,7 @@ public class GabageBlock extends SpecialBlock implements Item {
                 i.setColor();
                 i.setX(x*SIZE);
                 i.setY(23*SIZE);
-                Tetris.group.getChildren().add(i);
+                pane.getChildren().add(i);
             }
         }
         MESH[emptyGrid][23]=0;
