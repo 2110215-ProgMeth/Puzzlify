@@ -67,13 +67,7 @@ public class Tetris extends Application {
     public AudioClip clearLine;
     public AudioClip bgSong;
 
-    public Button mainstartButton = new Button("Start");
-    public Button mainhelpButton = new Button("Help");
-    public Button mainexitButton = new Button("Exit");
     public Button helpBackmainBtn = new Button("Main-Menu");
-    public Button startButton = new Button("Let's play");
-
-    public Button restartButton = new Button();
 
     public ScoreBox conScore;
     public ScoreBox conLv;
