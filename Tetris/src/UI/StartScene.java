@@ -3,6 +3,7 @@ package UI;
 import application.Tetris;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -60,6 +61,11 @@ public class StartScene implements Initializable {
     public void OnExitBtnPressed(){
         exitBtn.setImage(disExitBtnImg);
         clickSound.play();
+    }
+
+    public void OnExitBtnReleased(){
+        Platform.exit();
+        System.exit(0);
     }
 
 

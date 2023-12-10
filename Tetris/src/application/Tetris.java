@@ -109,28 +109,16 @@ public class Tetris extends Application {
         startROOT = loadStartScene.load();
         startSceneCon = loadStartScene.getController();
 
-        startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-            startSceneCon.OnStartBtnPressed();
-        });
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             startSceneCon.OnStartBtnReleased();
             stage.setScene(gamescene);
         });
 
-        startSceneCon.getGuideBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-            startSceneCon.OnGuideBtnPressed();
-        });
         startSceneCon.getGuideBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             startSceneCon.OnGuidbtnReleased();
             stage.setScene(helpscene);
         });
 
-        startSceneCon.getExitBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-            startSceneCon.OnExitBtnPressed();
-        });
-        startSceneCon.getExitBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
-            System.exit(0);
-        });
 
         mainscene = new Scene(startROOT,480 + 300,960 + 50);
         // load guide scene
