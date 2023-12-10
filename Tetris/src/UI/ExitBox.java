@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 
@@ -12,7 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ExitBox implements Initializable {
-    @FXML private AnchorPane box;
+    @FXML private GridPane box;
     @FXML private Text ScoreTxt;
     @FXML private Text LineTxt;
     @FXML private ImageView restartBtn;
@@ -27,7 +28,7 @@ public class ExitBox implements Initializable {
         return restartBtn;
     }
 
-    public AnchorPane getBox(){return box;}
+    public GridPane getBox(){return box;}
 
 
     public void OnRestartBtnPressed(){

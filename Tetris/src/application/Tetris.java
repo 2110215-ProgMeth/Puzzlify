@@ -103,8 +103,8 @@ public class Tetris extends Application {
         countDownCon = loadCountDown.getController();
 
         FXMLLoader loadExitBox= new FXMLLoader(getClass().getResource("/FXML/ExitBox.fxml"));
-//        AnchorPane exitBox = loadExitBox.load();
-        loadExitBox.load();
+        GridPane exitBox = loadExitBox.load();
+//        loadExitBox.load();
         exitBoxCon = loadExitBox.getController();
 
         exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
@@ -217,7 +217,8 @@ public class Tetris extends Application {
         Background rootBackGound = new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
         gameROOT.setBackground(rootBackGound);
 
-        gameLayerPane.getChildren().addAll(gameROOT,countDownCon.countDownImg,exitBoxCon.getBox());
+        gameLayerPane.setAlignment(Pos.CENTER);
+        gameLayerPane.getChildren().addAll(gameROOT,countDownCon.countDownImg,exitBox);
         exitBoxCon.getBox().setVisible(false);
         UI.setBackground(UIBackGound);
 

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="1010.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.StartScene">
    <children>
-      <ImageView fitHeight="1010.0" fitWidth="780.0" pickOnBounds="true" preserveRatio="true" >
+      <ImageView fitHeight="1010.0" fitWidth="780.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../UISprite/mainWall2.png" />
          </image>
@@ -16,21 +17,42 @@
          <image>
             <Image url="@../UISprite/GameTitle.png" />
          </image>
+         <effect>
+            <Glow />
+         </effect>
       </ImageView>
       <ImageView fx:id="startBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../UISprite/StartButtonEnable.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Glow />
+         </effect>
       </ImageView>
       <ImageView fx:id="guideBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../UISprite/GuideBtn.png" />
          </image>
+         <effect>
+            <Glow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
       <ImageView fx:id="exitBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="670.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../UISprite/ExitBtn.png" />
          </image>
+         <effect>
+            <Glow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
    </children>
 </AnchorPane>
