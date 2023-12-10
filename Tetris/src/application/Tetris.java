@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
 import UI.CountDownBox;
+import UI.ExitBox;
 import UI.ScoreBox;
 import UI.StartScene;
 import Utils.Utils;
@@ -83,6 +84,7 @@ public class Tetris extends Application {
 
     private ImageView nextObjImg = new ImageView(new Image("/BlockSprite/FormSprite/Transparent64x64.png"));
     public CountDownBox countDownCon;
+    public ExitBox exitBoxCon;
     private boolean isFristTime = false;
 
 
@@ -99,6 +101,20 @@ public class Tetris extends Application {
         FXMLLoader loadCountDown = new FXMLLoader(getClass().getResource("/FXML/CountDownBox.fxml"));
         loadCountDown.load();
         countDownCon = loadCountDown.getController();
+
+        FXMLLoader loadExitBox= new FXMLLoader(getClass().getResource("/FXML/ExitBox.fxml"));
+        Parent exitBox = loadExitBox.load();
+        exitBoxCon = loadExitBox.getController();
+
+        exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+            exitBoxCon.OnRestartBtnPressed();
+        });
+        exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
+            exitBoxCon.OnRestartBtnReleased();
+            stage.setScene(mainscene);
+            exitBox.setVisible(false);
+            restartGame();
+        });
 
         mainscene = new Scene(startROOT,480 + 300,960 + 50);
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
@@ -199,7 +215,8 @@ public class Tetris extends Application {
         Background rootBackGound = new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
         gameROOT.setBackground(rootBackGound);
 
-        gameLayerPane.getChildren().addAll(gameROOT,countDownCon.countDownImg);
+        gameLayerPane.getChildren().addAll(gameROOT,exitBox,countDownCon.countDownImg);
+        exitBox.setVisible(false);
         UI.setBackground(UIBackGound);
 
         stage.setScene(mainscene);
@@ -222,22 +239,16 @@ public class Tetris extends Application {
 
                         if (top == 2) {//เกินไป 1 block = จบ
                             // GAME OVER
-                            Text over = new Text("GAME OVER");
-                            over.setFill(Color.RED);
-                            over.setStyle("-fx-font: 70 arial;");
-                            over.setY(250);
-                            over.setX(10);
-                            group.getChildren().add(over);
+                            exitBox.setVisible(true);
                             game = false;//จบเกม
-                            seconds=4;
                         }
 
                         // Exit
-                        if (top == 15) {//เวลาในการExitGame automatically
-                            System.out.println("Restarting App!");
-                            stage.setScene(mainscene);
-                            restartGame();
-                        }
+//                        if (top == 15) {//เวลาในการExitGame automatically
+//                            System.out.println("Restarting App!");
+//                            stage.setScene(mainscene);
+//                            restartGame();
+//                        }
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
                         }
@@ -854,6 +865,7 @@ public class Tetris extends Application {
             Tetris.cleargame(group);
             conScore.setScore(0);
             conLv.setScore(0);
+            seconds=4;
         });
     }
 
