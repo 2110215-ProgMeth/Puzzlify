@@ -83,6 +83,7 @@ public class Tetris extends Application {
 
     private ImageView nextObjImg = new ImageView(new Image("/BlockSprite/FormSprite/Transparent64x64.png"));
     public CountDownBox countDownCon;
+    
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart

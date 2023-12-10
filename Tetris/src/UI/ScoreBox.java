@@ -33,7 +33,7 @@ public class ScoreBox implements Initializable {
 
         translateTransitionS.setNode(scoreText);
         translateTransitionS.setDuration(Duration.millis(1000));
-        translateTransitionS.setByY(10);
+        translateTransitionS.setByY(13);
 
         translateTransitionS.setInterpolator(Interpolator.EASE_BOTH);
         translateTransitionS.setCycleCount(-1);
@@ -43,11 +43,11 @@ public class ScoreBox implements Initializable {
 
         scaleTransition.setNode(scoreText);
         scaleTransition.setDuration(Duration.millis(100));
-        scaleTransition.setFromX(.8);
-        scaleTransition.setToX(1.4);
+        scaleTransition.setFromX(.5);
+        scaleTransition.setToX(1);
 
-        scaleTransition.setFromY(.8);
-        scaleTransition.setToY(1.4);
+        scaleTransition.setFromY(.5);
+        scaleTransition.setToY(1);
 
         scaleTransition.setInterpolator(Interpolator.EASE_BOTH);
         scaleTransition.setAutoReverse(true);
