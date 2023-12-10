@@ -9,3 +9,7 @@
     -fx-alignment: center ;
     -fx-background-size: 420 840;
 }
+#GameROOT{
+    -fx-background-image: url("/UISprite/GameWall.png");
+    -fx-background-size: 780 1010;
+}

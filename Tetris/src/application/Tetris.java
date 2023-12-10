@@ -180,7 +180,7 @@ public class Tetris extends Application {
 
         gameROOT.setPadding(new Insets(20));
         gameROOT.setSpacing(10);
-        gameROOT.setAlignment(Pos.CENTER);
+        gameROOT.setAlignment(Pos.BOTTOM_CENTER);
 
          FXMLLoader loadScoreText= new FXMLLoader();
          Parent st = (Parent) loadScoreText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
@@ -221,11 +221,8 @@ public class Tetris extends Application {
         nextObjImg.setFitWidth(200);
         nextObjImg.setFitHeight(200);
 
-
-        Background rootBackGround= new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
-        gameROOT.setBackground(rootBackGround);
-
         gameROOT.getChildren().addAll(group,UI);
+        gameROOT.setId("GameROOT");
 
         gameLayerPane.setAlignment(Pos.CENTER);
         gameLayerPane.getChildren().addAll(gameROOT,countDownCon.countDownImg,exitBox);
