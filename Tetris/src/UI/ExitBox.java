@@ -23,13 +23,14 @@ public class ExitBox implements Initializable {
     private Image restartImg = new Image("/UISprite/ReStart.png");
     private Image exitDis = new Image("/UISprite/ExitDis.png");
 
+    private AudioClip looseSFX;
+
 
     public ImageView getRestartBtn() {
         return restartBtn;
     }
 
     public GridPane getBox(){return box;}
-
 
     public void OnRestartBtnPressed(){
         clickSound.play();restartBtn.setImage(reStartDis);
@@ -43,8 +44,14 @@ public class ExitBox implements Initializable {
         System.exit(0);
     }
 
+    public void OnPaneActive(){
+        looseSFX.play();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        looseSFX = new AudioClip(getClass().getResource("/SFX/loose1.mp3").toExternalForm());
+        looseSFX.setVolume(.2);
         clickSound = new AudioClip(getClass().getResource("/SFX/bui.wav").toExternalForm());
         clickSound.setVolume(.2);
     }

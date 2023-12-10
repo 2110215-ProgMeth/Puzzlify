@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -8,17 +10,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <GridPane fx:id="box" alignment="CENTER" prefHeight="369.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ExitBox">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.0" minWidth="10.0" prefWidth="254.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="247.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints maxHeight="127.0" minHeight="10.0" prefHeight="127.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="79.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="151.0" minHeight="10.0" prefHeight="151.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="187.0" minHeight="10.0" prefHeight="187.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="151.0" minHeight="10.0" prefHeight="104.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <ImageView fitHeight="375.0" fitWidth="488.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="4" GridPane.valignment="CENTER">
@@ -26,25 +27,43 @@
             <Image url="@../UISprite/GamOverMenu.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="restartBtn" fitHeight="121.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <ImageView fx:id="restartBtn" fitHeight="89.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
          <image>
             <Image url="@../UISprite/ReStart.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <GridPane.margin>
+            <Insets right="30.0" />
+         </GridPane.margin>
       </ImageView>
-      <ImageView fx:id="exitBtn" fitHeight="138.0" fitWidth="141.0" onMousePressed="#OnExitBtnPressed" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+      <ImageView fx:id="exitBtn" fitHeight="105.0" fitWidth="114.0" onMousePressed="#OnExitBtnPressed" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
          <image>
             <Image url="@../UISprite/Exit.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <GridPane.margin>
+            <Insets left="20.0" />
+         </GridPane.margin>
       </ImageView>
-      <Text fx:id="ScoreTxt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE :" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Text fx:id="ScoreTxt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE :" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <font>
             <Font size="33.0" />
          </font>
+         <GridPane.margin>
+            <Insets left="100.0" />
+         </GridPane.margin>
       </Text>
-      <Text fx:id="LineTxt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LINE :" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Text fx:id="LineTxt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LINE :" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="33.0" />
          </font>
+         <GridPane.margin>
+            <Insets left="100.0" />
+         </GridPane.margin>
       </Text>
    </children>
 </GridPane>

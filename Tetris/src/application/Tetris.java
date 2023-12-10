@@ -245,6 +245,7 @@ public class Tetris extends Application {
                             exitBoxCon.getBox().setVisible(true);
                             exitBoxCon.setScoreTxt(score);
                             exitBoxCon.setLineTxt(linesNo);
+                            exitBoxCon.OnPaneActive();
                             game = false;//จบเกม
                         }
 
