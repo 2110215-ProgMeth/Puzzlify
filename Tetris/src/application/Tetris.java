@@ -71,8 +71,6 @@ public class Tetris extends Application {
     private AudioClip clearLine;
     private AudioClip bgSong;
 
-    public Button helpBackmainBtn = new Button("Main-Menu");
-
     public ScoreBox conScore;
     public ScoreBox conLv;
 
@@ -89,6 +87,7 @@ public class Tetris extends Application {
 
     private BuffUI x2UI;
     private BuffUI d2UI;
+
 
 
     public static void main(String[] args) {//main
@@ -161,15 +160,6 @@ public class Tetris extends Application {
         startSceneCon.getExitBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             System.exit(0);
         });
-
-
-
-        helpBackmainBtn.setOnMouseClicked(e->{
-            stage.setScene(mainscene);
-        });
-        helpROOT.setAlignment(Pos.BOTTOM_CENTER);
-        helpROOT.setPadding(new Insets(20));
-        helpROOT.getChildren().add(helpBackmainBtn);
 
 
         hs = new AudioClip(this.getClass().getResource("/SFX/harddrop.mp3").toExternalForm());
@@ -315,14 +305,14 @@ public class Tetris extends Application {
                         fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
                         isFristTime = true;
                     }
-                    nextObj = Controller.makeRect();
+                    nextObj = Utils.makeRect();
 
                     Form a = nextObj;
                     group.getChildren().addAll(a.a, a.b, a.c, a.d);
 
                     moveOnKeyPress(a);
                     object = a;
-                    nextObj = Controller.makeRect();
+                    nextObj = Utils.makeRect();
                 }
             }
         });
@@ -340,7 +330,8 @@ public class Tetris extends Application {
                 if(!game){return;}
                 switch (event.getCode()) {
                     case RIGHT:
-                        Controller.MoveRight(form);
+//                        Controller.MoveRight(form);
+                        MoveRight(form);
                         break;
                     case DOWN:
                         MoveDown(form);
@@ -348,7 +339,8 @@ public class Tetris extends Application {
                         increaseScore(2);
                         break;
                     case LEFT:
-                        Controller.MoveLeft(form);
+//                        Controller.MoveLeft(form);
+                        MoveLeft(form);
                         break;
                     case UP:
                         MoveTurn(form);
@@ -361,6 +353,39 @@ public class Tetris extends Application {
         });
     }
 
+    public void MoveRight(Form form) {
+        if (form.a.getX() + MOVE <= XMAX - SIZE && form.b.getX() + MOVE <= XMAX - SIZE
+                && form.c.getX() + MOVE <= XMAX - SIZE && form.d.getX() + MOVE <= XMAX - SIZE) {
+            tap.play();
+            int movea = MESH[((int) form.a.getX() / SIZE) + 1][((int) form.a.getY() / SIZE)];
+            int moveb = MESH[((int) form.b.getX() / SIZE) + 1][((int) form.b.getY() / SIZE)];
+            int movec = MESH[((int) form.c.getX() / SIZE) + 1][((int) form.c.getY() / SIZE)];
+            int moved = MESH[((int) form.d.getX() / SIZE) + 1][((int) form.d.getY() / SIZE)];
+            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) { // every mesh is till empty? (0)
+                form.a.setX(form.a.getX() + MOVE);
+                form.b.setX(form.b.getX() + MOVE);
+                form.c.setX(form.c.getX() + MOVE);
+                form.d.setX(form.d.getX() + MOVE);
+            }
+        }
+    }
+
+    public void MoveLeft(Form form) {
+        if (form.a.getX() - MOVE >= 0 && form.b.getX() - MOVE >= 0 && form.c.getX() - MOVE >= 0
+                && form.d.getX() - MOVE >= 0) {
+            tap.play();
+            int movea = MESH[((int) form.a.getX() / SIZE) - 1][((int) form.a.getY() / SIZE)];
+            int moveb = MESH[((int) form.b.getX() / SIZE) - 1][((int) form.b.getY() / SIZE)];
+            int movec = MESH[((int) form.c.getX() / SIZE) - 1][((int) form.c.getY() / SIZE)];
+            int moved = MESH[((int) form.d.getX() / SIZE) - 1][((int) form.d.getY() / SIZE)];
+            if (movea == 0 && movea == moveb && moveb == movec && movec == moved) {
+                form.a.setX(form.a.getX() - MOVE);
+                form.b.setX(form.b.getX() - MOVE);
+                form.c.setX(form.c.getX() - MOVE);
+                form.d.setX(form.d.getX() - MOVE);
+            }
+        }
+    }
     private void MoveTurn(Form form) {//หมุน แต่ละแบบหมุนได้ 4 form มี 7 แบบ รวม 28 form
         rotateSound.play();
         int f = form.form;//แยกแต่ละrectangleมาเลื่อน
@@ -785,7 +810,7 @@ public class Tetris extends Application {
 
             // create next block
             Form a = nextObj;
-            nextObj = Controller.makeRect();
+            nextObj = Utils.makeRect();
             object = a;
             group.getChildren().addAll(a.a, a.b, a.c, a.d);
             moveOnKeyPress(a);
