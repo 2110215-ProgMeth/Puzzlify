@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+
+<ImageView id="countDownImg" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CountDownBox">
+   <image>
+      <Image url="@../UISprite/CountDown/3.png" />
+   </image>
+</ImageView>

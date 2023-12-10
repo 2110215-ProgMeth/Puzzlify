@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
 import UI.ButtonBox;
+import UI.CountDownBox;
 import UI.ScoreBox;
 import UI.StartScene;
 import Utils.Utils;
@@ -51,11 +52,12 @@ public class Tetris extends Application {
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
     public static Pane group = new Pane();//สร้างpane
     private static VBox UI = new VBox();
-    private static HBox ROOT = new HBox();
+    private static StackPane gameLayerPane = new StackPane();
+    private static HBox gameROOT = new HBox();
     private static Parent startROOT;
     private static VBox helpROOT = new VBox();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene gamescene = new Scene(ROOT, 480 + 300, 960+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene gamescene = new Scene(gameLayerPane, 480 + 300, 960+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     private static Scene mainscene ;
     private static Scene helpscene = new Scene(helpROOT,480 + 300,960 + 50);
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
@@ -77,14 +79,13 @@ public class Tetris extends Application {
     public ScoreBox conScore;
     public ScoreBox conLv;
 
-    public ButtonBox conStart;
     public StartScene startSceneCon;
     private final int startTime = 4;
     private int seconds = startTime;
     private Text count;
 
-
     private ImageView nextObjImg = new ImageView(new Image("/BlockSprite/FormSprite/Transparent64x64.png"));
+    public CountDownBox countDownCon;
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -95,6 +96,10 @@ public class Tetris extends Application {
         FXMLLoader loadStartScene = new FXMLLoader(getClass().getResource("/FXML/StartScene.fxml"));
         startROOT = loadStartScene.load();
         startSceneCon = loadStartScene.getController();
+
+        FXMLLoader loadCountDown = new FXMLLoader(getClass().getResource("/FXML/CountDownBox.fxml"));
+        loadCountDown.load();
+        countDownCon = loadCountDown.getController();
 
         mainscene = new Scene(startROOT,480 + 300,960 + 50);
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
@@ -149,9 +154,9 @@ public class Tetris extends Application {
         for (int[] a : MESH) {//unknowed
             Arrays.fill(a, 0);
         }
-        ROOT.setPadding(new Insets(20));
-        ROOT.setSpacing(10);
-        ROOT.setAlignment(Pos.CENTER);
+        gameROOT.setPadding(new Insets(20));
+        gameROOT.setSpacing(10);
+        gameROOT.setAlignment(Pos.CENTER);
 
          FXMLLoader loadScoreText= new FXMLLoader();
          Parent st = (Parent) loadScoreText.load(getClass().getResource("/FXML/ScoreBox.fxml").openStream());
@@ -165,12 +170,7 @@ public class Tetris extends Application {
 
         conLv.setLableText("Level:");
 
-        FXMLLoader loadStartButton = new FXMLLoader(getClass().getResource("/FXML/ButtonBox.fxml"));
-        ImageView startBtn = loadStartButton.load();
-        conStart = loadStartButton.getController();
 
-        conStart.setEnableButtonPath("/UISprite/StartButtonEnable.png");
-        conStart.setDisableButtonPath("/UISprite/StartButtonDisable.png");
 
 
         setBackground();
@@ -178,7 +178,7 @@ public class Tetris extends Application {
 
         UI.setAlignment(Pos.CENTER);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(nextObjImg,st, lv,count);//เพิ่มลงในpane
+        UI.getChildren().addAll(nextObjImg,st, lv);//เพิ่มลงในpane
         nextObjImg.setFitWidth(200);
         nextObjImg.setFitHeight(200);
 
@@ -188,11 +188,13 @@ public class Tetris extends Application {
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
 
 
-        ROOT.getChildren().addAll(group,UI);
+        gameROOT.getChildren().addAll(group,UI);
 
         Background UIBackGound= new Background(new BackgroundFill(Color.valueOf("#161A30"),CornerRadii.EMPTY,Insets.EMPTY));
         Background rootBackGound = new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
-        ROOT.setBackground(rootBackGound);
+        gameROOT.setBackground(rootBackGound);
+
+        gameLayerPane.getChildren().addAll(gameROOT,countDownCon.countDownImg);
         UI.setBackground(UIBackGound);
 
         stage.setScene(mainscene);
@@ -252,6 +254,8 @@ public class Tetris extends Application {
             public void handle(ActionEvent actionEvent) {
                 seconds--;
                 count.setText("Countdown :"+Integer.toString(seconds));
+                System.out.println(seconds);
+                countDownCon.CountDown((int)seconds);
                 if(seconds<=0){
                     time.stop();
                     game = true;
