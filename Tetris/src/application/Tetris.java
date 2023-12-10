@@ -12,8 +12,11 @@ import UI.ButtonBox;
 import UI.ScoreBox;
 import UI.StartScene;
 import Utils.sMode;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -33,6 +36,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import static javafx.fxml.FXMLLoader.load;
 
@@ -74,6 +78,9 @@ public class Tetris extends Application {
 
     public ButtonBox conStart;
     public StartScene startSceneCon;
+    private final int startTime = 5;
+    private int seconds = startTime;
+    private Text count;
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
@@ -164,10 +171,11 @@ public class Tetris extends Application {
 
 
         setBackground();
+        count = new Text("Countdown :");
 
         UI.setAlignment(Pos.CENTER);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(st, lv, startBtn);//เพิ่มลงในpane
+        UI.getChildren().addAll(st, lv, startBtn,count);//เพิ่มลงในpane
 
         ROOT.getChildren().addAll(group,UI);
         ROOT.setSpacing(20);
@@ -222,23 +230,40 @@ public class Tetris extends Application {
         startBtn.addEventHandler(MouseEvent.MOUSE_PRESSED,e->{
             if(!game){
                 conStart.mousePressed();
+                        game = true;
 
-                game = true;
+                        fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+                        nextObj = Controller.makeRect();
 
-                fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
-                nextObj = Controller.makeRect();
+                        Form a = nextObj;
+                        group.getChildren().addAll(a.a, a.b, a.c, a.d);
 
-                Form a = nextObj;
-                group.getChildren().addAll(a.a, a.b, a.c, a.d);
+                        moveOnKeyPress(a);
 
-                moveOnKeyPress(a);
-
-                object = a;
-                nextObj = Controller.makeRect();
-
+                        object = a;
+                    nextObj = Controller.makeRect();
             }
 
         });
+    }
+    public void countdown(){
+        Timeline time = new Timeline();
+        time.setCycleCount(Timeline.INDEFINITE);
+        if(time!=null){
+            time.stop();
+        }
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                seconds--;
+                count.setText("Countdown :"+Integer.toString(seconds));
+                if(seconds<=0){
+                    time.stop();
+                }
+            }
+        });
+        time.getKeyFrames().add(frame);
+        time.playFromStart();
     }
 
 
