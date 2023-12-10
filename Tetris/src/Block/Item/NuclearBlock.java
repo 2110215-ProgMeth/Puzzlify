@@ -8,8 +8,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-import static application.Tetris.MESH;
-import static application.Tetris.SIZE;
+import static application.Tetris.*;
 
 public class NuclearBlock extends SpecialBlock {
     private final int radius=2;
@@ -21,17 +20,7 @@ public class NuclearBlock extends SpecialBlock {
     @Override
     public void activeSkill(Pane pane) {
         System.out.println("I am Atomic!!!");
-        ArrayList<Node> rects = new ArrayList<Node>();
-        for (Node node : pane.getChildren()) {
-            if (node instanceof Block)
-                rects.add(node);
-        }
-        for (Node node : rects) {
-            Block a = (Block) node;
-            MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
-            pane.getChildren().remove(node);
-        }
-        rects.clear();
+        cleargame(pane);
     }
 
 

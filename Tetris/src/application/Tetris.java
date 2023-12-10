@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
@@ -8,7 +7,6 @@ import java.util.TimerTask;
 
 import Block.BasicStructure.Block;
 import Block.BasicStructure.Skillable;
-import UI.ButtonBox;
 import UI.CountDownBox;
 import UI.ScoreBox;
 import UI.StartScene;
@@ -34,7 +32,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -49,7 +46,7 @@ public class Tetris extends Application {
     public static final int SIZE = 35;//ขนาดblock
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
-    public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
+    public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตาราง
     public static Pane group = new Pane();//สร้างpane
     private static VBox UI = new VBox();
     private static StackPane gameLayerPane = new StackPane();
@@ -228,9 +225,9 @@ public class Tetris extends Application {
 
                         // Exit
                         if (top == 15) {//เวลาในการExitGame automatically
-                            System.exit(0);
+                            System.out.println("Restarting App!");
+                            restartGame();
                         }
-
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
                         }
@@ -818,6 +815,34 @@ public class Tetris extends Application {
         }
         System.out.println("Current Score :" + Integer.toString(score));
     }
-
+    public static void cleargame(Pane pane){
+        ArrayList<Node> rects = new ArrayList<Node>();
+        for (Node node : pane.getChildren()) {
+            if (node instanceof Block)
+                rects.add(node);
+        }
+        for (Node node : rects) {
+            Block a = (Block) node;
+            MESH[(int) a.getX() / SIZE][(int) a.getY() / SIZE] = 0;
+            pane.getChildren().remove(node);
+        }
+        rects.clear();
+    }
+    private static void setScore(int i){
+        if(i<0)i=0;
+        score = 0;
+    }
+    private static void setLinesNo(int i){
+        if(i<0)i=0;
+        linesNo = 0;
+    }
+    public void restartGame() {
+        Platform.runLater(() -> {
+            //clear all
+            Tetris.cleargame(group);
+            conScore.setScore(0);
+            conLv.setScore(0);
+        });
+    }
 
 }
