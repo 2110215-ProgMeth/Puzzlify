@@ -1,5 +1,6 @@
 package UI;
 
+import application.Tetris;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ public class StartScene implements Initializable {
     private AudioClip clickSound;
 
     private Image disStartBtnImg = new Image("/UISprite/StartButtonDisable.png");
+    private Image startBtnImg = new Image("/UISprite/StartButtonEnable.png");
     private Image disGuideBtnImg = new Image("/UISprite/GuideBtnDisable.png");
     private Image guideBtnImg = new Image("/UISprite/GuideBtn.png");
     private Image disExitBtnImg = new Image("/UISprite/ExitBtnDisable.png");
@@ -43,6 +45,10 @@ public class StartScene implements Initializable {
 
     public void OnStartBtnPressed(){
         startBtn.setImage(disStartBtnImg);
+        clickSound.play();
+    }
+    public void OnStartBtnReleased(){
+        startBtn.setImage(startBtnImg);
         clickSound.play();
     }
     public void OnGuideBtnPressed(){

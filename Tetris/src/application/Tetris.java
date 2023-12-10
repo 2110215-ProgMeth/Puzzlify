@@ -83,7 +83,8 @@ public class Tetris extends Application {
 
     private ImageView nextObjImg = new ImageView(new Image("/BlockSprite/FormSprite/Transparent64x64.png"));
     public CountDownBox countDownCon;
-    
+    private boolean isFristTime = false;
+
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -100,7 +101,13 @@ public class Tetris extends Application {
         countDownCon = loadCountDown.getController();
 
         mainscene = new Scene(startROOT,480 + 300,960 + 50);
+        startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+            startSceneCon.OnStartBtnPressed();
+            game = true;
+        });
+
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
+            startSceneCon.OnStartBtnReleased();
             stage.setScene(gamescene);
         });
 
@@ -227,6 +234,7 @@ public class Tetris extends Application {
                         // Exit
                         if (top == 15) {//เวลาในการExitGame automatically
                             System.out.println("Restarting App!");
+                            stage.setScene(mainscene);
                             restartGame();
                         }
                         if (game) {
@@ -257,8 +265,10 @@ public class Tetris extends Application {
                 if(seconds<=0){
                     time.stop();
                     game = true;
-
-                    fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+                    if(!isFristTime){
+                        fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+                        isFristTime = true;
+                    }
                     nextObj = Controller.makeRect();
 
                     Form a = nextObj;
