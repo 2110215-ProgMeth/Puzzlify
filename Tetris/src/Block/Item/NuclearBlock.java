@@ -5,6 +5,7 @@ import Block.BasicStructure.SpecialBlock;
 import Utils.Utils;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ public class NuclearBlock extends SpecialBlock {
     public NuclearBlock(double v1, double v2) {
         super(v1, v2);
         bt = Utils.BlockType.BOMB;
+        sfx = new AudioClip(this.getClass().getResource("/SFX/nuclear.wav").toExternalForm());
     }
 
     @Override

@@ -7,6 +7,7 @@ import Utils.Utils;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class JesusBlock extends SpecialBlock implements Item {
     public JesusBlock(double v1,double v2){
         super(v1,v2);
         bt = Utils.BlockType.JESUS;
+        sfx = new AudioClip(this.getClass().getResource("/SFX/jesus.wav").toExternalForm());
     }
 
     @Override

@@ -7,6 +7,7 @@ import Utils.Utils;
 import Utils.sMode;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.ImagePattern;
 
 import static application.Tetris.scoreMode;
@@ -15,6 +16,7 @@ public class HalfBlock extends SpecialBlock implements Buff {
     public HalfBlock(double v1,double v2){
         super(v1,v2);
         bt = Utils.BlockType.D2;
+        sfx = new AudioClip(this.getClass().getResource("/SFX/d2.wav").toExternalForm());
     }
     @Override
     public void activeSkill(Pane pane) {

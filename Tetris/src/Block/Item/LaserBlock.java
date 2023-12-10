@@ -6,6 +6,7 @@ import Utils.Utils;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class LaserBlock extends SpecialBlock {
     public LaserBlock(double v1,double v2){
         super(v1,v2);
         bt = Utils.BlockType.LASER;
+        sfx = new AudioClip(this.getClass().getResource("/SFX/laser.wav").toExternalForm());
     }
 
     @Override

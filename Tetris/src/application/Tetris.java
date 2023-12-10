@@ -86,6 +86,9 @@ public class Tetris extends Application {
     public GuideScene guideSceneCon;
     private boolean isFristTime = false;
 
+    private BuffUI x2UI;
+    private BuffUI d2UI;
+
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
@@ -215,17 +218,27 @@ public class Tetris extends Application {
         setBackground();
         count = new Text("Countdown :");
 
+        HBox buffUIGroup = new HBox();
+        buffUIGroup.setSpacing(10);
+        x2UI = new BuffUI("/BlockSprite/x2.png", "/BlockSprite/x2D.png");
+        x2UI.setFitWidth(50);
+        x2UI.setFitHeight(50);
+        d2UI = new BuffUI("/BlockSprite/d2.png", "/BlockSprite/d2d.png");
+        d2UI.setFitWidth(50);
+        d2UI.setFitHeight(50);
+        buffUIGroup.getChildren().addAll(x2UI,d2UI);
+
         UI.setAlignment(Pos.TOP_CENTER);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(nextObjImg,st, lv);//เพิ่มลงในpane
+        UI.getChildren().addAll(nextObjImg,st, lv,buffUIGroup);//เพิ่มลงในpane
         nextObjImg.setFitWidth(200);
         nextObjImg.setFitHeight(200);
+
 
         UI.setSpacing(10);
         UI.setMaxHeight(YMAX);
         UI.setBorder(new Border(new BorderStroke(Color.WHITESMOKE,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
-
 
         gameROOT.getChildren().addAll(group,UI);
 
@@ -268,6 +281,9 @@ public class Tetris extends Application {
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
                         }
+
+                        x2UI.isActive(scoreMode == sMode.DOUBLE);
+                        d2UI.isActive(scoreMode == sMode.HALF);
                     }
                 });
             }
