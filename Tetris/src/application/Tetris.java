@@ -94,6 +94,13 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        stage.setOnCloseRequest(e->{
+            Platform.exit();
+            System.exit(0);
+            bgSong.stop();
+        });
+
         FXMLLoader loadStartScene = new FXMLLoader(getClass().getResource("/FXML/StartScene.fxml"));
         startROOT = loadStartScene.load();
         startSceneCon = loadStartScene.getController();
