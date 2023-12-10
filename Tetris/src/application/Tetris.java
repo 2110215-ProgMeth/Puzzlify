@@ -283,7 +283,6 @@ public class Tetris extends Application {
                     group.getChildren().addAll(a.a, a.b, a.c, a.d);
 
                     moveOnKeyPress(a);
-
                     object = a;
                     nextObj = Controller.makeRect();
                 }
@@ -297,6 +296,7 @@ public class Tetris extends Application {
 
     private void moveOnKeyPress(Form form) {//แต่ละอันทำอะไรบ้าง
 //        hitSound.play();
+
         gamescene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -859,6 +859,8 @@ public class Tetris extends Application {
         Platform.runLater(() -> {
             //clear all
             Tetris.cleargame(group);
+            setScore(0);
+            setLinesNo(0);
             conScore.setScore(0);
             conLv.setScore(0);
             seconds=4;
