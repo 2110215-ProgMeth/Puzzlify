@@ -9,9 +9,8 @@ import javafx.scene.media.AudioClip;
 
 public class DoubleBlock extends SpecialBlock implements Buff {
     public DoubleBlock(double v1,double v2){
-        super(v1,v2);
+        super(v1,v2,"x2");
         bt = Utils.BlockType.X2;
-        sfx = new AudioClip(this.getClass().getResource("/SFX/x2.wav").toExternalForm());
     }
 
     @Override

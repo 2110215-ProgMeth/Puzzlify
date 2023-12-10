@@ -18,9 +18,8 @@ import static application.Tetris.SIZE;
 
 public class JesusBlock extends SpecialBlock implements Item {
     public JesusBlock(double v1,double v2){
-        super(v1,v2);
+        super(v1,v2,"jesus");
         bt = Utils.BlockType.JESUS;
-        sfx = new AudioClip(this.getClass().getResource("/SFX/jesus.wav").toExternalForm());
     }
 
     @Override

@@ -16,9 +16,8 @@ import static application.Tetris.SIZE;
 
 public class LaserBlock extends SpecialBlock {
     public LaserBlock(double v1,double v2){
-        super(v1,v2);
+        super(v1,v2,"laser");
         bt = Utils.BlockType.LASER;
-        sfx = new AudioClip(this.getClass().getResource("/SFX/laser.wav").toExternalForm());
     }
 
     @Override

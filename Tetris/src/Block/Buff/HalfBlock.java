@@ -14,9 +14,8 @@ import static application.Tetris.scoreMode;
 
 public class HalfBlock extends SpecialBlock implements Buff {
     public HalfBlock(double v1,double v2){
-        super(v1,v2);
+        super(v1,v2, "d2");
         bt = Utils.BlockType.D2;
-        sfx = new AudioClip(this.getClass().getResource("/SFX/d2.wav").toExternalForm());
     }
     @Override
     public void activeSkill(Pane pane) {

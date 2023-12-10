@@ -15,8 +15,6 @@ public abstract class Block extends Rectangle {
         if(this.bt == Utils.BlockType.NULL){this.bt = bt;}
     }
 
-    public Utils.BlockType getBlockType(){return bt;}
-
     public void setColor() {
         Image img = new Image(Utils.getBlockSpritePath(this.bt));
         this.setFill(new ImagePattern(img));

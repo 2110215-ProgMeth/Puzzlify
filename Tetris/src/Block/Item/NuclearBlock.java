@@ -14,9 +14,8 @@ import static application.Tetris.*;
 public class NuclearBlock extends SpecialBlock {
     private final int radius=2;
     public NuclearBlock(double v1, double v2) {
-        super(v1, v2);
+        super(v1, v2,"nuclear");
         bt = Utils.BlockType.BOMB;
-        sfx = new AudioClip(this.getClass().getResource("/SFX/nuclear.wav").toExternalForm());
     }
 
     @Override

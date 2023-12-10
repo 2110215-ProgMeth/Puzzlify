@@ -15,9 +15,8 @@ import static application.Tetris.SIZE;
 
 public class GabageBlock extends SpecialBlock implements Item {
     public GabageBlock(double v1, double v2){
-        super(v1,v2);
+        super(v1,v2, "garbage_out_large");
         bt = Utils.BlockType.GARBAGE;
-        sfx = new AudioClip(this.getClass().getResource("/SFX/garbage_out_large.wav").toExternalForm());
     }
 
     @Override

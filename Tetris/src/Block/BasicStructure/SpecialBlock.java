@@ -8,9 +8,9 @@ import javafx.scene.paint.ImagePattern;
 public abstract class SpecialBlock extends Block implements Skillable{
     protected AudioClip sfx ;
 
-   public SpecialBlock(double v1, double v2) {
+   public SpecialBlock(double v1, double v2, String sfxName) {
         super(v1, v2);
-       sfx = new AudioClip(this.getClass().getResource("/SFX/x2.wav").toExternalForm());
+       sfx = new AudioClip(this.getClass().getResource("/SFX/" + sfxName+ ".wav").toExternalForm());
        sfx.setVolume(.2);
    }
 
