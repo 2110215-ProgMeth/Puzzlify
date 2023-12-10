@@ -49,7 +49,6 @@ public class StartScene implements Initializable {
     }
     public void OnStartBtnReleased(){
         startBtn.setImage(startBtnImg);
-        clickSound.play();
     }
     public void OnGuideBtnPressed(){
         guideBtn.setImage(disGuideBtnImg);

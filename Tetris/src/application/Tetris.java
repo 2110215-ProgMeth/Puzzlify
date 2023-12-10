@@ -240,15 +240,11 @@ public class Tetris extends Application {
                         if (top == 2) {//เกินไป 1 block = จบ
                             // GAME OVER
                             exitBox.setVisible(true);
+                            exitBoxCon.setScoreTxt(score);
+                            exitBoxCon.setLineTxt(linesNo);
                             game = false;//จบเกม
                         }
 
-                        // Exit
-//                        if (top == 15) {//เวลาในการExitGame automatically
-//                            System.out.println("Restarting App!");
-//                            stage.setScene(mainscene);
-//                            restartGame();
-//                        }
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
                         }

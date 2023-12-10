@@ -18,12 +18,12 @@
             <Image url="@../UISprite/Exit.png" />
          </image>
       </ImageView>
-      <Text id="ScoreTxt" fill="WHITE" layoutX="135.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE :">
+      <Text fx:id="ScoreTxt" fill="WHITE" layoutX="135.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE :">
          <font>
             <Font size="33.0" />
          </font>
       </Text>
-      <Text id="LineTxt" fill="WHITE" layoutX="135.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LINE :">
+      <Text fx:id="LineTxt" fill="WHITE" layoutX="135.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LINE :">
          <font>
             <Font size="33.0" />
          </font>
