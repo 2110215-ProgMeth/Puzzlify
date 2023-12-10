@@ -44,7 +44,10 @@ public class ExitBox implements Initializable {
         System.exit(0);
     }
 
-    public void OnPaneActive(){
+    public void OnPaneActive(int score, int line){
+        setLineTxt(line);
+        setScoreTxt(score);
+        box.setVisible(true);
         looseSFX.play();
     }
 
@@ -54,6 +57,7 @@ public class ExitBox implements Initializable {
         looseSFX.setVolume(.2);
         clickSound = new AudioClip(getClass().getResource("/SFX/bui.wav").toExternalForm());
         clickSound.setVolume(.2);
+        box.setVisible(false);
     }
     public void setScoreTxt(int score){
         ScoreTxt.setText("Score: "+ score);

@@ -35,7 +35,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static javafx.fxml.FXMLLoader.load;
 
 
 public class Tetris extends Application {
@@ -77,16 +76,16 @@ public class Tetris extends Application {
     public StartScene startSceneCon;
     private final int startTime = 4;
     private int seconds = startTime;
-    private Text count;
 
     private ImageView nextObjImg = new ImageView(new Image("/BlockSprite/FormSprite/Transparent64x64.png"));
     public CountDownBox countDownCon;
     public ExitBox exitBoxCon;
     public GuideScene guideSceneCon;
-    private boolean isFristTime = false;
 
     private BuffUI x2UI;
     private BuffUI d2UI;
+
+    private boolean isFirstTime = false;
 
 
 
@@ -102,45 +101,17 @@ public class Tetris extends Application {
             System.exit(0);
             bgSong.stop();
         });
+        stage.setResizable(false);
 
+        // FXML LOADER
+        // load start scene
         FXMLLoader loadStartScene = new FXMLLoader(getClass().getResource("/FXML/StartScene.fxml"));
         startROOT = loadStartScene.load();
         startSceneCon = loadStartScene.getController();
 
-        FXMLLoader loadGuideScene = new FXMLLoader(getClass().getResource("/FXML/GuideScene.fxml"));
-        guideROOT = loadGuideScene.load();
-        guideSceneCon = loadGuideScene.getController();
-        guideSceneCon.getBackBtn().addEventHandler(MouseEvent.MOUSE_PRESSED,e->{
-            guideSceneCon.OnBackBtnPressed();
-        });
-        guideSceneCon.getBackBtn().addEventHandler(MouseEvent.MOUSE_RELEASED,e->{
-            stage.setScene(mainscene);
-        });
-        helpscene = new Scene(guideROOT,480 + 300,960 + 50);
-
-        FXMLLoader loadCountDown = new FXMLLoader(getClass().getResource("/FXML/CountDownBox.fxml"));
-        loadCountDown.load();
-        countDownCon = loadCountDown.getController();
-
-        FXMLLoader loadExitBox= new FXMLLoader(getClass().getResource("/FXML/ExitBox.fxml"));
-        GridPane exitBox = loadExitBox.load();
-        exitBoxCon = loadExitBox.getController();
-
-        exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-            exitBoxCon.OnRestartBtnPressed();
-        });
-        exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
-            exitBoxCon.OnRestartBtnReleased();
-            stage.setScene(mainscene);
-            exitBoxCon.getBox().setVisible(false);
-            restartGame();
-        });
-
-        mainscene = new Scene(startROOT,480 + 300,960 + 50);
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
             startSceneCon.OnStartBtnPressed();
         });
-
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             startSceneCon.OnStartBtnReleased();
             stage.setScene(gamescene);
@@ -161,7 +132,43 @@ public class Tetris extends Application {
             System.exit(0);
         });
 
+        mainscene = new Scene(startROOT,480 + 300,960 + 50);
+        // load guide scene
+        FXMLLoader loadGuideScene = new FXMLLoader(getClass().getResource("/FXML/GuideScene.fxml"));
+        guideROOT = loadGuideScene.load();
+        guideSceneCon = loadGuideScene.getController();
+        guideSceneCon.getBackBtn().addEventHandler(MouseEvent.MOUSE_PRESSED,e->{
+            guideSceneCon.OnBackBtnPressed();
+        });
+        guideSceneCon.getBackBtn().addEventHandler(MouseEvent.MOUSE_RELEASED,e->{
+            stage.setScene(mainscene);
+        });
 
+        helpscene = new Scene(guideROOT,480 + 300,960 + 50);
+
+        // load countdown
+        FXMLLoader loadCountDown = new FXMLLoader(getClass().getResource("/FXML/CountDownBox.fxml"));
+        loadCountDown.load();
+        countDownCon = loadCountDown.getController();
+
+        // load exit box
+        FXMLLoader loadExitBox= new FXMLLoader(getClass().getResource("/FXML/ExitBox.fxml"));
+        GridPane exitBox = loadExitBox.load();
+        exitBoxCon = loadExitBox.getController();
+
+        exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+            exitBoxCon.OnRestartBtnPressed();
+        });
+        exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
+            exitBoxCon.OnRestartBtnReleased();
+            stage.setScene(mainscene);
+            exitBoxCon.getBox().setVisible(false);
+            restartGame();
+        });
+
+
+
+        // load sound
         hs = new AudioClip(this.getClass().getResource("/SFX/harddrop.mp3").toExternalForm());
         hs.setVolume(0.2);
         rotateSound = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
@@ -176,7 +183,6 @@ public class Tetris extends Application {
         gamescene = new Scene(gameLayerPane, 480 + 300, 960+50);
         gamescene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
 
-        stage.setResizable(false);
 
         group.setId("GamePane");
         group.setPrefWidth(XMAX);
@@ -184,9 +190,9 @@ public class Tetris extends Application {
         group.setPadding(new Insets(20));
 
 
-        for (int[] a : MESH) {//unknowed
-            Arrays.fill(a, 0);
-        }
+        for (int[] a : MESH) {Arrays.fill(a, 0);}
+
+
         gameROOT.setPadding(new Insets(20));
         gameROOT.setSpacing(10);
         gameROOT.setAlignment(Pos.CENTER);
@@ -204,10 +210,7 @@ public class Tetris extends Application {
         conLv.setLableText("Level:");
 
 
-
-
         setBackground();
-        count = new Text("Countdown :");
 
         HBox buffUIGroup = new HBox();
         buffUIGroup.setSpacing(10);
@@ -221,26 +224,26 @@ public class Tetris extends Application {
 
         UI.setAlignment(Pos.TOP_CENTER);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(nextObjImg,st, lv,buffUIGroup);//เพิ่มลงในpane
-        nextObjImg.setFitWidth(200);
-        nextObjImg.setFitHeight(200);
-
-
         UI.setSpacing(10);
         UI.setMaxHeight(YMAX);
         UI.setBorder(new Border(new BorderStroke(Color.WHITESMOKE,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+        Background UIBackGound= new Background(new BackgroundFill(Color.valueOf("#161A30"),CornerRadii.EMPTY,Insets.EMPTY));
+        UI.setBackground(UIBackGound);
+
+        UI.getChildren().addAll(nextObjImg,st, lv,buffUIGroup);//เพิ่มลงในpane
+
+        nextObjImg.setFitWidth(200);
+        nextObjImg.setFitHeight(200);
+
+
+        Background rootBackGround= new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
+        gameROOT.setBackground(rootBackGround);
 
         gameROOT.getChildren().addAll(group,UI);
 
-        Background UIBackGound= new Background(new BackgroundFill(Color.valueOf("#161A30"),CornerRadii.EMPTY,Insets.EMPTY));
-        Background rootBackGound = new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
-        gameROOT.setBackground(rootBackGound);
-
         gameLayerPane.setAlignment(Pos.CENTER);
         gameLayerPane.getChildren().addAll(gameROOT,countDownCon.countDownImg,exitBox);
-        exitBoxCon.getBox().setVisible(false);
-        UI.setBackground(UIBackGound);
 
 
         stage.setScene(mainscene);
@@ -263,10 +266,7 @@ public class Tetris extends Application {
 
                         if (top == 2) {//เกินไป 1 block = จบ
                             // GAME OVER
-                            exitBoxCon.getBox().setVisible(true);
-                            exitBoxCon.setScoreTxt(score);
-                            exitBoxCon.setLineTxt(linesNo);
-                            exitBoxCon.OnPaneActive();
+                            exitBoxCon.OnPaneActive(score, linesNo);
                             game = false;//จบเกม
                         }
 
@@ -280,12 +280,14 @@ public class Tetris extends Application {
                 });
             }
         };
+
+
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
             startSceneCon.OnStartBtnPressed();
             countdown(fall, task);
         });
     }
-    public void countdown(Timer fall, TimerTask task){
+    private void countdown(Timer fall, TimerTask task){
         Timeline time = new Timeline();
         time.setCycleCount(Timeline.INDEFINITE);
         if(time!=null){
@@ -295,15 +297,14 @@ public class Tetris extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 seconds--;
-                count.setText("Countdown :"+Integer.toString(seconds));
                 System.out.println(seconds);
                 countDownCon.CountDown((int)seconds);
                 if(seconds<=0){
                     time.stop();
                     game = true;
-                    if(!isFristTime){
+                    if(!isFirstTime){
                         fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
-                        isFristTime = true;
+                        isFirstTime= true;
                     }
                     nextObj = Utils.makeRect();
 
@@ -353,7 +354,7 @@ public class Tetris extends Application {
         });
     }
 
-    public void MoveRight(Form form) {
+    private void MoveRight(Form form) {
         if (form.a.getX() + MOVE <= XMAX - SIZE && form.b.getX() + MOVE <= XMAX - SIZE
                 && form.c.getX() + MOVE <= XMAX - SIZE && form.d.getX() + MOVE <= XMAX - SIZE) {
             tap.play();
@@ -370,7 +371,7 @@ public class Tetris extends Application {
         }
     }
 
-    public void MoveLeft(Form form) {
+    private void MoveLeft(Form form) {
         if (form.a.getX() - MOVE >= 0 && form.b.getX() - MOVE >= 0 && form.c.getX() - MOVE >= 0
                 && form.d.getX() - MOVE >= 0) {
             tap.play();
@@ -909,7 +910,7 @@ public class Tetris extends Application {
         if(i<0)i=0;
         linesNo = 0;
     }
-    public void restartGame() {
+    private void restartGame() {
         Platform.runLater(() -> {
             //clear all
             Tetris.cleargame(group);
