@@ -229,6 +229,7 @@ public class Tetris extends Application {
                             over.setX(10);
                             group.getChildren().add(over);
                             game = false;//จบเกม
+                            seconds=4;
                         }
 
                         // Exit
