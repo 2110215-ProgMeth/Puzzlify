@@ -11,6 +11,7 @@ import Block.BasicStructure.Skillable;
 import UI.ButtonBox;
 import UI.ScoreBox;
 import UI.StartScene;
+import Utils.Utils;
 import Utils.sMode;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -43,8 +44,8 @@ import static javafx.fxml.FXMLLoader.load;
 
 public class Tetris extends Application {
     //variable ต่างๆ
-    public static final int MOVE = 40;//เคลื่อนที่ครั้งละblock
-    public static final int SIZE = 40;//ขนาดblock
+    public static final int MOVE = 35;//เคลื่อนที่ครั้งละblock
+    public static final int SIZE = 35;//ขนาดblock
     public static int XMAX = SIZE * 12;//ความยาวแกนxของช่องเล่นเกม
     public static int YMAX = SIZE * 24;//ความยาวแกนyของช่องเล่น
     public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];//เป็นการตีตารางมั้ง??
@@ -54,9 +55,9 @@ public class Tetris extends Application {
     private static Parent startROOT;
     private static VBox helpROOT = new VBox();
     private static Form object;//ของชิ้นปัจจุบัน
-    private static Scene gamescene = new Scene(ROOT, XMAX + 300, YMAX+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
+    private static Scene gamescene = new Scene(ROOT, 480 + 300, 960+50);//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     private static Scene mainscene ;
-    private static Scene helpscene = new Scene(helpROOT,XMAX + 300,YMAX + 50);
+    private static Scene helpscene = new Scene(helpROOT,480 + 300,960 + 50);
     public static int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private static int top = 0;//สำหรับดูว่าเกินหรือยัง
     private static boolean game = false;//ยังรอดอยู่ไหม
@@ -78,9 +79,13 @@ public class Tetris extends Application {
 
     public ButtonBox conStart;
     public StartScene startSceneCon;
-    private final int startTime = 5;
+    private final int startTime = 4;
     private int seconds = startTime;
     private Text count;
+
+
+    private ImageView nextObjImg = new ImageView(new Image("/BlockSprite/FormSprite/Transparent64x64.png"));
+
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
     }
@@ -91,10 +96,7 @@ public class Tetris extends Application {
         startROOT = loadStartScene.load();
         startSceneCon = loadStartScene.getController();
 
-        mainscene = new Scene(startROOT,XMAX + 300,YMAX + 50);
-        startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-            startSceneCon.OnStartBtnPressed();
-        });
+        mainscene = new Scene(startROOT,480 + 300,960 + 50);
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             stage.setScene(gamescene);
         });
@@ -113,6 +115,7 @@ public class Tetris extends Application {
         startSceneCon.getExitBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             System.exit(0);
         });
+
 
 
         helpBackmainBtn.setOnMouseClicked(e->{
@@ -139,15 +142,15 @@ public class Tetris extends Application {
 
         group.setId("GamePane");
         group.setPrefWidth(XMAX);
-        group.setPrefHeight(YMAX);
+        group.setMaxHeight(YMAX);
         group.setPadding(new Insets(20));
-
 
 
         for (int[] a : MESH) {//unknowed
             Arrays.fill(a, 0);
         }
         ROOT.setPadding(new Insets(20));
+        ROOT.setSpacing(10);
         ROOT.setAlignment(Pos.CENTER);
 
          FXMLLoader loadScoreText= new FXMLLoader();
@@ -175,10 +178,17 @@ public class Tetris extends Application {
 
         UI.setAlignment(Pos.CENTER);
         UI.setPadding(new Insets(10));
-        UI.getChildren().addAll(st, lv, startBtn,count);//เพิ่มลงในpane
+        UI.getChildren().addAll(nextObjImg,st, lv,count);//เพิ่มลงในpane
+        nextObjImg.setFitWidth(200);
+        nextObjImg.setFitHeight(200);
+
+        UI.setSpacing(10);
+        UI.setMaxHeight(YMAX);
+        UI.setBorder(new Border(new BorderStroke(Color.WHITESMOKE,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5))));
+
 
         ROOT.getChildren().addAll(group,UI);
-        ROOT.setSpacing(20);
 
         Background UIBackGound= new Background(new BackgroundFill(Color.valueOf("#161A30"),CornerRadii.EMPTY,Insets.EMPTY));
         Background rootBackGound = new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
@@ -190,11 +200,12 @@ public class Tetris extends Application {
         stage.show();
 
         Timer fall = new Timer();
+
         TimerTask task = new TimerTask() {
             public void run() {
                 Platform.runLater(new Runnable() {//ใช้เพราะมีการเปลี่ยน user interface
                     public void run() {
-
+                        nextObjImg.setImage(new Image(Utils.getFormSpritePath(nextObj.getBlockType())));
 
                         if (object.a.getY() == 0 || object.b.getY() == 0 || object.c.getY() == 0
                                 || object.d.getY() == 0)//ถึงแตะบนสุด + 1
@@ -220,33 +231,17 @@ public class Tetris extends Application {
 
                         if (game) {
                             MoveDown(object);//เลื่อนลงเรื่อยๆ เสมออยู่แล้ว
-//                            if(DoubleNow){circle.setVisible(true);}
-//                            else{circle.setVisible(false);}
                         }
                     }
                 });
             }
         };
-        startBtn.addEventHandler(MouseEvent.MOUSE_PRESSED,e->{
-            if(!game){
-                conStart.mousePressed();
-                        game = true;
-
-                        fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
-                        nextObj = Controller.makeRect();
-
-                        Form a = nextObj;
-                        group.getChildren().addAll(a.a, a.b, a.c, a.d);
-
-                        moveOnKeyPress(a);
-
-                        object = a;
-                    nextObj = Controller.makeRect();
-            }
-
+        startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+            startSceneCon.OnStartBtnPressed();
+            countdown(fall, task);
         });
     }
-    public void countdown(){
+    public void countdown(Timer fall, TimerTask task){
         Timeline time = new Timeline();
         time.setCycleCount(Timeline.INDEFINITE);
         if(time!=null){
@@ -259,6 +254,18 @@ public class Tetris extends Application {
                 count.setText("Countdown :"+Integer.toString(seconds));
                 if(seconds<=0){
                     time.stop();
+                    game = true;
+
+                    fall.schedule(task, 0, 300);//period = เว้นว่างระหว่างรอบ จะtaskซ้ำๆหลังจากdelay
+                    nextObj = Controller.makeRect();
+
+                    Form a = nextObj;
+                    group.getChildren().addAll(a.a, a.b, a.c, a.d);
+
+                    moveOnKeyPress(a);
+
+                    object = a;
+                    nextObj = Controller.makeRect();
                 }
             }
         });
@@ -786,8 +793,6 @@ public class Tetris extends Application {
         for(int i =0;i<12;i++){
             for(int j = 0;j<24;j++){
                 Rectangle wall = new Rectangle(SIZE-3,SIZE-3);
-//                wall.setFill(new ImagePattern(new Image("/BlockSprite/wall.png")));
-//                wall.setStyle("-fx-fill:rgb(22, 26, 48); -fx-stroke: rgb(10,20, 40); -fx-stroke-width: 1");
                 wall.setStyle("-fx-fill:transparent; -fx-stroke: rgb(10,20, 40); -fx-stroke-width: 1");
                 wall.setX(i*SIZE);
                 wall.setY(j*SIZE);

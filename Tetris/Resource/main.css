@@ -7,7 +7,6 @@
 
 #GamePane{
     -fx-background-image: url("WallPaper2.png");
-    -fx-background-size: 480 960;
-    -fx-background-position: center center;
-    -fx-background-repeat: stretch;
+    -fx-alignment: center ;
+    -fx-background-size: 420 840;
 }
