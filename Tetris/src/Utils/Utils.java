@@ -57,5 +57,17 @@ public class Utils {
             default -> "BlockSprite/yellow.png";
         };
     }
+    public static String getFormSpritePath(BlockType bt){
+        return switch (bt) {
+            case I -> "BlockSprite/FormSprite/I.png";
+            case J -> "BlockSprite/FormSprite/J.png";
+            case O -> "BlockSprite/FormSprite/O.png";
+            case S -> "BlockSprite/FormSprite/S.png";
+            case Z -> "BlockSprite/FormSprite/Z.png";
+            case T -> "BlockSprite/FormSprite/T.png";
+            case L -> "BlockSprite/FormSprite/L.png";
+            default -> "BlockSprite/FormSprite/J.png";
+        };
+    }
 
 }
