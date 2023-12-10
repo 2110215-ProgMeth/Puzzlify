@@ -176,7 +176,7 @@ public class Tetris extends Application {
         setBackground();
         count = new Text("Countdown :");
 
-        UI.setAlignment(Pos.CENTER);
+        UI.setAlignment(Pos.TOP_CENTER);
         UI.setPadding(new Insets(10));
         UI.getChildren().addAll(nextObjImg,st, lv);//เพิ่มลงในpane
         nextObjImg.setFitWidth(200);
