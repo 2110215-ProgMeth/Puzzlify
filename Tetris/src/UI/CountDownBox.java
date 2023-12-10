@@ -19,7 +19,7 @@ public class CountDownBox implements Initializable {
     private Image img2 = new Image("/UISprite/CountDown/2.png");
     private Image img1 = new Image("/UISprite/CountDown/1.png");
     private Image trans = new Image("/BlockSprite/FormSprite/Transparent64x64.png");
-    ScaleTransition scaleTransition = new ScaleTransition();
+    private ScaleTransition scaleTransition = new ScaleTransition();
     private AudioClip countClick;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,7 +38,7 @@ public class CountDownBox implements Initializable {
         scaleTransition.play();
     }
 
-    public void CountDown(int count){
+    public void countDown(int count){
         Image img = switch (count){
             case 3 -> img3;
             case 2 -> img2;

@@ -280,7 +280,7 @@ public class Tetris extends Application {
             public void handle(ActionEvent actionEvent) {
                 seconds--;
                 System.out.println(seconds);
-                countDownCon.CountDown((int)seconds);
+                countDownCon.countDown((int)seconds);
                 if(seconds<=0){
                     time.stop();
                     game = true;

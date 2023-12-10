@@ -16,28 +16,28 @@ public class ScoreBox implements Initializable {
     private Text scoreText;
     @FXML
     private Text labelText;
-    ScaleTransition scaleTransition = new ScaleTransition();
-    TranslateTransition translateTransition = new TranslateTransition();
-    TranslateTransition translateTransitionS = new TranslateTransition();
+    private ScaleTransition scaleTransition = new ScaleTransition();
+    private TranslateTransition translateTransitionLabel = new TranslateTransition();
+    private TranslateTransition translateTransitionText = new TranslateTransition();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        translateTransition.setNode(labelText);
-        translateTransition.setDuration(Duration.millis(1000));
-        translateTransition.setByY(10);
+        translateTransitionLabel.setNode(labelText);
+        translateTransitionLabel.setDuration(Duration.millis(1000));
+        translateTransitionLabel.setByY(10);
 
-        translateTransition.setInterpolator(Interpolator.EASE_BOTH);
-        translateTransition.setCycleCount(-1);
-        translateTransition.setAutoReverse(true);
-        translateTransition.play();
+        translateTransitionLabel.setInterpolator(Interpolator.EASE_BOTH);
+        translateTransitionLabel.setCycleCount(-1);
+        translateTransitionLabel.setAutoReverse(true);
+        translateTransitionLabel.play();
 
-        translateTransitionS.setNode(scoreText);
-        translateTransitionS.setDuration(Duration.millis(1000));
-        translateTransitionS.setByY(13);
+        translateTransitionText.setNode(scoreText);
+        translateTransitionText.setDuration(Duration.millis(1000));
+        translateTransitionText.setByY(13);
 
-        translateTransitionS.setInterpolator(Interpolator.EASE_BOTH);
-        translateTransitionS.setCycleCount(-1);
-        translateTransitionS.setAutoReverse(true);
-        translateTransitionS.play();
+        translateTransitionText.setInterpolator(Interpolator.EASE_BOTH);
+        translateTransitionText.setCycleCount(-1);
+        translateTransitionText.setAutoReverse(true);
+        translateTransitionText.play();
 
 
         scaleTransition.setNode(scoreText);

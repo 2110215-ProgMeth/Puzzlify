@@ -1,5 +1,6 @@
 package UI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -18,7 +19,7 @@ public class ExitBox implements Initializable {
     @FXML private ImageView restartBtn;
     @FXML private ImageView exitBtn;
     private AudioClip clickSound;
-    private Image reStartDis = new Image("/UISprite/ReStartdisable.png");
+    private Image restartDis = new Image("/UISprite/ReStartdisable.png");
     private Image restartImg = new Image("/UISprite/ReStart.png");
     private Image exitDis = new Image("/UISprite/ExitDis.png");
 
@@ -32,7 +33,7 @@ public class ExitBox implements Initializable {
     public GridPane getBox(){return box;}
 
     public void onRestartBtnPressed(){
-        clickSound.play();restartBtn.setImage(reStartDis);
+        clickSound.play();restartBtn.setImage(restartDis);
     }
     public void onRestartBtnReleased(){
         restartBtn.setImage(restartImg);
@@ -40,6 +41,7 @@ public class ExitBox implements Initializable {
     public void onExitBtnPressed(){
         clickSound.play();
         exitBtn.setImage(exitDis);
+        Platform.exit();
         System.exit(0);
     }
 
