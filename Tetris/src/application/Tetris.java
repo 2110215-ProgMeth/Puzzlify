@@ -184,7 +184,7 @@ public class Tetris extends Application {
         UI.setBackground(UIBackGound);
 
         stage.setScene(mainscene);
-        stage.setTitle("T E T R I S");
+        stage.setTitle("Puzzlify");
         stage.show();
 
         Timer fall = new Timer();
