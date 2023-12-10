@@ -1,13 +1,8 @@
 package Block.Item;
 
-import Block.BasicStructure.Block;
 import Block.BasicStructure.SpecialBlock;
 import Utils.Utils;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
-
-import java.util.ArrayList;
 
 import static application.Tetris.*;
 
@@ -21,7 +16,7 @@ public class NuclearBlock extends SpecialBlock {
     @Override
     public void activeSkill(Pane pane) {
         System.out.println("I am Atomic!!!");
-        cleargame(pane);
+        clearGame(pane);
     }
 
 
