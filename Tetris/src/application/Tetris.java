@@ -103,7 +103,8 @@ public class Tetris extends Application {
         countDownCon = loadCountDown.getController();
 
         FXMLLoader loadExitBox= new FXMLLoader(getClass().getResource("/FXML/ExitBox.fxml"));
-        Parent exitBox = loadExitBox.load();
+//        AnchorPane exitBox = loadExitBox.load();
+        loadExitBox.load();
         exitBoxCon = loadExitBox.getController();
 
         exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
@@ -112,14 +113,13 @@ public class Tetris extends Application {
         exitBoxCon.getRestartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
             exitBoxCon.OnRestartBtnReleased();
             stage.setScene(mainscene);
-            exitBox.setVisible(false);
+            exitBoxCon.getBox().setVisible(false);
             restartGame();
         });
 
         mainscene = new Scene(startROOT,480 + 300,960 + 50);
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
             startSceneCon.OnStartBtnPressed();
-            game = true;
         });
 
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
@@ -153,10 +153,12 @@ public class Tetris extends Application {
 
 
         hs = new AudioClip(this.getClass().getResource("/SFX/harddrop.mp3").toExternalForm());
+        hs.setVolume(0.2);
         rotateSound = new AudioClip(this.getClass().getResource("/SFX/rotate.mp3").toExternalForm());
         tap = new AudioClip(this.getClass().getResource("/SFX/tap.mp3").toExternalForm());
         tap.setVolume(0.2);
         clearLine = new AudioClip(this.getClass().getResource("/SFX/clearLine.wav").toExternalForm());
+        clearLine.setVolume(.2);
         bgSong = new AudioClip(this.getClass().getResource("/Totoro.mp3").toExternalForm());
         bgSong.setVolume(0.2);
         bgSong.play();
@@ -215,8 +217,8 @@ public class Tetris extends Application {
         Background rootBackGound = new Background(new BackgroundFill(Color.valueOf("#31304D"),CornerRadii.EMPTY,Insets.EMPTY));
         gameROOT.setBackground(rootBackGound);
 
-        gameLayerPane.getChildren().addAll(gameROOT,exitBox,countDownCon.countDownImg);
-        exitBox.setVisible(false);
+        gameLayerPane.getChildren().addAll(gameROOT,countDownCon.countDownImg,exitBoxCon.getBox());
+        exitBoxCon.getBox().setVisible(false);
         UI.setBackground(UIBackGound);
 
         stage.setScene(mainscene);
@@ -239,7 +241,7 @@ public class Tetris extends Application {
 
                         if (top == 2) {//เกินไป 1 block = จบ
                             // GAME OVER
-                            exitBox.setVisible(true);
+                            exitBoxCon.getBox().setVisible(true);
                             exitBoxCon.setScoreTxt(score);
                             exitBoxCon.setLineTxt(linesNo);
                             game = false;//จบเกม
@@ -300,6 +302,7 @@ public class Tetris extends Application {
         gamescene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                if(!game){return;}
                 switch (event.getCode()) {
                     case RIGHT:
                         Controller.MoveRight(form);

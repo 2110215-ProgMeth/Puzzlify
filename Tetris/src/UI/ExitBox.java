@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 
@@ -11,6 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ExitBox implements Initializable {
+    @FXML private AnchorPane box;
     @FXML private Text ScoreTxt;
     @FXML private Text LineTxt;
     @FXML private ImageView restartBtn;
@@ -24,6 +26,9 @@ public class ExitBox implements Initializable {
     public ImageView getRestartBtn() {
         return restartBtn;
     }
+
+    public AnchorPane getBox(){return box;}
+
 
     public void OnRestartBtnPressed(){
         clickSound.play();restartBtn.setImage(reStartDis);
@@ -40,6 +45,7 @@ public class ExitBox implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clickSound = new AudioClip(getClass().getResource("/SFX/bui.wav").toExternalForm());
+        clickSound.setVolume(.2);
     }
     public void setScoreTxt(int score){
         ScoreTxt.setText("Score: "+ score);
