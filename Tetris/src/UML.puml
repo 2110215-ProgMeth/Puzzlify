@@ -1,5 +1,18 @@
 @startuml
-class UI.StartScene {
+class Block.Buff.DoubleBlock {
++ <<Create>> DoubleBlock(double,double)
++ void activeSkill(Pane)
+}
+class Block.Item.LaserBlock {
++ <<Create>> LaserBlock(double,double)
++ void activeSkill(Pane)
+}
+interface Block.BasicStructure.Buff {
+}
+class Block.BasicStructure.NormalBlock {
++ <<Create>> NormalBlock(double,double)
+}
+class UI.MainScene {
 - ImageView startBtn
 - ImageView guideBtn
 - ImageView exitBtn
@@ -20,23 +33,6 @@ class UI.StartScene {
 + void onExitBtnReleased()
 + ImageView getStartBtn()
 + ImageView getGuideBtn()
-}
-class Block.Item.GabageBlock {
-+ <<Create>> GabageBlock(double,double)
-+ void activeSkill(Pane)
-}
-class Block.Buff.DoubleBlock {
-+ <<Create>> DoubleBlock(double,double)
-+ void activeSkill(Pane)
-}
-class Block.Item.LaserBlock {
-+ <<Create>> LaserBlock(double,double)
-+ void activeSkill(Pane)
-}
-interface Block.BasicStructure.Buff {
-}
-class Block.BasicStructure.NormalBlock {
-+ <<Create>> NormalBlock(double,double)
 }
 class Block.Buff.HalfBlock {
 + <<Create>> HalfBlock(double,double)
@@ -90,7 +86,7 @@ enum Utils.BlockType {
 +  T
 +  Z
 +  I
-+  BOMB
++  NUCLEAR
 +  LASER
 +  X2
 +  GARBAGE
@@ -113,16 +109,27 @@ class UI.GuideScene {
 + void onBackBtnReleased()
 }
 class application.Form {
-~ Block a
-~ Block b
-~ Block c
-~ Block d
+- Block a
+- Block b
+- Block c
+- Block d
 - Utils.BlockType bt
-+ int form
+- int form
 + <<Create>> Form(Block,Block,Block,Block,Utils.BlockType)
 + Utils.BlockType getBlockType()
 + void changeForm()
 + {static} Form makeRect()
++ Block getA()
++ void setA(Block)
++ Block getB()
++ void setB(Block)
++ Block getC()
++ void setC(Block)
++ Block getD()
++ void setD(Block)
++ Utils.BlockType getBt()
++ void setBt(Utils.BlockType)
++ int getForm()
 }
 class UI.ScoreBox {
 - Text scoreText
@@ -174,6 +181,10 @@ abstract class Block.BasicStructure.Block {
 + void setBlockType(Utils.BlockType)
 + void setColor()
 }
+class Block.Item.GarbageBlock {
++ <<Create>> GarbageBlock(double,double)
++ void activeSkill(Pane)
+}
 class application.Tetris {
 + {static} int MOVE
 + {static} int SIZE
@@ -184,12 +195,12 @@ class application.Tetris {
 - VBox UI
 - StackPane gameLayerPane
 - HBox gameROOT
-- Parent startROOT
+- Parent mainROOT
 - Parent guideROOT
 - Form object
 - Scene gamescene
 - Scene mainscene
-- Scene helpscene
+- Scene guidescene
 - int score
 - int top
 - boolean game
@@ -203,7 +214,7 @@ class application.Tetris {
 - AudioClip bgSong
 + ScoreBox conScore
 + ScoreBox conLv
-+ StartScene startSceneCon
++ MainScene mainSceneCon
 - int startTime
 - int seconds
 - ImageView nextObjImg
@@ -221,19 +232,19 @@ class application.Tetris {
 - void moveLeft(Form)
 - void moveTurn(Form)
 + void removeRows(Pane)
-- void moveDown(Rectangle)
-- void moveRight(Rectangle)
-- void moveLeft(Rectangle)
-- void moveUp(Rectangle)
+- void moveDown(Block)
+- void moveRight(Block)
+- void moveLeft(Block)
+- void moveUp(Block)
 - void moveToBottom(Form)
 - void moveDown(Form)
 - boolean moveA(Form)
 - boolean moveB(Form)
 - boolean moveC(Form)
 - boolean moveD(Form)
-- boolean cB(Rectangle,int,int)
+- boolean checkBounder(Block,int,int)
 - void setBackground()
-+ void increaseScore(int)
+- void increaseScore(int)
 + {static} void clearGame(Pane)
 - void setScore(int)
 - void setLinesNo(int)
@@ -249,13 +260,11 @@ class application.Tetris {
 }
 
 
-javafx.fxml.Initializable <|.. UI.StartScene
-Block.Item.Item <|.. Block.Item.GabageBlock
-Block.Item.SpecialBlock <|-- Block.Item.GabageBlock
 Block.BasicStructure.Buff <|.. Block.Buff.DoubleBlock
 Block.BasicStructure.SpecialBlock <|-- Block.Buff.DoubleBlock
 Block.BasicStructure.SpecialBlock <|-- Block.Item.LaserBlock
 Block.BasicStructure.Block <|-- Block.BasicStructure.NormalBlock
+javafx.fxml.Initializable <|.. UI.MainScene
 Block.BasicStructure.Buff <|.. Block.Buff.HalfBlock
 Block.BasicStructure.SpecialBlock <|-- Block.Buff.HalfBlock
 Block.BasicStructure.Skillable <|.. Block.BasicStructure.SpecialBlock
@@ -270,5 +279,7 @@ Block.BasicStructure.Item <|.. Block.Item.JesusBlock
 Block.BasicStructure.SpecialBlock <|-- Block.Item.JesusBlock
 Block.BasicStructure.SpecialBlock <|-- Block.Item.NuclearBlock
 javafx.scene.shape.Rectangle <|-- Block.BasicStructure.Block
+Block.Item.Item <|.. Block.Item.GarbageBlock
+Block.Item.SpecialBlock <|-- Block.Item.GarbageBlock
 javafx.application.Application <|-- application.Tetris
 @enduml
