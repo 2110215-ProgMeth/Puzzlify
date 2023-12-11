@@ -11,7 +11,6 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-21.0.1/lib/javafx.swing.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-21.0.1/lib/javafx.controls.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../javafx-sdk-21.0.1/lib/javafx.graphics.jar" path-in-jar="/" />
-      <element id="module-source" name="2110215--team-1" />
     </root>
   </artifact>
 </component>
