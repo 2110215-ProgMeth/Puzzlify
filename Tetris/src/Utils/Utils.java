@@ -3,13 +3,11 @@ package Utils;
 import Block.BasicStructure.Block;
 import Block.Buff.DoubleBlock;
 import Block.Buff.HalfBlock;
-import Block.Item.GabageBlock;
+import Block.Item.GarbageBlock;
 import Block.Item.JesusBlock;
 import Block.Item.LaserBlock;
 import Block.BasicStructure.NormalBlock;
 import Block.Item.NuclearBlock;
-import application.Form;
-import application.Tetris;
 
 public class Utils {
     public enum BlockType{
@@ -21,7 +19,7 @@ public class Utils {
             return new NuclearBlock(v1,v2);
         }
         else if(700<value&&value<=750){
-            return new GabageBlock(v1,v2);
+            return new GarbageBlock(v1,v2);
         }
         else if(750<value&&value<=800){
             return new HalfBlock(v1,v2);

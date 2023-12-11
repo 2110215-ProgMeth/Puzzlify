@@ -47,12 +47,12 @@ public class Tetris extends Application {
     private VBox UI = new VBox();
     private StackPane gameLayerPane = new StackPane();
     private HBox gameROOT = new HBox();
-    private Parent startROOT;
+    private Parent mainROOT;
     private Parent guideROOT;
     private Form object;//ของชิ้นปัจจุบัน
     private Scene gamescene ;//XMAX + 150 เพราะส่วนขวามีที่ไม่ใช่พื้นที่เกมด้วย
     private Scene mainscene ;
-    private Scene helpscene;
+    private Scene guidescene;
     private int score = 0;//คะแนนที่ได้ เพิ่มได้จากการกด เลื่อนลง || deleterow
     private int top = 0;//สำหรับดูว่าเกินหรือยัง
     private boolean game = false;//ยังรอดอยู่ไหม
@@ -70,7 +70,7 @@ public class Tetris extends Application {
     public ScoreBox conScore;
     public ScoreBox conLv;
 
-    public StartScene startSceneCon;
+    public MainScene mainSceneCon;
     private final int startTime = 4;
     private int seconds = startTime;
 
@@ -105,21 +105,21 @@ public class Tetris extends Application {
         // FXML LOADER
         // load start scene
         FXMLLoader loadStartScene = new FXMLLoader(getClass().getResource("/FXML/StartScene.fxml"));
-        startROOT = loadStartScene.load();
-        startSceneCon = loadStartScene.getController();
+        mainROOT = loadStartScene.load();
+        mainSceneCon = loadStartScene.getController();
 
-        startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
-            startSceneCon.OnStartBtnReleased();
+        mainSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
+            mainSceneCon.OnStartBtnReleased();
             stage.setScene(gamescene);
         });
 
-        startSceneCon.getGuideBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
-            startSceneCon.onGuidBtnReleased();
-            stage.setScene(helpscene);
+        mainSceneCon.getGuideBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
+            mainSceneCon.onGuidBtnReleased();
+            stage.setScene(guidescene);
         });
 
 
-        mainscene = new Scene(startROOT,480 + 300,960 + 50);
+        mainscene = new Scene(mainROOT,480 + 300,960 + 50);
         // load guide scene
         FXMLLoader loadGuideScene = new FXMLLoader(getClass().getResource("/FXML/GuideScene.fxml"));
         guideROOT = loadGuideScene.load();
@@ -131,7 +131,7 @@ public class Tetris extends Application {
             stage.setScene(mainscene);
         });
 
-        helpscene = new Scene(guideROOT,480 + 300,960 + 50);
+        guidescene = new Scene(guideROOT,480 + 300,960 + 50);
 
         // load countdown
         FXMLLoader loadCountDown = new FXMLLoader(getClass().getResource("/FXML/CountDownBox.fxml"));
@@ -267,8 +267,8 @@ public class Tetris extends Application {
         };
 
 
-        startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-            startSceneCon.OnStartBtnPressed();
+        mainSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
+            mainSceneCon.OnStartBtnPressed();
             countdown(fall, task);
         });
     }
@@ -380,7 +380,7 @@ public class Tetris extends Application {
         Block d = form.getD();
         switch (form.getBlockType()) {
             case J:
-                if (f == 1 && cB(a, 1, -1) && cB(c, -1, -1) && cB(d, -2, -2)) {
+                if (f == 1 && checkBounder(a, 1, -1) && checkBounder(c, -1, -1) && checkBounder(d, -2, -2)) {
                     moveRight(form.getA());
                     moveDown(form.getA());
                     moveDown(form.getC());
@@ -392,7 +392,7 @@ public class Tetris extends Application {
                     form.changeForm();//จาก 1->2
                     break;
                 }
-                if (f == 2 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, -2, 2)) {
+                if (f == 2 && checkBounder(a, -1, -1) && checkBounder(c, -1, 1) && checkBounder(d, -2, 2)) {
                     moveDown(form.getA());
                     moveLeft(form.getA());
                     moveLeft(form.getC());
@@ -404,7 +404,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 3 && cB(a, -1, 1) && cB(c, 1, 1) && cB(d, 2, 2)) {
+                if (f == 3 && checkBounder(a, -1, 1) && checkBounder(c, 1, 1) && checkBounder(d, 2, 2)) {
                     moveLeft(form.getA());
                     moveUp(form.getA());
                     moveUp(form.getC());
@@ -416,7 +416,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 4 && cB(a, 1, 1) && cB(c, 1, -1) && cB(d, 2, -2)) {
+                if (f == 4 && checkBounder(a, 1, 1) && checkBounder(c, 1, -1) && checkBounder(d, 2, -2)) {
                     moveUp(form.getA());
                     moveRight(form.getA());
                     moveRight(form.getC());
@@ -430,7 +430,7 @@ public class Tetris extends Application {
                 }
                 break;
             case L:
-                if (f == 1 && cB(a, 1, -1) && cB(c, 1, 1) && cB(b, 2, 2)) {
+                if (f == 1 && checkBounder(a, 1, -1) && checkBounder(c, 1, 1) && checkBounder(b, 2, 2)) {
                     moveRight(form.getA());
                     moveDown(form.getA());
                     moveUp(form.getC());
@@ -442,7 +442,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 2 && cB(a, -1, -1) && cB(b, 2, -2) && cB(c, 1, -1)) {
+                if (f == 2 && checkBounder(a, -1, -1) && checkBounder(b, 2, -2) && checkBounder(c, 1, -1)) {
                     moveDown(form.getA());
                     moveLeft(form.getA());
                     moveRight(form.getB());
@@ -454,7 +454,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 3 && cB(a, -1, 1) && cB(c, -1, -1) && cB(b, -2, -2)) {
+                if (f == 3 && checkBounder(a, -1, 1) && checkBounder(c, -1, -1) && checkBounder(b, -2, -2)) {
                     moveLeft(form.getA());
                     moveUp(form.getA());
                     moveDown(form.getC());
@@ -466,7 +466,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 4 && cB(a, 1, 1) && cB(b, -2, 2) && cB(c, -1, 1)) {
+                if (f == 4 && checkBounder(a, 1, 1) && checkBounder(b, -2, 2) && checkBounder(c, -1, 1)) {
                     moveUp(form.getA());
                     moveRight(form.getA());
                     moveLeft(form.getB());
@@ -482,7 +482,7 @@ public class Tetris extends Application {
             case O:
                 break;
             case S:
-                if (f == 1 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, 0, 2)) {
+                if (f == 1 && checkBounder(a, -1, -1) && checkBounder(c, -1, 1) && checkBounder(d, 0, 2)) {
                     moveDown(form.getA());
                     moveLeft(form.getA());
                     moveLeft(form.getC());
@@ -492,7 +492,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 2 && cB(a, 1, 1) && cB(c, 1, -1) && cB(d, 0, -2)) {
+                if (f == 2 && checkBounder(a, 1, 1) && checkBounder(c, 1, -1) && checkBounder(d, 0, -2)) {
                     moveUp(form.getA());
                     moveRight(form.getA());
                     moveRight(form.getC());
@@ -502,7 +502,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 3 && cB(a, -1, -1) && cB(c, -1, 1) && cB(d, 0, 2)) {
+                if (f == 3 && checkBounder(a, -1, -1) && checkBounder(c, -1, 1) && checkBounder(d, 0, 2)) {
                     moveDown(form.getA());
                     moveLeft(form.getA());
                     moveLeft(form.getC());
@@ -512,7 +512,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 4 && cB(a, 1, 1) && cB(c, 1, -1) && cB(d, 0, -2)) {
+                if (f == 4 && checkBounder(a, 1, 1) && checkBounder(c, 1, -1) && checkBounder(d, 0, -2)) {
                     moveUp(form.getA());
                     moveRight(form.getA());
                     moveRight(form.getC());
@@ -524,7 +524,7 @@ public class Tetris extends Application {
                 }
                 break;
             case T:
-                if (f == 1 && cB(a, 1, 1) && cB(d, -1, -1) && cB(c, -1, 1)) {
+                if (f == 1 && checkBounder(a, 1, 1) && checkBounder(d, -1, -1) && checkBounder(c, -1, 1)) {
                     moveUp(form.getA());
                     moveRight(form.getA());
                     moveDown(form.getD());
@@ -534,7 +534,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 2 && cB(a, 1, -1) && cB(d, -1, 1) && cB(c, 1, 1)) {
+                if (f == 2 && checkBounder(a, 1, -1) && checkBounder(d, -1, 1) && checkBounder(c, 1, 1)) {
                     moveRight(form.getA());
                     moveDown(form.getA());
                     moveLeft(form.getD());
@@ -544,7 +544,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 3 && cB(a, -1, -1) && cB(d, 1, 1) && cB(c, 1, -1)) {
+                if (f == 3 && checkBounder(a, -1, -1) && checkBounder(d, 1, 1) && checkBounder(c, 1, -1)) {
                     moveDown(form.getA());
                     moveLeft(form.getA());
                     moveUp(form.getD());
@@ -554,7 +554,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 4 && cB(a, -1, 1) && cB(d, 1, -1) && cB(c, -1, -1)) {
+                if (f == 4 && checkBounder(a, -1, 1) && checkBounder(d, 1, -1) && checkBounder(c, -1, -1)) {
                     moveLeft(form.getA());
                     moveUp(form.getA());
                     moveRight(form.getD());
@@ -566,7 +566,7 @@ public class Tetris extends Application {
                 }
                 break;
             case Z:
-                if (f == 1 && cB(b, 1, 1) && cB(c, -1, 1) && cB(d, -2, 0)) {
+                if (f == 1 && checkBounder(b, 1, 1) && checkBounder(c, -1, 1) && checkBounder(d, -2, 0)) {
                     moveUp(form.getB());
                     moveRight(form.getB());
                     moveLeft(form.getC());
@@ -576,7 +576,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 2 && cB(b, -1, -1) && cB(c, 1, -1) && cB(d, 2, 0)) {
+                if (f == 2 && checkBounder(b, -1, -1) && checkBounder(c, 1, -1) && checkBounder(d, 2, 0)) {
                     moveDown(form.getB());
                     moveLeft(form.getB());
                     moveRight(form.getC());
@@ -586,7 +586,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 3 && cB(b, 1, 1) && cB(c, -1, 1) && cB(d, -2, 0)) {
+                if (f == 3 && checkBounder(b, 1, 1) && checkBounder(c, -1, 1) && checkBounder(d, -2, 0)) {
                     moveUp(form.getB());
                     moveRight(form.getB());
                     moveLeft(form.getC());
@@ -596,7 +596,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 4 && cB(b, -1, -1) && cB(c, 1, -1) && cB(d, 2, 0)) {
+                if (f == 4 && checkBounder(b, -1, -1) && checkBounder(c, 1, -1) && checkBounder(d, 2, 0)) {
                     moveDown(form.getB());
                     moveLeft(form.getB());
                     moveRight(form.getC());
@@ -608,7 +608,7 @@ public class Tetris extends Application {
                 }
                 break;
             case I:
-                if (f == 1 && cB(a, 2, 2) && cB(b, 1, 1) && cB(d, -1, -1)) {
+                if (f == 1 && checkBounder(a, 2, 2) && checkBounder(b, 1, 1) && checkBounder(d, -1, -1)) {
                     moveUp(form.getA());
                     moveUp(form.getA());
                     moveRight(form.getA());
@@ -620,7 +620,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 2 && cB(a, -2, -2) && cB(b, -1, -1) && cB(d, 1, 1)) {
+                if (f == 2 && checkBounder(a, -2, -2) && checkBounder(b, -1, -1) && checkBounder(d, 1, 1)) {
                     moveDown(form.getA());
                     moveDown(form.getA());
                     moveLeft(form.getA());
@@ -632,7 +632,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 3 && cB(a, 2, 2) && cB(b, 1, 1) && cB(d, -1, -1)) {
+                if (f == 3 && checkBounder(a, 2, 2) && checkBounder(b, 1, 1) && checkBounder(d, -1, -1)) {
                     moveUp(form.getA());
                     moveUp(form.getA());
                     moveRight(form.getA());
@@ -644,7 +644,7 @@ public class Tetris extends Application {
                     form.changeForm();
                     break;
                 }
-                if (f == 4 && cB(a, -2, -2) && cB(b, -1, -1) && cB(d, 1, 1)) {
+                if (f == 4 && checkBounder(a, -2, -2) && checkBounder(b, -1, -1) && checkBounder(d, 1, 1)) {
                     moveDown(form.getA());
                     moveDown(form.getA());
                     moveLeft(form.getA());
@@ -743,25 +743,25 @@ public class Tetris extends Application {
         }
     }
 
-    private void moveDown(Rectangle rect) {
-        if (rect.getY() + MOVE < YMAX)
-            rect.setY(rect.getY() + MOVE);
+    private void moveDown(Block block) {
+        if (block.getY() + MOVE < YMAX)
+            block.setY(block.getY() + MOVE);
     }
 
 
-    private void moveRight(Rectangle rect) {
-        if (rect.getX() + MOVE <= XMAX - SIZE)
-            rect.setX(rect.getX() + MOVE);
+    private void moveRight(Block block) {
+        if (block.getX() + MOVE <= XMAX - SIZE)
+            block.setX(block.getX() + MOVE);
     }
 
-    private void moveLeft(Rectangle rect) {
-        if (rect.getX() - MOVE >= 0)
-            rect.setX(rect.getX() - MOVE);
+    private void moveLeft(Block block) {
+        if (block.getX() - MOVE >= 0)
+            block.setX(block.getX() - MOVE);
     }
 
-    private void moveUp(Rectangle rect) {
-        if (rect.getY() - MOVE > 0)
-            rect.setY(rect.getY() - MOVE);
+    private void moveUp(Block block) {
+        if (block.getY() - MOVE > 0)
+            block.setY(block.getY() - MOVE);
     }
 
     private void moveToBottom(Form form){
@@ -833,18 +833,18 @@ public class Tetris extends Application {
         return (MESH[(int) form.getD().getX() / SIZE][((int) form.getD().getY() / SIZE) + 1] == 1);
     }
 
-    private boolean cB(Rectangle rect, int x, int y) {//check bounder ดูว่าเลื่อนในแกนx x move/แกนy y move หลุดขอบไหม
+    private boolean checkBounder(Block block, int x, int y) {//check bounder ดูว่าเลื่อนในแกนx x move/แกนy y move หลุดขอบไหม
         boolean xb = false;//X-axis bounder
         boolean yb = false;//Y-axis bounder
         if (x >= 0)//เช็คเทียบขอบขวามือ
-            xb = rect.getX() + x * MOVE <= XMAX - SIZE;
+            xb = block.getX() + x * MOVE <= XMAX - SIZE;
         if (x < 0)//เช็คเทียบขอบซ้ายมือ
-            xb = rect.getX() + x * MOVE >= 0;
+            xb = block.getX() + x * MOVE >= 0;
         if (y >= 0)//เช็คล่าง
-            yb = rect.getY() - y * MOVE > 0;
+            yb = block.getY() - y * MOVE > 0;
         if (y < 0)//เช็คบน
-            yb = rect.getY() + y * MOVE < YMAX;
-        return xb && yb && MESH[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
+            yb = block.getY() + y * MOVE < YMAX;
+        return xb && yb && MESH[((int) block.getX() / SIZE) + x][((int) block.getY() / SIZE) - y] == 0;
     }
 
     private void setBackground(){
@@ -858,7 +858,7 @@ public class Tetris extends Application {
             }
         }
     }
-    public void increaseScore(int base){
+    private void increaseScore(int base){
         conScore.setScore(score);
         if(scoreMode == sMode.DEFAULT){
             System.out.println("You on Default Mode score+="+Integer.toString(base));

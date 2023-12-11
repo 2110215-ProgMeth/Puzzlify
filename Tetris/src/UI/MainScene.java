@@ -13,7 +13,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StartScene implements Initializable {
+public class MainScene implements Initializable {
     @FXML private ImageView startBtn;
     @FXML private ImageView guideBtn;
     @FXML private ImageView exitBtn;

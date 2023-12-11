@@ -2,19 +2,16 @@ package Block.Item;
 
 import Block.BasicStructure.*;
 import Utils.Utils;
-import application.Tetris;
-import javafx.css.Size;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
 
 import static application.Tetris.MESH;
 import static application.Tetris.SIZE;
 
-public class GabageBlock extends SpecialBlock implements Item {
-    public GabageBlock(double v1, double v2){
+public class GarbageBlock extends SpecialBlock implements Item {
+    public GarbageBlock(double v1, double v2){
         super(v1,v2, "garbage_out_large");
         bt = Utils.BlockType.GARBAGE;
     }

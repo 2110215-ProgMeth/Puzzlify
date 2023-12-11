@@ -19,7 +19,7 @@ public class Form {
         setD(d);
 
 
-        this.bt = blockType;
+        setBt(blockType);
 
         getA().setBlockType(blockType);
         getB().setBlockType(blockType);
