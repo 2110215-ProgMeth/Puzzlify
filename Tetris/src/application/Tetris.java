@@ -116,7 +116,7 @@ public class Tetris extends Application {
         startSceneCon = loadStartScene.getController();
 
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_RELEASED, e->{
-            startSceneCon.OnStartBtnReleased();
+            startSceneCon.onStartBtnReleased();
             stage.setScene(gamescene);
         });
 
@@ -274,7 +274,7 @@ public class Tetris extends Application {
 
 
         startSceneCon.getStartBtn().addEventHandler(MouseEvent.MOUSE_PRESSED, e->{
-            startSceneCon.OnStartBtnPressed();
+            startSceneCon.onStartBtnPressed();
             countdown(fall, task);
         });
     }
