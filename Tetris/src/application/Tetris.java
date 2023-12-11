@@ -84,10 +84,19 @@ public class Tetris extends Application {
 
     private boolean isFirstTime = false;
 
+    public static Tetris instance;
+
 
 
     public static void main(String[] args) {//main
         launch(args);//จะไปเรียกstart
+    }
+
+    public static Tetris getInstance(){
+        if(instance == null){ instance = new Tetris();
+            return instance;
+        }
+        return instance;
     }
 
     @Override
