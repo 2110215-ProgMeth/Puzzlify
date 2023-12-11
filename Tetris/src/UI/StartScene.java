@@ -41,14 +41,14 @@ public class StartScene implements Initializable {
         translateTransition.play();
     }
 
-    public void onStartBtnPressed(){
+    public void OnStartBtnPressed(){
         startBtn.setImage(disStartBtnImg);
         clickSound.play();
     }
-    public void onStartBtnReleased(){
+    public void OnStartBtnReleased(){
         startBtn.setImage(startBtnImg);
     }
-    public void onGuideBtnPressed(){
+    public void OnGuideBtnPressed(){
         guideBtn.setImage(disGuideBtnImg);
         clickSound.play();
     }
