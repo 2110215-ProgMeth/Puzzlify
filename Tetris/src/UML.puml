@@ -1,0 +1,274 @@
+@startuml
+class UI.StartScene {
+- ImageView startBtn
+- ImageView guideBtn
+- ImageView exitBtn
+- ImageView gameIcon
+- AudioClip clickSound
+- Image disStartBtnImg
+- Image startBtnImg
+- Image disGuideBtnImg
+- Image guideBtnImg
+- Image disExitBtnImg
++ TranslateTransition translateTransition
++ void initialize(URL,ResourceBundle)
++ void OnStartBtnPressed()
++ void OnStartBtnReleased()
++ void OnGuideBtnPressed()
++ void onGuidBtnReleased()
++ void onExitBtnPressed()
++ void onExitBtnReleased()
++ ImageView getStartBtn()
++ ImageView getGuideBtn()
+}
+class Block.Item.GabageBlock {
++ <<Create>> GabageBlock(double,double)
++ void activeSkill(Pane)
+}
+class Block.Buff.DoubleBlock {
++ <<Create>> DoubleBlock(double,double)
++ void activeSkill(Pane)
+}
+class Block.Item.LaserBlock {
++ <<Create>> LaserBlock(double,double)
++ void activeSkill(Pane)
+}
+interface Block.BasicStructure.Buff {
+}
+class Block.BasicStructure.NormalBlock {
++ <<Create>> NormalBlock(double,double)
+}
+class Block.Buff.HalfBlock {
++ <<Create>> HalfBlock(double,double)
++ void activeSkill(Pane)
+}
+interface Block.BasicStructure.Item {
+}
+abstract class Block.BasicStructure.SpecialBlock {
+# AudioClip sfx
++ <<Create>> SpecialBlock(double,double,String)
++ {abstract}void activeSkill(Pane)
+}
+class Utils.Mode {
+- {static} Thread Halfthread
+- {static} Thread Doublethread
++ {static} void activeDouble()
++ {static} void activeHalf()
+}
+enum Utils.sMode {
++  DEFAULT
++  DOUBLE
++  HALF
+}
+class UI.CountDownBox {
++ ImageView countDownImg
+- Image img3
+- Image img2
+- Image img1
+- Image trans
+- ScaleTransition scaleTransition
+- AudioClip countClick
++ void initialize(URL,ResourceBundle)
++ void countDown(int)
+}
+class UI.BuffUI {
+- Image buffActiveImg
+- Image buffDeActiveImg
++ <<Create>> BuffUI(String,String)
++ void isActive(boolean)
+}
+class Utils.Utils {
++ {static} Block RamdomBlock(double,double)
++ {static} String getBlockSpritePath(BlockType)
++ {static} String getFormSpritePath(BlockType)
+}
+enum Utils.BlockType {
++  J
++  L
++  O
++  S
++  T
++  Z
++  I
++  BOMB
++  LASER
++  X2
++  GARBAGE
++  JESUS
++  NULL
++  GAB
++  D2
+}
+class Block.BasicStructure.GabBlock {
++ <<Create>> GabBlock(double,double)
+}
+class UI.GuideScene {
+- ImageView backBtn
+- Image backBtnImg
+- Image backBtnDisImg
+- AudioClip clickSound
++ void initialize(URL,ResourceBundle)
++ ImageView getBackBtn()
++ void onBackBtnPressed()
++ void onBackBtnReleased()
+}
+class application.Form {
+~ Block a
+~ Block b
+~ Block c
+~ Block d
+- Utils.BlockType bt
++ int form
++ <<Create>> Form(Block,Block,Block,Block,Utils.BlockType)
++ Utils.BlockType getBlockType()
++ void changeForm()
++ {static} Form makeRect()
+}
+class UI.ScoreBox {
+- Text scoreText
+- Text labelText
+- ScaleTransition scaleTransition
+- TranslateTransition translateTransitionLabel
+- TranslateTransition translateTransitionText
++ void initialize(URL,ResourceBundle)
++ void setScore(int)
++ void setLabelText(String)
+}
+interface Block.BasicStructure.Skillable {
+~ void activeSkill(Pane)
+}
+class UI.ExitBox {
+- GridPane box
+- Text ScoreTxt
+- Text LineTxt
+- ImageView restartBtn
+- ImageView exitBtn
+- AudioClip clickSound
+- Image restartDis
+- Image restartImg
+- Image exitDis
+- AudioClip looseSFX
++ ImageView getRestartBtn()
++ GridPane getBox()
++ void onRestartBtnPressed()
++ void onRestartBtnReleased()
++ void onExitBtnPressed()
++ void onPaneActive(int,int)
++ void initialize(URL,ResourceBundle)
++ void setScoreTxt(int)
++ void setLineTxt(int)
+}
+class Block.Item.JesusBlock {
++ <<Create>> JesusBlock(double,double)
++ void activeSkill(Pane)
+}
+class Block.Item.NuclearBlock {
+- int radius
++ <<Create>> NuclearBlock(double,double)
++ void activeSkill(Pane)
++ String toString()
+}
+abstract class Block.BasicStructure.Block {
+# Utils.BlockType bt
++ <<Create>> Block(double,double)
++ void setBlockType(Utils.BlockType)
++ void setColor()
+}
+class application.Tetris {
++ {static} int MOVE
++ {static} int SIZE
++ {static} int XMAX
++ {static} int YMAX
++ {static} int[][] MESH
+- Pane group
+- VBox UI
+- StackPane gameLayerPane
+- HBox gameROOT
+- Parent startROOT
+- Parent guideROOT
+- Form object
+- Scene gamescene
+- Scene mainscene
+- Scene helpscene
+- int score
+- int top
+- boolean game
+- Form nextObj
+- int linesNo
++ {static} sMode scoreMode
+- AudioClip hs
+- AudioClip rotateSound
+- AudioClip tap
+- AudioClip clearLine
+- AudioClip bgSong
++ ScoreBox conScore
++ ScoreBox conLv
++ StartScene startSceneCon
+- int startTime
+- int seconds
+- ImageView nextObjImg
++ CountDownBox countDownCon
++ ExitBox exitBoxCon
++ GuideScene guideSceneCon
+- BuffUI x2UI
+- BuffUI d2UI
+- boolean isFirstTime
++ {static} void main(String[])
++ void start(Stage)
+- void countdown(Timer,TimerTask)
++ void moveOnKeyPress(Form)
+- void moveRight(Form)
+- void moveLeft(Form)
+- void moveTurn(Form)
++ void removeRows(Pane)
+- void moveDown(Rectangle)
+- void moveRight(Rectangle)
+- void moveLeft(Rectangle)
+- void moveUp(Rectangle)
+- void moveToBottom(Form)
+- void moveDown(Form)
+- boolean moveA(Form)
+- boolean moveB(Form)
+- boolean moveC(Form)
+- boolean moveD(Form)
+- boolean cB(Rectangle,int,int)
+- void setBackground()
++ void increaseScore(int)
++ {static} void clearGame(Pane)
+- void setScore(int)
+- void setLinesNo(int)
++ AudioClip getTap()
++ AudioClip getHs()
++ AudioClip getRotateSound()
++ Pane getGroup()
++ void setObject(Form)
++ Form getObject()
++ void setNextObj(Form)
++ Form getNextObj()
+- void restartGame()
+}
+
+
+javafx.fxml.Initializable <|.. UI.StartScene
+Block.Item.Item <|.. Block.Item.GabageBlock
+Block.Item.SpecialBlock <|-- Block.Item.GabageBlock
+Block.BasicStructure.Buff <|.. Block.Buff.DoubleBlock
+Block.BasicStructure.SpecialBlock <|-- Block.Buff.DoubleBlock
+Block.BasicStructure.SpecialBlock <|-- Block.Item.LaserBlock
+Block.BasicStructure.Block <|-- Block.BasicStructure.NormalBlock
+Block.BasicStructure.Buff <|.. Block.Buff.HalfBlock
+Block.BasicStructure.SpecialBlock <|-- Block.Buff.HalfBlock
+Block.BasicStructure.Skillable <|.. Block.BasicStructure.SpecialBlock
+Block.BasicStructure.Block <|-- Block.BasicStructure.SpecialBlock
+javafx.fxml.Initializable <|.. UI.CountDownBox
+javafx.scene.image.ImageView <|-- UI.BuffUI
+Block.BasicStructure.Block <|-- Block.BasicStructure.GabBlock
+javafx.fxml.Initializable <|.. UI.GuideScene
+javafx.fxml.Initializable <|.. UI.ScoreBox
+javafx.fxml.Initializable <|.. UI.ExitBox
+Block.BasicStructure.Item <|.. Block.Item.JesusBlock
+Block.BasicStructure.SpecialBlock <|-- Block.Item.JesusBlock
+Block.BasicStructure.SpecialBlock <|-- Block.Item.NuclearBlock
+javafx.scene.shape.Rectangle <|-- Block.BasicStructure.Block
+javafx.application.Application <|-- application.Tetris
+@enduml
