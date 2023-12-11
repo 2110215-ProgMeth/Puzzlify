@@ -10,11 +10,12 @@ public class NuclearBlock extends SpecialBlock {
     private final int radius=2;
     public NuclearBlock(double v1, double v2) {
         super(v1, v2,"nuclear");
-        bt = Utils.BlockType.BOMB;
+        bt = Utils.BlockType.NUCLEAR;
     }
 
     @Override
     public void activeSkill(Pane pane) {
+        sfx.play();
         System.out.println("I am Atomic!!!");
         clearGame(pane);
     }

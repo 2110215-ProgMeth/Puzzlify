@@ -24,6 +24,7 @@ public class JesusBlock extends SpecialBlock implements Item {
 
     @Override
     public void activeSkill(Pane pane) {
+        sfx.play();
         System.out.println("Jesus!!");
         int x = (int) this.getX();
         ArrayList<Node> rects = new ArrayList<Node>();

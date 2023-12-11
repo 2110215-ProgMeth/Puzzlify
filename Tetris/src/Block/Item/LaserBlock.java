@@ -22,6 +22,7 @@ public class LaserBlock extends SpecialBlock {
 
     @Override
     public void activeSkill(Pane pane) {
+        sfx.play();
         System.out.println("RazerBeam!!!");
         ArrayList<Node> rects = new ArrayList<Node>();
         ArrayList<Integer> lines = new ArrayList<Integer>();

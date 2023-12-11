@@ -19,6 +19,7 @@ public class HalfBlock extends SpecialBlock implements Buff {
     }
     @Override
     public void activeSkill(Pane pane) {
+        sfx.play();
         Mode.activeHalf();
     }
 }
