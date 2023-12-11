@@ -17,7 +17,7 @@
             <Image url="@../UISprite/GameTitle.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="startBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#onStartBtnPressed">
+      <ImageView fx:id="startBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#OnStartBtnPressed">
          <image>
             <Image url="@../UISprite/StartButtonEnable.png" />
          </image>
@@ -25,7 +25,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="guideBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#onGuideBtnPressed">
+      <ImageView fx:id="guideBtn" fitHeight="100.0" fitWidth="304.0" layoutX="290.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#OnGuideBtnPressed">
          <image>
             <Image url="@../UISprite/GuideBtn.png" />
          </image>
