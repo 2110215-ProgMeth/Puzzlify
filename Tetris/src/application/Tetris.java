@@ -167,6 +167,7 @@ public class Tetris extends Application {
         bgSong.setVolume(0.2);
         bgSong.play();
 
+
         gamescene = new Scene(gameLayerPane, 480 + 300, 960+50);
         gamescene.getStylesheets().add(this.getClass().getResource("/main.css").toExternalForm());
 
