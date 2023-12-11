@@ -328,11 +328,11 @@ public class Tetris extends Application {
                         moveLeft(form);
                         getTap().play();
                         break;
-                    case UP:
+                    case Z:
                         moveTurn(form);
                         getRotateSound().play();
                         break;
-                    case ENTER:// ทำให้ลงถึงสุดเลย
+                    case SPACE:// ทำให้ลงถึงสุดเลย
                         moveToBottom(form);
                         getHs().play();
                         break;
