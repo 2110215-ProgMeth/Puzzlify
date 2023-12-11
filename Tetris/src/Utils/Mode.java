@@ -18,11 +18,7 @@ public class Mode {
                 scoreMode = sMode.DEFAULT;
                 System.out.println("Buff Gone!");
             }catch(InterruptedException e ){
-                /*if(scoreMode==sMode.DOUBLE) {
-                    System.out.println("You got Buff again, 15 second one more time!");
-                }else if(scoreMode==sMode.HALF){*/
-                    System.out.println("You got Debuff, Buff Gone!");
-                //}
+                System.out.println("You got Debuff, Buff Gone!");
             }
         });
         Doublethread.start();
