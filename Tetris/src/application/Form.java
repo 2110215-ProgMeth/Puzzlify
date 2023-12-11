@@ -4,33 +4,33 @@ import Block.BasicStructure.Block;
 import Utils.Utils;
 
 public class Form {
-    Block a;
-    Block b;
-    Block c;
-    Block d;
+    private Block a;
+    private Block b;
+    private Block c;
+    private Block d;
     private Utils.BlockType bt;
-    public int form = 1;
+    private int form = 1;
 
 
     public Form(Block a, Block b, Block c, Block d, Utils.BlockType blockType) {//constructor with name
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
+        setA(a);
+        setB(b);
+        setC(c);
+        setD(d);
 
 
         this.bt = blockType;
 
-        this.a.setBlockType(blockType);
-        this.b.setBlockType(blockType);
-        this.c.setBlockType(blockType);
-        this.d.setBlockType(blockType);
+        getA().setBlockType(blockType);
+        getB().setBlockType(blockType);
+        getC().setBlockType(blockType);
+        getD().setBlockType(blockType);
 
 
-        this.a.setColor();
-        this.b.setColor();
-        this.c.setColor();
-        this.d.setColor();
+        getA().setColor();
+        getB().setColor();
+        getC().setColor();
+        getD().setColor();
     }
 
 
@@ -113,5 +113,48 @@ public class Form {
         }
 //        System.out.println(a.getBlockType().toString());
         return new Form(a, b, c, d, bt);
+    }
+
+    public Block getA() {
+        return a;
+    }
+
+    public void setA(Block a) {
+        this.a = a;
+    }
+
+    public Block getB() {
+        return b;
+    }
+
+    public void setB(Block b) {
+        this.b = b;
+    }
+
+    public Block getC() {
+        return c;
+    }
+
+    public void setC(Block c) {
+        this.c = c;
+    }
+
+    public Block getD() {
+        return d;
+    }
+
+    public void setD(Block d) {
+        this.d = d;
+    }
+
+    public Utils.BlockType getBt() {
+        return bt;
+    }
+
+    public void setBt(Utils.BlockType bt) {
+        this.bt = bt;
+    }
+    public int getForm(){
+        return form;
     }
 }
