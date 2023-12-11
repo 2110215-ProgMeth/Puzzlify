@@ -68,7 +68,7 @@ public class Utils {
             case Z -> "BlockSprite/FormSprite/Z.png";
             case T -> "BlockSprite/FormSprite/T.png";
             case L -> "BlockSprite/FormSprite/L.png";
-            default -> "BlockSprite/FormSprite/Tranparent64x64.png";
+            default -> "BlockSprite/FormSprite/Transparent64x64.png";
         };
     }
 
